@@ -1,0 +1,1 @@
+{{- include "appwrite.pdb" (merge (dict "component" (dict "name" "app" "config" .Values.components.appwrite)) .)}}

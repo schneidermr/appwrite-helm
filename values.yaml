@@ -1,0 +1,533 @@
+# Copyright Marton Schneider
+# SPDX-License-Identifier: APACHE-2.0
+
+
+# These global values also affect the sub-charts
+global:
+  ## Global Docker registry secret names as an array
+  ## E.g.
+  ## imagePullSecrets:
+  ##   - myRegistryKeySecretName
+  imagePullSecrets: []
+  ## Global StorageClass for Persistent Volume(s)
+  storageClass: ""
+
+
+
+## Environment variables for Appwrite
+## ref: https://appwrite.io/docs/advanced/self-hosting/environment-variables
+environments:
+  ## _APP_ENV
+  env: production
+  ## _APP_LOCALE
+  locale: en
+  worker:
+    ## _APP_WORKER_PER_CORE
+    perCore: 6
+  console:
+    whitelist:
+      ## _APP_CONSOLE_WHITELIST_ROOT
+      root: ""
+      ## _APP_CONSOLE_WHITELIST_EMAILS
+      emails: ""
+      ## _APP_CONSOLE_WHITELIST_IPS
+      ips: ""
+  system:
+    email:
+      ## _APP_SYSTEM_EMAIL_NAME
+      name: Appwrite
+      ## _APP_SYSTEM_EMAIL_ADDRESS
+      address: team@appwrite.io
+    security:
+      ## _APP_SYSTEM_SECURITY_EMAIL_ADDRESS
+      emailAddress: security@appwrite.io
+    response:
+      ## _APP_SYSTEM_RESPONSE_FORMAT
+      format: ""
+  options:
+    ## _APP_OPTIONS_ABUSE
+    abuse: disabled
+    ## _APP_OPTIONS_ROUTER_PROTECTION
+    routerProtection: disabled
+    ## _APP_OPTIONS_FORCE_HTTPS
+    forceHttps: disabled
+    functions:
+      ## _APP_OPTIONS_FUNCTIONS_FORCE_HTTPS
+      forceHttps: disabled
+  openssl:
+    ## _APP_OPENSSL_KEY_V1
+    keyV1: ""
+  domain: 
+    ## _APP_DOMAIN
+    app: localhost
+    ## _APP_DOMAIN_FUNCTIONS
+    functions: functions.localhost
+    ## _APP_DOMAIN_TARGET
+    target: localhost
+  redis:
+    ## _APP_REDIS_HOST
+    host: ""
+    ## _APP_REDIS_PORT
+    port: 6379
+    ## _APP_REDIS_USER
+    username: ""
+    ## _APP_REDIS_PASS
+    password: ""
+  database:
+    ## _APP_DB_HOST
+    host: ""
+    ## _APP_DB_PORT
+    port: 3306
+    ## _APP_DB_SCHEMA
+    schema: appwrite
+    ## _APP_DB_USER
+    username: user
+    ## _APP_DB_PASS
+    password: your-secret-password
+    ## _APP_DB_ROOT_PASS
+    rootPassword: root-secret-root-password
+  storage:  
+    ## _APP_STORAGE_DEVICE
+    device: Local
+    s3:
+      ## _APP_STORAGE_S3_ENDPOINT_URL
+      endpointUrl: ""
+      ## _APP_STORAGE_S3_ACCESS_KEY
+      accessKey: ""
+      ## _APP_STORAGE_S3_SECRET
+      secret: ""
+      ## _APP_STORAGE_S3_REGION
+      region: us-east-1
+      ## _APP_STORAGE_S3_BUCKET
+      bucket: ""
+    doSpaces:
+      ## _APP_STORAGE_DO_SPACES_ACCESS_KEY
+      accessKey: ""
+      ## _APP_STORAGE_DO_SPACES_SECRET
+      secret: ""
+      ## _APP_STORAGE_DO_SPACES_REGION
+      region: us-east-1
+      ## _APP_STORAGE_DO_SPACES_BUCKET
+      bucket: ""
+    backblaze:
+      ## _APP_STORAGE_BACKBLAZE_ACCESS_KEY
+      accessKey: ""
+      ## _APP_STORAGE_BACKBLAZE_SECRET
+      secret: ""
+      ## _APP_STORAGE_BACKBLAZE_REGION
+      region: us-west-004
+      ## _APP_STORAGE_BACKBLAZE_BUCKET
+      bucket: ""
+    linode:
+      ## _APP_STORAGE_LINODE_ACCESS_KEY
+      accessKey: ""
+      ## _APP_STORAGE_LINODE_SECRET
+      secret: ""
+      ## _APP_STORAGE_LINODE_REGION
+      region: eu-central-1
+      ## _APP_STORAGE_LINODE_BUCKET
+      bucket: ""
+    wasabi:
+      ## _APP_STORAGE_WASABI_ACCESS_KEY
+      accessKey: ""
+      ## _APP_STORAGE_WASABI_SECRET
+      secret: ""
+      ## _APP_STORAGE_WASABI_REGION
+      region: eu-central-1
+      ## _APP_STORAGE_WASABI_BUCKET
+      bucket: ""
+    antivirus:
+      ## _APP_STORAGE_ANTIVIRUS
+      enabled: disabled
+      ## _APP_STORAGE_ANTIVIRUS_HOST
+      host: clamav
+      ## _APP_STORAGE_ANTIVIRUS_PORT
+      port: 3310
+    ## _APP_STORAGE_LIMIT
+    limit: 30000000
+    ## _APP_STORAGE_PREVIEW_LIMIT
+    previewLimit: 20000000
+  influxdb:
+    ## _APP_INFLUXDB_HOST
+    host: ""
+    ## _APP_INFLUXDB_PORT
+    port: 8086
+  statsd:
+    ## _APP_STATSD_HOST
+    host: ""
+    ## _APP_STATSD_PORT
+    port: 8125
+  smtp:
+    ## _APP_SMTP_HOST
+    host: ""
+    ## _APP_SMTP_PORT
+    port: ""
+    ## _APP_SMTP_SECURE
+    secure: ""
+    ## _APP_SMTP_USERNAME
+    username: ""
+    ## _APP_SMTP_PASSWORD
+    password: ""
+  sms:
+    ## _APP_SMS_PROVIDER
+    provider: ""
+    ## _APP_SMS_FROM
+    from: ""
+  functions:
+    ## _APP_FUNCTIONS_SIZE_LIMIT
+    sizeLimit: 30000000
+    ## _APP_FUNCTIONS_TIMEOUT
+    timeout: 900
+    ## _APP_FUNCTIONS_BUILD_TIMEOUT
+    buildTimeout: 900
+    ## _APP_FUNCTIONS_CPUS
+    cpus: ""
+    ## _APP_FUNCTIONS_MEMORY
+    memory: ""
+    ## _APP_FUNCTIONS_INACTIVE_THRESHOLD
+    inactiveThreshold: 600
+    ## _APP_FUNCTIONS_MAINTENANCE_INTERVAL
+    maintenanceInterval: 600
+    ## _APP_FUNCTIONS_RUNTIMES
+    runtimes:
+      - php-8.0
+      - node-18.0
+      - python-3.9
+      - ruby-3.1
+  executor:
+    ## _APP_EXECUTOR_SECRET
+    secret: ""
+    ## _APP_EXECUTOR_HOST
+    host: ""
+  maintenance:
+    ## _APP_MAINTENANCE_INTERVAL
+    interval: 86400
+    retention:
+      ## _APP_MAINTENANCE_RETENTION_CACHE
+      cache: 2592000
+      ## _APP_MAINTENANCE_RETENTION_EXECUTION
+      execution: 1209600
+      ## _APP_MAINTENANCE_RETENTION_ABUSE
+      abuse: 86400
+      ## _APP_MAINTENANCE_RETENTION_AUDIT
+      audit: 1209600
+      ## _APP_MAINTENANCE_RETENTION_USAGE_HOURLY
+      usageHourly: 8640000
+      ## _APP_MAINTENANCE_RETENTION_SCHEDULES
+      schedules: 86400
+  usage:
+    ## _APP_USAGE_AGGREGATION_INTERVAL
+    aggregationInterval: 5
+    ## _APP_USAGE_STATS
+    stats: enabled
+  logging:
+    ## _APP_LOGGING_PROVIDER
+    provider: ""
+    ## _APP_LOGGING_CONFIG
+    config: ""
+  graphql:
+    ## _APP_GRAPHQL_MAX_BATCH_SIZE
+    maxBatchSize: 10
+    ## _APP_GRAPHQL_MAX_COMPLEXITY
+    maxComplexity: 250
+    ## _APP_GRAPHQL_MAX_DEPTH
+    maxDepth: 3
+  dockerHub:
+    ## _APP_DOCKER_HUB_USERNAME
+    username: ""
+    ## _APP_DOCKER_HUB_PASSWORD
+    password: ""
+  vcs:
+    github:
+      ## _APP_VCS_GITHUB_APP_NAME
+      appName: ""
+      ## _APP_VCS_GITHUB_PRIVATE_KEY
+      privateKey: disabled
+      ## _APP_VCS_GITHUB_APP_ID
+      appId: ""
+      ## _APP_VCS_GITHUB_CLIENT_ID
+      clientId: ""
+      ## _APP_VCS_GITHUB_CLIENT_SECRET
+      clientSecret: ""
+      ## _APP_VCS_GITHUB_WEBHOOK_SECRET
+      webhookSecret: ""
+  migrations:
+    firebase:
+      ## _APP_MIGRATIONS_FIREBASE_CLIENT_ID
+      clientId: ""
+      ## _APP_MIGRATIONS_FIREBASE_CLIENT_SECRET
+      clientSecret: ""
+  assistant:
+    openAi:
+      ## _APP_ASSISTANT_OPENAI_API_KEY
+      apiKey: ""
+
+
+
+## Kubernetes cluster domain name
+clusterDomain: cluster.local
+## Shared pod labels
+podLabels: {}
+## Shared pod annotations
+podAnnotations: {}
+
+
+## Appwrite components
+components:
+  ##
+  ## Appwrite studio (webUI)
+  appwrite:
+    image:
+      registry: docker.io
+      repository: appwrite/appwrite
+      tag: 1.4.13
+      pullPolicy: IfNotPresent
+    command:
+      - /bin/sh
+      - -c
+    args:
+      - php
+      - -e
+      - app/http.php
+      - -dopcache.preload=opcache.preload=/usr/src/code/app/preload.php
+    env: true
+    ## Only effect if autoscaling false
+    replicaCount: 2
+    ## Setup autoscaling to enable HPA (HorizontalPodAutoscaler)
+    ## To enable also need to configure the resource limits
+    autoscaling:
+      enabled: false
+      minReplicas: 1
+      maxReplicas: 5
+      targetCPU: "60"
+      targetMemory: ""
+      behavior: {}
+    ## Setup resource limits and requests
+    resources: {}
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
+    podLabels: {}
+    podAnnotations: {}
+    deploymentStrategy:
+      type: RollingUpdate
+      maxUnavailable: 1
+    readinessProbe:
+      httpGet:
+        path: /api/health
+        port: 80
+    livenessProbe:
+      httpGet:
+        path: /api/health
+        port: 80
+      initialDelaySeconds: 30
+      timeoutSeconds: 30
+      failureThreshold: 10
+    restartPolicy: OnFailure
+    podSecurityContext:
+      runAsNonRoot: true
+      runAsUser: 472
+      runAsGroup: 472
+      fsGroup: 472
+      ## Enable it when deployed as statefulset
+      fsGroupChangePolicy: OnRootMismatch
+    containerSecurityContext:
+      allowPrivilegeEscalation: false
+      seccompProfile:
+        type: RuntimeDefault
+      capabilities:
+        drop:
+        - ALL
+    nodeSelector: {}
+    tolerations: []
+    affinity: {}
+    ports:
+    - name: http
+      containerPort: 80
+      protocol: TCP
+
+    ## Service configuration
+    service:
+      type: ClusterIP
+      ports:
+      - name: http
+        protocol: TCP
+        port: 80
+        targetPort: 80
+
+    ## Ingress configuration
+    ingress:
+      enabled: false
+      className: ""
+      annotations: {}
+      # nginx.ingress.kubernetes.io/rewrite-target: /
+      # kubernetes.io/ingress.class: nginx
+      # kubernetes.io/tls-acme: "true"
+      rules:
+      - host: appwrite.io
+        http:
+          paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: appwrite-app-svc
+                port:
+                  number: 80
+      tls: []
+      # - secretName: tls-secret-name
+      #   hosts:
+      #   - domain.name
+        
+    ## PodDisruptionBudget configuration
+    podDisruption: {}
+    # minAvailable: 2
+    # maxUnavailable: 1
+    ## >= 1.27
+    # unhealthyPodEvictionPolicy: AlwaysAllow
+
+    ## NetworkPolicy configuration
+    networkPolicy:
+      enabled: true
+      policyTypes:
+      - Ingress
+      ingress:
+      - from:
+        - ipBlock:
+            cidr: 0.0.0.0/0
+        - namespaceSelector:
+            matchLabels:
+              namespace: default
+        ports:
+          - protocol: TCP
+            port: 80
+      egress: {}
+
+  ##
+  ## Executor
+  executor:
+    replicaCount: 1
+    autoscaling:
+      enabled: false
+      minReplicas: 1
+      maxReplicas: 5
+      targetCPU: "60"
+      targetMemory: ""
+      behavior: {}
+
+  ##
+  ## Maintenance
+  maintenance:
+    replicaCount: 1
+    autoscaling:
+      enabled: false
+      minReplicas: 1
+      maxReplicas: 5
+      targetCPU: "60"
+      targetMemory: ""
+      behavior: {}
+
+  ##
+  ## Realtime
+  realtime:
+    replicaCount: 1
+    autoscaling:
+      enabled: false
+      minReplicas: 1
+      maxReplicas: 5
+      targetCPU: "60"
+      targetMemory: ""
+      behavior: {}
+      
+  schedule:
+
+  telegraf:
+    image:
+      registry: docker.io
+      repository: appwrite/telegraf
+      tag: 1.4.0
+    replicaCount: 1
+
+  usage:
+    replicaCount: 1
+
+  worker:
+    audits:
+      replicaCount: 1
+
+    builds:
+      replicaCount: 1
+      autoscaling:
+        enabled: false
+        minReplicas: 1
+        maxReplicas: 5
+        targetCPU: "60"
+        targetMemory: ""
+        behavior: {}
+
+    certificates:
+      replicaCount: 1
+
+    databases:
+      replicaCount: 1
+
+    deletes:
+      replicaCount: 1
+      autoscaling:
+        enabled: false
+        minReplicas: 1
+        maxReplicas: 5
+        targetCPU: "60"
+        targetMemory: ""
+        behavior: {}
+
+    functions:
+      replicaCount: 1
+      autoscaling:
+        enabled: false
+        minReplicas: 1
+        maxReplicas: 5
+        targetCPU: "60"
+        targetMemory: ""
+        behavior: {}
+
+    mails:
+      replicaCount: 1
+
+    messaging:
+      replicaCount: 1
+
+    webhooks:
+      replicaCount: 1
+      autoscaling:
+        enabled: false
+        minReplicas: 1
+        maxReplicas: 5
+        targetCPU: "60"
+        targetMemory: ""
+        behavior: {}
+
+
+
+
+##
+## Bitnami Sub-Charts for required backend services (Redis, MariaDB, InfluxDB)
+##
+
+## Bitnami Redis subchart
+redis:
+  enabled: false
+  auth:
+    enabled: false
+    sentinel: false
+## Bitnami MariaDB subchart
+mariadb:
+  enabled: false
+## Bitnami InfluxDB subchart
+influxdb:
+  enabled: false
+  auth:
+    enabled: false

@@ -1,0 +1,15 @@
+dependencies:
+- name: redis
+  repository: https://charts.bitnami.com/bitnami
+  version: 18.4.0
+- name: mariadb
+  repository: https://charts.bitnami.com/bitnami
+  version: 14.1.2
+- name: mongodb
+  repository: https://charts.bitnami.com/bitnami
+  version: 14.2.8
+- name: influxdb
+  repository: https://charts.bitnami.com/bitnami
+  version: 5.10.2
+digest: sha256:d60bd5679b9ddd32ee4b51a1255831d0e28ce5d3299ad1ddba301bcd60a6fda0
+generated: "2023-11-18T19:22:22.772233+01:00"

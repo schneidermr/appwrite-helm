@@ -1,0 +1,89 @@
+{{/* Create a configmap with all the insensitive environment variable data if not exist */}}
+{{- $config := (lookup "v1" "ConfigMap" (include "appwrite.namespace" .) (printf "%s-env" (include "appwrite.fullname" .))) }}
+{{- if not $config }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "{{ include "appwrite.fullname" . }}-env"
+  namespace: "{{ include "appwrite.namespace" . }}"
+  labels:
+    app.kubernetes.io/name: "{{ include "appwrite.fullname" . }}-env"
+    {{- include "appwrite.labels" . | nindent 4 }}
+data:
+  _APP_ENV: {{ .Values.environments.env | default "production" }}
+  _APP_LOCALE: {{ .Values.environments.locale | default "en" }}
+  _APP_WORKER_PER_CORE: {{ .Values.environments.worker.perCore | default 3 }}
+  _APP_CONSOLE_WHITELIST_ROOT: {{ .Values.environments.console.whitelist.root | default "" }}
+  _APP_CONSOLE_WHITELIST_EMAILS: {{ .Values.environments.console.whitelist.emails | default "" }}
+  _APP_CONSOLE_WHITELIST_IPS: {{ .Values.environments.console.whitelist.ips | default "" }}
+  _APP_SYSTEM_EMAIL_NAME: {{ .Values.environments.system.email.name | default "Appwrite" }}
+  _APP_SYSTEM_EMAIL_ADDRESS: {{ .Values.environments.system.email.address | default "team@appwrite.io" }}
+  _APP_SYSTEM_SECURITY_EMAIL_ADDRESS: {{ .Values.environments.system.security.emailAddress | default "security@appwrite.io" }}
+  _APP_SYSTEM_RESPONSE_FORMAT: {{ .Values.environments.system.response.format | default "" }}
+  _APP_OPTIONS_ABUSE: {{ .Values.environments.options.abuse | default "disabled" }}
+  _APP_OPTIONS_ROUTER_PROTECTION: {{ .Values.environments.options.routerProtection | default "disabled" }}
+  _APP_OPTIONS_FORCE_HTTPS: {{ .Values.environments.options.forceHttps | default "disabled" }}
+  _APP_OPTIONS_FUNCTIONS_FORCE_HTTPS: {{ .Values.environments.options.functions.forceHttps | default "disabled" }}
+  _APP_DOMAIN: {{ .Values.environments.domain.app | default "localhost" }}
+  _APP_DOMAIN_FUNCTIONS: {{ .Values.environments.domain.functions | default "" }}
+  _APP_DOMAIN_TARGET: {{ .Values.environments.domain.target | default "localhost" }}
+  _APP_REDIS_HOST: {{ .Values.environments.redis.host | default (printf "%s-redis-master.%s.svc.%s" .Release.Name (include "appwrite.namespace" .) .Values.clusterDomain) }}
+  _APP_REDIS_PORT: {{ .Values.environments.redis.port | default 6379 }}
+  _APP_DB_HOST: {{ .Values.environments.database.host | default (printf "%s-mariadb.%s.svc.%s" .Release.Name (include "appwrite.namespace" .) .Values.clusterDomain) }}
+  _APP_DB_PORT: {{ .Values.environments.database.port | default 3306 }}
+  _APP_DB_SCHEMA: {{ .Values.environments.database.schema | default "appwrite" }}
+  _APP_STORAGE_DEVICE: {{ .Values.environments.storage.device | default "Local" }}
+  _APP_STORAGE_S3_ENDPOINT_URL: {{ .Values.environments.storage.s3.endpointUrl | default "" }}
+  _APP_STORAGE_S3_REGION: {{ .Values.environments.storage.s3.region | default "us-east-1" }}
+  _APP_STORAGE_S3_BUCKET: {{ .Values.environments.storage.s3.bucket | default "" }}
+  _APP_STORAGE_DO_SPACES_REGION: {{ .Values.environments.storage.doSpaces.region | default "us-east-1" }}
+  _APP_STORAGE_DO_SPACES_BUCKET: {{ .Values.environments.storage.doSpaces.bucket | default "" }}
+  _APP_STORAGE_BACKBLAZE_REGION: {{ .Values.environments.storage.backblaze.region | default "us-west-004" }}
+  _APP_STORAGE_BACKBLAZE_BUCKET: {{ .Values.environments.storage.backblaze.bucket | default "" }}
+  _APP_STORAGE_LINODE_REGION: {{ .Values.environments.storage.linode.region | default "eu-central-1" }}
+  _APP_STORAGE_LINODE_BUCKET: {{ .Values.environments.storage.linode.bucket | default "" }}
+  _APP_STORAGE_WASABI_REGION: {{ .Values.environments.storage.wasabi.region | default "eu-central-1" }}
+  _APP_STORAGE_WASABI_BUCKET: {{ .Values.environments.storage.wasabi.bucket | default "" }}
+  _APP_STORAGE_ANTIVIRUS: {{ .Values.environments.storage.antivirus.enabled | default "disabled" }}
+  _APP_STORAGE_ANTIVIRUS_HOST: {{ .Values.environments.storage.antivirus.host | default (printf "clamav.%s.svc.%s" (include "appwrite.namespace" .) .Values.clusterDomain) }}
+  _APP_STORAGE_ANTIVIRUS_PORT: {{ .Values.environments.storage.antivirus.port | default 3310 }}
+  _APP_INFLUXDB_HOST: {{ .Values.environments.influxdb.host | default (printf "%s-influxdb.%s.svc.%s" .Release.Name (include "appwrite.namespace" .) .Values.clusterDomain) }}
+  _APP_INFLUXDB_PORT: {{ .Values.environments.influxdb.port | default 8086 }}
+  _APP_STATSD_HOST: {{ .Values.environments.statsd.host | default (printf "telegraf.%s.svc.%s" (include "appwrite.namespace" .) .Values.clusterDomain) }}
+  _APP_STATSD_PORT: {{ .Values.environments.statsd.port | default 8125 }}
+  _APP_SMTP_HOST: {{ .Values.environments.smtp.host | default "" }}
+  _APP_SMTP_PORT: {{ .Values.environments.smtp.port | default 1025 }}
+  _APP_SMTP_SECURE: {{ .Values.environments.smtp.secure | default "" }}
+  _APP_SMS_PROVIDER: {{ .Values.environments.sms.provider | default "sms://username:password@mock" }}
+  _APP_SMS_FROM: {{ .Values.environments.sms.from | default "+123456789" }}
+  _APP_STORAGE_LIMIT: {{ required "A valid storage limit is required!" .Values.environments.storage.limit }}
+  _APP_STORAGE_PREVIEW_LIMIT: {{ required "A valid preview storage limit is required!" .Values.environments.storage.previewLimit }}
+  _APP_FUNCTIONS_SIZE_LIMIT: {{ required "A valid size limit for functions is required!" .Values.environments.functions.sizeLimit }}
+  _APP_FUNCTIONS_TIMEOUT: {{ .Values.environments.functions.timeout | default 900 }}
+  _APP_FUNCTIONS_BUILD_TIMEOUT: {{ .Values.environments.functions.buildTimeout | default 900 }}
+  _APP_FUNCTIONS_CPUS: {{ .Values.environments.functions.cpus | default "" }}
+  _APP_FUNCTIONS_MEMORY: {{ .Values.environments.functions.memory | default "" }}
+  _APP_FUNCTIONS_INACTIVE_THRESHOLD: {{ .Values.environments.functions.inactiveThreshold | default 600 }}
+  _APP_FUNCTIONS_MAINTENANCE_INTERVAL: {{ .Values.environments.functions.maintenanceInterval | default 600 }}
+  _APP_EXECUTOR_HOST: {{ .Values.environments.executor.host | default (printf "http://proxy.%s.svc.%s/v1" (include "appwrite.namespace" .) .Values.clusterDomain) }}
+  _APP_FUNCTIONS_RUNTIMES: {{ if .Values.environments.functions.runtimes }}{{ join "," .Values.environments.functions.runtimes }}{{ else }}{{ print "php-8.0,node-18.0,python-3.9,ruby-3.1" }}{{ end }}
+  _APP_MAINTENANCE_INTERVAL: {{ .Values.environments.maintenance.interval | default 86400 }}
+  _APP_MAINTENANCE_RETENTION_CACHE: {{ .Values.environments.maintenance.retention.cache | default 2592000 }}
+  _APP_MAINTENANCE_RETENTION_EXECUTION: {{ .Values.environments.maintenance.retention.execution | default 1209600 }}
+  _APP_MAINTENANCE_RETENTION_ABUSE: {{ .Values.environments.maintenance.retention.abuse | default 86400 }}
+  _APP_MAINTENANCE_RETENTION_AUDIT: {{ .Values.environments.maintenance.retention.audit | default 1209600 }}
+  _APP_USAGE_AGGREGATION_INTERVAL: {{ .Values.environments.usage.aggregationInterval | default 5 }}
+  _APP_MAINTENANCE_RETENTION_USAGE_HOURLY: {{ .Values.environments.maintenance.retention.usageHourly | default 8640000 }}
+  _APP_MAINTENANCE_RETENTION_SCHEDULES: {{ .Values.environments.maintenance.retention.schedules | default 86400 }}
+  _APP_USAGE_STATS: {{ .Values.environments.usage.stats | default "enabled" }}
+  _APP_LOGGING_PROVIDER: {{ .Values.environments.logging.provider | default "" }}
+  _APP_LOGGING_CONFIG: {{ .Values.environments.logging.config | default "" }}
+  _APP_GRAPHQL_MAX_BATCH_SIZE: {{ .Values.environments.graphql.maxBatchSize | default 10 }}
+  _APP_GRAPHQL_MAX_COMPLEXITY: {{ .Values.environments.graphql.maxComplexity | default 250 }}
+  _APP_GRAPHQL_MAX_DEPTH: {{ .Values.environments.graphql.maxDepth | default 3 }}
+  _APP_VCS_GITHUB_APP_NAME: {{ .Values.environments.vcs.github.appName | default "" }}
+  _APP_VCS_GITHUB_PRIVATE_KEY: {{ .Values.environments.vcs.github.privateKey | default "disabled" }}
+  _APP_VCS_GITHUB_APP_ID: {{ .Values.environments.vcs.github.appId | default "" }}
+  _APP_VCS_GITHUB_CLIENT_ID: {{ .Values.environments.vcs.github.clientId | default "" }}
+  _APP_MIGRATIONS_FIREBASE_CLIENT_ID: {{ .Values.environments.migrations.firebase.clientId | default "" }}
+{{- end }}
