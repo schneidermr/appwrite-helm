@@ -1,1 +1,3 @@
-{{- include "appwrite.pdb" (merge (dict "component" (dict "name" "app" "config" .Values.components.appwrite)) .)}}
+{{- if .Values.components.appwrite.podDisruption.enabled }}
+{{- include "appwrite.budget" (merge (dict "component" (dict "name" "app" "config" .Values.components.appwrite)) .)}}
+{{- end }}

@@ -59,7 +59,7 @@ environments:
     keyV1: ""
   domain: 
     ## _APP_DOMAIN
-    app: localhost
+    app: &appDomain localhost
     ## _APP_DOMAIN_FUNCTIONS
     functions: functions.localhost
     ## _APP_DOMAIN_TARGET
@@ -275,7 +275,8 @@ podAnnotations: {}
 ## Appwrite components
 components:
   ##
-  ## Appwrite studio (webUI)
+  ## APPWRITE STUDIO (WEBUI)
+  ##
   appwrite:
     image:
       registry: docker.io
@@ -292,7 +293,7 @@ components:
       - -dopcache.preload=opcache.preload=/usr/src/code/app/preload.php
     env: true
     ## Only effect if autoscaling false
-    replicaCount: 2
+    replicaCount: 1
     ## Setup autoscaling to enable HPA (HorizontalPodAutoscaler)
     ## To enable also need to configure the resource limits
     autoscaling:
@@ -367,7 +368,7 @@ components:
       # kubernetes.io/ingress.class: nginx
       # kubernetes.io/tls-acme: "true"
       rules:
-      - host: appwrite.io
+      - host: *appDomain
         http:
           paths:
           - path: /
@@ -383,15 +384,221 @@ components:
       #   - domain.name
         
     ## PodDisruptionBudget configuration
-    podDisruption: {}
-    # minAvailable: 2
-    # maxUnavailable: 1
-    ## >= 1.27
-    # unhealthyPodEvictionPolicy: AlwaysAllow
+    podDisruption:
+      enabled: false
+      config:
+      # minAvailable: 2
+      # maxUnavailable: 1
+      ## >= 1.27
+      # unhealthyPodEvictionPolicy: AlwaysAllow
 
     ## NetworkPolicy configuration
     networkPolicy:
-      enabled: true
+      enabled: false
+      policyTypes:
+      - Ingress
+      ingress:
+      - from:
+        - ipBlock:
+            cidr: 0.0.0.0/0
+        - namespaceSelector:
+            matchLabels:
+              namespace: default
+        ports:
+          - protocol: TCP
+            port: 80
+      egress: 
+      - {}
+
+  ##
+  ## EXECUTOR
+  ##
+  executor:
+    
+
+  ##
+  ## MAINTENANCE
+  ##
+  maintenance:
+    command:
+      - "maintenance"
+    env: true
+    ## Only effect if autoscaling false
+    replicaCount: 1
+    ## Setup autoscaling to enable HPA (HorizontalPodAutoscaler)
+    ## To enable also need to configure the resource limits
+    autoscaling:
+      enabled: false
+      minReplicas: 1
+      maxReplicas: 5
+      targetCPU: "60"
+      targetMemory: ""
+      behavior: {}
+    ## Setup resource limits and requests
+    resources: {}
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
+    podLabels: {}
+    podAnnotations: {}
+    deploymentStrategy:
+      type: RollingUpdate
+      maxUnavailable: 1
+    restartPolicy: OnFailure
+    podSecurityContext:
+      runAsNonRoot: true
+      runAsUser: 472
+      runAsGroup: 472
+      fsGroup: 472
+      ## Enable it when deployed as statefulset
+      fsGroupChangePolicy: OnRootMismatch
+    containerSecurityContext:
+      allowPrivilegeEscalation: false
+      seccompProfile:
+        type: RuntimeDefault
+      capabilities:
+        drop:
+        - ALL
+    nodeSelector: {}
+    tolerations: []
+    affinity: {}
+    ports:
+    - name: http
+      containerPort: 80
+      protocol: TCP
+        
+    ## PodDisruptionBudget configuration
+    podDisruption:
+      enabled: false
+      config:
+      # minAvailable: 2
+      # maxUnavailable: 1
+      ## >= 1.27
+      # unhealthyPodEvictionPolicy: AlwaysAllow
+
+    ## NetworkPolicy configuration
+    networkPolicy:
+      enabled: false
+      policyTypes:
+      - Ingress
+      - Egress
+      egress:
+        - {}
+
+
+  ##
+  ## REALTIME
+  ##
+  realtime:
+    command:
+      - "realtime"
+    env: true
+    ## Only effect if autoscaling false
+    replicaCount: 1
+    ## Setup autoscaling to enable HPA (HorizontalPodAutoscaler)
+    ## To enable also need to configure the resource limits
+    autoscaling:
+      enabled: false
+      minReplicas: 1
+      maxReplicas: 5
+      targetCPU: "60"
+      targetMemory: ""
+      behavior: {}
+    ## Setup resource limits and requests
+    resources: {}
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
+    podLabels: {}
+    podAnnotations: {}
+    deploymentStrategy:
+      type: RollingUpdate
+      maxUnavailable: 1
+    readinessProbe:
+      httpGet:
+        path: /api/health
+        port: 80
+    livenessProbe:
+      httpGet:
+        path: /api/health
+        port: 80
+      initialDelaySeconds: 30
+      timeoutSeconds: 30
+      failureThreshold: 10
+    restartPolicy: OnFailure
+    podSecurityContext:
+      runAsNonRoot: true
+      runAsUser: 472
+      runAsGroup: 472
+      fsGroup: 472
+      ## Enable it when deployed as statefulset
+      fsGroupChangePolicy: OnRootMismatch
+    containerSecurityContext:
+      allowPrivilegeEscalation: false
+      seccompProfile:
+        type: RuntimeDefault
+      capabilities:
+        drop:
+        - ALL
+    nodeSelector: {}
+    tolerations: []
+    affinity: {}
+    ports:
+    - name: http
+      containerPort: 80
+      protocol: TCP
+
+    ## Service configuration
+    service:
+      type: ClusterIP
+      ports:
+      - name: http
+        protocol: TCP
+        port: 80
+        targetPort: 80
+
+    ## Ingress configuration
+    ingress:
+      enabled: false
+      className: ""
+      annotations: {}
+      # nginx.ingress.kubernetes.io/rewrite-target: /
+      # kubernetes.io/ingress.class: nginx
+      # kubernetes.io/tls-acme: "true"
+      rules:
+      - host: *appDomain
+        http:
+          paths:
+          - path: /v1/realtime
+            pathType: Prefix
+            backend:
+              service:
+                name: appwrite-app-svc
+                port:
+                  number: 80
+      tls: []
+      # - secretName: tls-secret-name
+      #   hosts:
+      #   - domain.name
+        
+    ## PodDisruptionBudget configuration
+    podDisruption:
+      enabled: false
+      config:
+      # minAvailable: 2
+      # maxUnavailable: 1
+      ## >= 1.27
+      # unhealthyPodEvictionPolicy: AlwaysAllow
+
+    ## NetworkPolicy configuration
+    networkPolicy:
+      enabled: false
       policyTypes:
       - Ingress
       ingress:
@@ -405,61 +612,301 @@ components:
           - protocol: TCP
             port: 80
       egress: {}
-
-  ##
-  ## Executor
-  executor:
-    replicaCount: 1
-    autoscaling:
-      enabled: false
-      minReplicas: 1
-      maxReplicas: 5
-      targetCPU: "60"
-      targetMemory: ""
-      behavior: {}
-
-  ##
-  ## Maintenance
-  maintenance:
-    replicaCount: 1
-    autoscaling:
-      enabled: false
-      minReplicas: 1
-      maxReplicas: 5
-      targetCPU: "60"
-      targetMemory: ""
-      behavior: {}
-
-  ##
-  ## Realtime
-  realtime:
-    replicaCount: 1
-    autoscaling:
-      enabled: false
-      minReplicas: 1
-      maxReplicas: 5
-      targetCPU: "60"
-      targetMemory: ""
-      behavior: {}
       
-  schedule:
 
+  ##
+  ## SCHEDULE
+  ##
+  schedule:
+    command:
+      - "schedule"
+    env: true
+    ## Only effect if autoscaling false
+    replicaCount: 1
+    ## Setup autoscaling to enable HPA (HorizontalPodAutoscaler)
+    ## To enable also need to configure the resource limits
+    autoscaling:
+      enabled: false
+      minReplicas: 1
+      maxReplicas: 5
+      targetCPU: "60"
+      targetMemory: ""
+      behavior: {}
+    ## Setup resource limits and requests
+    resources: {}
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
+    podLabels: {}
+    podAnnotations: {}
+    deploymentStrategy:
+      type: RollingUpdate
+      maxUnavailable: 1
+    restartPolicy: OnFailure
+    podSecurityContext:
+      runAsNonRoot: true
+      runAsUser: 472
+      runAsGroup: 472
+      fsGroup: 472
+      ## Enable it when deployed as statefulset
+      fsGroupChangePolicy: OnRootMismatch
+    containerSecurityContext:
+      allowPrivilegeEscalation: false
+      seccompProfile:
+        type: RuntimeDefault
+      capabilities:
+        drop:
+        - ALL
+    nodeSelector: {}
+    tolerations: []
+    affinity: {}
+        
+    ## PodDisruptionBudget configuration
+    podDisruption:
+      enabled: false
+      config:
+      # minAvailable: 2
+      # maxUnavailable: 1
+      ## >= 1.27
+      # unhealthyPodEvictionPolicy: AlwaysAllow
+
+    ## NetworkPolicy configuration
+    networkPolicy:
+      enabled: false
+      policyTypes:
+      - Ingress
+      - Egress
+      egress:
+        - {}
+
+  ##
+  ##  TELEGRAF
+  ##
   telegraf:
     image:
       registry: docker.io
       repository: appwrite/telegraf
       tag: 1.4.0
+      pullPolicy: IfNotPresent
+    env: true
+    ## Only effect if autoscaling false
     replicaCount: 1
+    ## Setup autoscaling to enable HPA (HorizontalPodAutoscaler)
+    ## To enable also need to configure the resource limits
+    autoscaling:
+      enabled: false
+      minReplicas: 1
+      maxReplicas: 5
+      targetCPU: "60"
+      targetMemory: ""
+      behavior: {}
+    ## Setup resource limits and requests
+    resources: {}
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
+    podLabels: {}
+    podAnnotations: {}
+    deploymentStrategy:
+      type: RollingUpdate
+      maxUnavailable: 1
+    restartPolicy: OnFailure
+    podSecurityContext:
+      runAsNonRoot: true
+      runAsUser: 472
+      runAsGroup: 472
+      fsGroup: 472
+      ## Enable it when deployed as statefulset
+      fsGroupChangePolicy: OnRootMismatch
+    containerSecurityContext:
+      allowPrivilegeEscalation: false
+      seccompProfile:
+        type: RuntimeDefault
+      capabilities:
+        drop:
+        - ALL
+    nodeSelector: {}
+    tolerations: []
+    affinity: {}
+        
+    ## PodDisruptionBudget configuration
+    podDisruption:
+      enabled: false
+      config:
+      # minAvailable: 2
+      # maxUnavailable: 1
+      ## >= 1.27
+      # unhealthyPodEvictionPolicy: AlwaysAllow
 
+    ## NetworkPolicy configuration
+    networkPolicy:
+      enabled: false
+      policyTypes:
+      - Ingress
+      - Egress
+      egress:
+      - {}
+
+
+  ##
+  ##  USAGE
+  ##
   usage:
+    command:
+      - "usage"
+    env: true
+    ## Only effect if autoscaling false
     replicaCount: 1
+    ## Setup autoscaling to enable HPA (HorizontalPodAutoscaler)
+    ## To enable also need to configure the resource limits
+    autoscaling:
+      enabled: false
+      minReplicas: 1
+      maxReplicas: 5
+      targetCPU: "60"
+      targetMemory: ""
+      behavior: {}
+    ## Setup resource limits and requests
+    resources: {}
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
+    podLabels: {}
+    podAnnotations: {}
+    deploymentStrategy:
+      type: RollingUpdate
+      maxUnavailable: 1
+    restartPolicy: OnFailure
+    podSecurityContext:
+      runAsNonRoot: true
+      runAsUser: 472
+      runAsGroup: 472
+      fsGroup: 472
+      ## Enable it when deployed as statefulset
+      fsGroupChangePolicy: OnRootMismatch
+    containerSecurityContext:
+      allowPrivilegeEscalation: false
+      seccompProfile:
+        type: RuntimeDefault
+      capabilities:
+        drop:
+        - ALL
+    nodeSelector: {}
+    tolerations: []
+    affinity: {}
 
-  worker:
+    ## PodDisruptionBudget configuration
+    podDisruption:
+      enabled: false
+      config:
+      # minAvailable: 2
+      # maxUnavailable: 1
+      ## >= 1.27
+      # unhealthyPodEvictionPolicy: AlwaysAllow
+
+    ## NetworkPolicy configuration
+    networkPolicy:
+      enabled: false
+      policyTypes:
+      - Ingress
+      - Egress
+      egress: 
+        - {}
+
+
+  ##
+  ##  WORKERS
+  ##
+  workers:
+    ##
+    ##  AUDITS
+    ##
     audits:
+      command:
+        - "worker-audits"
+      env: true
+      ## Only effect if autoscaling false
       replicaCount: 1
+      ## Setup autoscaling to enable HPA (HorizontalPodAutoscaler)
+      ## To enable also need to configure the resource limits
+      autoscaling:
+        enabled: false
+        minReplicas: 1
+        maxReplicas: 5
+        targetCPU: "60"
+        targetMemory: ""
+        behavior: {}
+      ## Setup resource limits and requests
+      resources: {}
+      # limits:
+      #   cpu: 100m
+      #   memory: 128Mi
+      # requests:
+      #   cpu: 100m
+      #   memory: 128Mi
+      podLabels: {}
+      podAnnotations: {}
+      deploymentStrategy:
+        type: RollingUpdate
+        maxUnavailable: 1
+      restartPolicy: OnFailure
+      podSecurityContext:
+        runAsNonRoot: true
+        runAsUser: 472
+        runAsGroup: 472
+        fsGroup: 472
+        ## Enable it when deployed as statefulset
+        fsGroupChangePolicy: OnRootMismatch
+      containerSecurityContext:
+        allowPrivilegeEscalation: false
+        seccompProfile:
+          type: RuntimeDefault
+        capabilities:
+          drop:
+          - ALL
+      nodeSelector: {}
+      tolerations: []
+      affinity: {}
 
+      ## PodDisruptionBudget configuration
+      podDisruption:
+        enabled: false
+        config:
+        # minAvailable: 2
+        # maxUnavailable: 1
+        ## >= 1.27
+        # unhealthyPodEvictionPolicy: AlwaysAllow
+
+      ## NetworkPolicy configuration
+      networkPolicy:
+        enabled: false
+        policyTypes:
+        - Ingress
+        - Egress
+        egress: 
+          - {}
+
+
+    ##
+    ##  BUILDS
+    ##
     builds:
+      command:
+        - "worker-builds"
+      env: true
+      ## Only effect if autoscaling false
       replicaCount: 1
+      ## Setup autoscaling to enable HPA (HorizontalPodAutoscaler)
+      ## To enable also need to configure the resource limits
       autoscaling:
         enabled: false
         minReplicas: 1
@@ -467,15 +914,206 @@ components:
         targetCPU: "60"
         targetMemory: ""
         behavior: {}
+      ## Setup resource limits and requests
+      resources: {}
+      # limits:
+      #   cpu: 100m
+      #   memory: 128Mi
+      # requests:
+      #   cpu: 100m
+      #   memory: 128Mi
+      podLabels: {}
+      podAnnotations: {}
+      deploymentStrategy:
+        type: RollingUpdate
+        maxUnavailable: 1
+      restartPolicy: OnFailure
+      podSecurityContext:
+        runAsNonRoot: true
+        runAsUser: 472
+        runAsGroup: 472
+        fsGroup: 472
+        ## Enable it when deployed as statefulset
+        fsGroupChangePolicy: OnRootMismatch
+      containerSecurityContext:
+        allowPrivilegeEscalation: false
+        seccompProfile:
+          type: RuntimeDefault
+        capabilities:
+          drop:
+          - ALL
+      nodeSelector: {}
+      tolerations: []
+      affinity: {}
 
+      ## PodDisruptionBudget configuration
+      podDisruption:
+        enabled: false
+        config:
+        # minAvailable: 2
+        # maxUnavailable: 1
+        ## >= 1.27
+        # unhealthyPodEvictionPolicy: AlwaysAllow
+
+      ## NetworkPolicy configuration
+      networkPolicy:
+        enabled: false
+        policyTypes:
+        - Ingress
+        - Egress
+        egress: 
+          - {}
+
+
+    ##
+    ##  CERTIFICATES
+    ##
     certificates:
+      command:
+        - "worker-certificates"
+      env: true
+      ## Only effect if autoscaling false
       replicaCount: 1
+      ## Setup autoscaling to enable HPA (HorizontalPodAutoscaler)
+      ## To enable also need to configure the resource limits
+      autoscaling:
+        enabled: false
+        minReplicas: 1
+        maxReplicas: 5
+        targetCPU: "60"
+        targetMemory: ""
+        behavior: {}
+      ## Setup resource limits and requests
+      resources: {}
+      # limits:
+      #   cpu: 100m
+      #   memory: 128Mi
+      # requests:
+      #   cpu: 100m
+      #   memory: 128Mi
+      podLabels: {}
+      podAnnotations: {}
+      deploymentStrategy:
+        type: RollingUpdate
+        maxUnavailable: 1
+      restartPolicy: OnFailure
+      podSecurityContext:
+        runAsNonRoot: true
+        runAsUser: 472
+        runAsGroup: 472
+        fsGroup: 472
+        ## Enable it when deployed as statefulset
+        fsGroupChangePolicy: OnRootMismatch
+      containerSecurityContext:
+        allowPrivilegeEscalation: false
+        seccompProfile:
+          type: RuntimeDefault
+        capabilities:
+          drop:
+          - ALL
+      nodeSelector: {}
+      tolerations: []
+      affinity: {}
 
+      ## PodDisruptionBudget configuration
+      podDisruption:
+        enabled: false
+        config:
+        # minAvailable: 2
+        # maxUnavailable: 1
+        ## >= 1.27
+        # unhealthyPodEvictionPolicy: AlwaysAllow
+
+      ## NetworkPolicy configuration
+      networkPolicy:
+        enabled: false
+        policyTypes:
+        - Ingress
+        - Egress
+        egress: 
+          - {}
+
+
+    ##
+    ##  DATABASES
+    ##
     databases:
+      command:
+        - "worker-databases"
+      env: true
+      ## Only effect if autoscaling false
       replicaCount: 1
+      ## Setup autoscaling to enable HPA (HorizontalPodAutoscaler)
+      ## To enable also need to configure the resource limits
+      autoscaling:
+        enabled: false
+        minReplicas: 1
+        maxReplicas: 5
+        targetCPU: "60"
+        targetMemory: ""
+        behavior: {}
+      ## Setup resource limits and requests
+      resources: {}
+      # limits:
+      #   cpu: 100m
+      #   memory: 128Mi
+      # requests:
+      #   cpu: 100m
+      #   memory: 128Mi
+      podLabels: {}
+      podAnnotations: {}
+      deploymentStrategy:
+        type: RollingUpdate
+        maxUnavailable: 1
+      restartPolicy: OnFailure
+      podSecurityContext:
+        runAsNonRoot: true
+        runAsUser: 472
+        runAsGroup: 472
+        fsGroup: 472
+        ## Enable it when deployed as statefulset
+        fsGroupChangePolicy: OnRootMismatch
+      containerSecurityContext:
+        allowPrivilegeEscalation: false
+        seccompProfile:
+          type: RuntimeDefault
+        capabilities:
+          drop:
+          - ALL
+      nodeSelector: {}
+      tolerations: []
+      affinity: {}
 
+      ## PodDisruptionBudget configuration
+      podDisruption:
+        enabled: false
+        config:
+        # minAvailable: 2
+        # maxUnavailable: 1
+        ## >= 1.27
+        # unhealthyPodEvictionPolicy: AlwaysAllow
+
+      ## NetworkPolicy configuration
+      networkPolicy:
+        enabled: false
+        policyTypes:
+        - Ingress
+        - Egress
+        egress: 
+          - {}
+
+
+    ##
+    ##  DELETES
+    ##
     deletes:
+      command:
+        - "worker-deletes"
+      env: true
+      ## Only effect if autoscaling false
       replicaCount: 1
+      ## Setup autoscaling to enable HPA (HorizontalPodAutoscaler)
+      ## To enable also need to configure the resource limits
       autoscaling:
         enabled: false
         minReplicas: 1
@@ -483,9 +1121,68 @@ components:
         targetCPU: "60"
         targetMemory: ""
         behavior: {}
+      ## Setup resource limits and requests
+      resources: {}
+      # limits:
+      #   cpu: 100m
+      #   memory: 128Mi
+      # requests:
+      #   cpu: 100m
+      #   memory: 128Mi
+      podLabels: {}
+      podAnnotations: {}
+      deploymentStrategy:
+        type: RollingUpdate
+        maxUnavailable: 1
+      restartPolicy: OnFailure
+      podSecurityContext:
+        runAsNonRoot: true
+        runAsUser: 472
+        runAsGroup: 472
+        fsGroup: 472
+        ## Enable it when deployed as statefulset
+        fsGroupChangePolicy: OnRootMismatch
+      containerSecurityContext:
+        allowPrivilegeEscalation: false
+        seccompProfile:
+          type: RuntimeDefault
+        capabilities:
+          drop:
+          - ALL
+      nodeSelector: {}
+      tolerations: []
+      affinity: {}
 
+      ## PodDisruptionBudget configuration
+      podDisruption:
+        enabled: false
+        config:
+        # minAvailable: 2
+        # maxUnavailable: 1
+        ## >= 1.27
+        # unhealthyPodEvictionPolicy: AlwaysAllow
+
+      ## NetworkPolicy configuration
+      networkPolicy:
+        enabled: false
+        policyTypes:
+        - Ingress
+        - Egress
+        egress: 
+          - {}
+
+
+    ##
+    ##  FUNCTIONS
+    ##
     functions:
+      command:
+        - "worker-functions"
+      env: true
+      ## Only effect if autoscaling false
       replicaCount: 1
+      ## Setup autoscaling to enable HPA (HorizontalPodAutoscaler)
+      ## To enable also need to configure the resource limits
       autoscaling:
         enabled: false
         minReplicas: 1
@@ -493,15 +1190,68 @@ components:
         targetCPU: "60"
         targetMemory: ""
         behavior: {}
+      ## Setup resource limits and requests
+      resources: {}
+      # limits:
+      #   cpu: 100m
+      #   memory: 128Mi
+      # requests:
+      #   cpu: 100m
+      #   memory: 128Mi
+      podLabels: {}
+      podAnnotations: {}
+      deploymentStrategy:
+        type: RollingUpdate
+        maxUnavailable: 1
+      restartPolicy: OnFailure
+      podSecurityContext:
+        runAsNonRoot: true
+        runAsUser: 472
+        runAsGroup: 472
+        fsGroup: 472
+        ## Enable it when deployed as statefulset
+        fsGroupChangePolicy: OnRootMismatch
+      containerSecurityContext:
+        allowPrivilegeEscalation: false
+        seccompProfile:
+          type: RuntimeDefault
+        capabilities:
+          drop:
+          - ALL
+      nodeSelector: {}
+      tolerations: []
+      affinity: {}
 
+      ## PodDisruptionBudget configuration
+      podDisruption:
+        enabled: false
+        config:
+        # minAvailable: 2
+        # maxUnavailable: 1
+        ## >= 1.27
+        # unhealthyPodEvictionPolicy: AlwaysAllow
+
+      ## NetworkPolicy configuration
+      networkPolicy:
+        enabled: false
+        policyTypes:
+        - Ingress
+        - Egress
+        egress: 
+          - {}
+
+
+    ##
+    ##  MAILS
+    ##
     mails:
+      command:
+        - "worker-mails"
+      env: true
+      ## Only effect if autoscaling false
       replicaCount: 1
-
-    messaging:
-      replicaCount: 1
-
-    webhooks:
-      replicaCount: 1
+      ## Setup autoscaling to enable HPA (HorizontalPodAutoscaler)
+      ## To enable also need to configure the resource limits
       autoscaling:
         enabled: false
         minReplicas: 1
@@ -509,6 +1259,193 @@ components:
         targetCPU: "60"
         targetMemory: ""
         behavior: {}
+      ## Setup resource limits and requests
+      resources: {}
+      # limits:
+      #   cpu: 100m
+      #   memory: 128Mi
+      # requests:
+      #   cpu: 100m
+      #   memory: 128Mi
+      podLabels: {}
+      podAnnotations: {}
+      deploymentStrategy:
+        type: RollingUpdate
+        maxUnavailable: 1
+      restartPolicy: OnFailure
+      podSecurityContext:
+        runAsNonRoot: true
+        runAsUser: 472
+        runAsGroup: 472
+        fsGroup: 472
+        ## Enable it when deployed as statefulset
+        fsGroupChangePolicy: OnRootMismatch
+      containerSecurityContext:
+        allowPrivilegeEscalation: false
+        seccompProfile:
+          type: RuntimeDefault
+        capabilities:
+          drop:
+          - ALL
+      nodeSelector: {}
+      tolerations: []
+      affinity: {}
+
+      ## PodDisruptionBudget configuration
+      podDisruption:
+        enabled: false
+        config:
+        # minAvailable: 2
+        # maxUnavailable: 1
+        ## >= 1.27
+        # unhealthyPodEvictionPolicy: AlwaysAllow
+
+      ## NetworkPolicy configuration
+      networkPolicy:
+        enabled: false
+        policyTypes:
+        - Ingress
+        - Egress
+        egress: 
+          - {}
+
+
+    ##
+    ##  MESSAGING
+    ##
+    messaging:
+      command:
+        - "worker-messaging"
+      env: true
+      ## Only effect if autoscaling false
+      replicaCount: 1
+      ## Setup autoscaling to enable HPA (HorizontalPodAutoscaler)
+      ## To enable also need to configure the resource limits
+      autoscaling:
+        enabled: false
+        minReplicas: 1
+        maxReplicas: 5
+        targetCPU: "60"
+        targetMemory: ""
+        behavior: {}
+      ## Setup resource limits and requests
+      resources: {}
+      # limits:
+      #   cpu: 100m
+      #   memory: 128Mi
+      # requests:
+      #   cpu: 100m
+      #   memory: 128Mi
+      podLabels: {}
+      podAnnotations: {}
+      deploymentStrategy:
+        type: RollingUpdate
+        maxUnavailable: 1
+      restartPolicy: OnFailure
+      podSecurityContext:
+        runAsNonRoot: true
+        runAsUser: 472
+        runAsGroup: 472
+        fsGroup: 472
+        ## Enable it when deployed as statefulset
+        fsGroupChangePolicy: OnRootMismatch
+      containerSecurityContext:
+        allowPrivilegeEscalation: false
+        seccompProfile:
+          type: RuntimeDefault
+        capabilities:
+          drop:
+          - ALL
+      nodeSelector: {}
+      tolerations: []
+      affinity: {}
+
+      ## PodDisruptionBudget configuration
+      podDisruption:
+        enabled: false
+        config:
+        # minAvailable: 2
+        # maxUnavailable: 1
+        ## >= 1.27
+        # unhealthyPodEvictionPolicy: AlwaysAllow
+
+      ## NetworkPolicy configuration
+      networkPolicy:
+        enabled: false
+        policyTypes:
+        - Ingress
+        - Egress
+        egress: 
+          - {}
+
+
+    ##
+    ##  WEBHOOKS
+    ##
+    webhooks:
+      command:
+        - "worker-webhooks"
+      env: true
+      ## Only effect if autoscaling false
+      replicaCount: 1
+      ## Setup autoscaling to enable HPA (HorizontalPodAutoscaler)
+      ## To enable also need to configure the resource limits
+      autoscaling:
+        enabled: false
+        minReplicas: 1
+        maxReplicas: 5
+        targetCPU: "60"
+        targetMemory: ""
+        behavior: {}
+      ## Setup resource limits and requests
+      resources: {}
+      # limits:
+      #   cpu: 100m
+      #   memory: 128Mi
+      # requests:
+      #   cpu: 100m
+      #   memory: 128Mi
+      podLabels: {}
+      podAnnotations: {}
+      deploymentStrategy:
+        type: RollingUpdate
+        maxUnavailable: 1
+      restartPolicy: OnFailure
+      podSecurityContext:
+        runAsNonRoot: true
+        runAsUser: 472
+        runAsGroup: 472
+        fsGroup: 472
+        ## Enable it when deployed as statefulset
+        fsGroupChangePolicy: OnRootMismatch
+      containerSecurityContext:
+        allowPrivilegeEscalation: false
+        seccompProfile:
+          type: RuntimeDefault
+        capabilities:
+          drop:
+          - ALL
+      nodeSelector: {}
+      tolerations: []
+      affinity: {}
+
+      ## PodDisruptionBudget configuration
+      podDisruption:
+        enabled: false
+        config:
+        # minAvailable: 2
+        # maxUnavailable: 1
+        ## >= 1.27
+        # unhealthyPodEvictionPolicy: AlwaysAllow
+
+      ## NetworkPolicy configuration
+      networkPolicy:
+        enabled: false
+        policyTypes:
+        - Ingress
+        - Egress
+        egress: 
+          - {}
 
 
 

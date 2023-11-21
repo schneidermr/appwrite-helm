@@ -1,5 +1,5 @@
 {{/* Define a template for the PodDisruptionBudget kind objects */}}
-{{- define "appwrite.pdb" -}}
+{{- define "appwrite.budget" -}}
 apiVersion: policy/v1
 kind: PodDisruptionBudget
 metadata:
@@ -13,7 +13,7 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/name: {{ printf "%s-%s" (include "appwrite.fullname" .) .component.name | trunc 63 }}
-  {{- with .component.config.podDisruption}}
+  {{- with .component.config.podDisruption.config }}
     {{- toYaml . | nindent 2 }}
   {{- end }}
 {{- end }}
