@@ -279,10 +279,10 @@ components:
   ##
   appwrite:
     image:
-      registry: docker.io
-      repository: appwrite/appwrite
-      tag: 1.4.13
-      pullPolicy: IfNotPresent
+      registry: &appwriteImgReg docker.io
+      repository: &appwriteImgRep appwrite/appwrite
+      tag: &appwriteImgTag 1.4.13
+      pullPolicy: &appwriteImgPullP IfNotPresent
     command:
       - /bin/sh
       - -c
@@ -420,6 +420,11 @@ components:
   ## MAINTENANCE
   ##
   maintenance:
+    image:
+      registry: *appwriteImgReg
+      repository: *appwriteImgRep
+      tag: *appwriteImgTag
+      pullPolicy: *appwriteImgPullP
     command:
       - "maintenance"
     env: true
@@ -493,6 +498,11 @@ components:
   ## REALTIME
   ##
   realtime:
+    image:
+      registry: *appwriteImgReg
+      repository: *appwriteImgRep
+      tag: *appwriteImgTag
+      pullPolicy: *appwriteImgPullP
     command:
       - "realtime"
     env: true
@@ -618,6 +628,11 @@ components:
   ## SCHEDULE
   ##
   schedule:
+    image:
+      registry: *appwriteImgReg
+      repository: *appwriteImgRep
+      tag: *appwriteImgTag
+      pullPolicy: *appwriteImgPullP
     command:
       - "schedule"
     env: true
@@ -758,6 +773,11 @@ components:
   ##  USAGE
   ##
   usage:
+    image:
+      registry: *appwriteImgReg
+      repository: *appwriteImgRep
+      tag: *appwriteImgTag
+      pullPolicy: *appwriteImgPullP
     command:
       - "usage"
     env: true
@@ -831,6 +851,11 @@ components:
     ##  AUDITS
     ##
     audits:
+      image:
+        registry: *appwriteImgReg
+        repository: *appwriteImgRep
+        tag: *appwriteImgTag
+        pullPolicy: *appwriteImgPullP
       command:
         - "worker-audits"
       env: true
@@ -900,6 +925,11 @@ components:
     ##  BUILDS
     ##
     builds:
+      image:
+        registry: *appwriteImgReg
+        repository: *appwriteImgRep
+        tag: *appwriteImgTag
+        pullPolicy: *appwriteImgPullP
       command:
         - "worker-builds"
       env: true
@@ -969,6 +999,11 @@ components:
     ##  CERTIFICATES
     ##
     certificates:
+      image:
+        registry: *appwriteImgReg
+        repository: *appwriteImgRep
+        tag: *appwriteImgTag
+        pullPolicy: *appwriteImgPullP
       command:
         - "worker-certificates"
       env: true
@@ -1038,6 +1073,11 @@ components:
     ##  DATABASES
     ##
     databases:
+      image:
+        registry: *appwriteImgReg
+        repository: *appwriteImgRep
+        tag: *appwriteImgTag
+        pullPolicy: *appwriteImgPullP
       command:
         - "worker-databases"
       env: true
@@ -1107,6 +1147,11 @@ components:
     ##  DELETES
     ##
     deletes:
+      image:
+        registry: *appwriteImgReg
+        repository: *appwriteImgRep
+        tag: *appwriteImgTag
+        pullPolicy: *appwriteImgPullP
       command:
         - "worker-deletes"
       env: true
@@ -1176,6 +1221,11 @@ components:
     ##  FUNCTIONS
     ##
     functions:
+      image:
+        registry: *appwriteImgReg
+        repository: *appwriteImgRep
+        tag: *appwriteImgTag
+        pullPolicy: *appwriteImgPullP
       command:
         - "worker-functions"
       env: true
@@ -1245,6 +1295,11 @@ components:
     ##  MAILS
     ##
     mails:
+      image:
+        registry: *appwriteImgReg
+        repository: *appwriteImgRep
+        tag: *appwriteImgTag
+        pullPolicy: *appwriteImgPullP
       command:
         - "worker-mails"
       env: true
@@ -1314,6 +1369,11 @@ components:
     ##  MESSAGING
     ##
     messaging:
+      image:
+        registry: *appwriteImgReg
+        repository: *appwriteImgRep
+        tag: *appwriteImgTag
+        pullPolicy: *appwriteImgPullP
       command:
         - "worker-messaging"
       env: true
@@ -1383,6 +1443,11 @@ components:
     ##  WEBHOOKS
     ##
     webhooks:
+      image:
+        registry: *appwriteImgReg
+        repository: *appwriteImgRep
+        tag: *appwriteImgTag
+        pullPolicy: *appwriteImgPullP
       command:
         - "worker-webhooks"
       env: true

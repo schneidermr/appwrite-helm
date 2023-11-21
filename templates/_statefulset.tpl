@@ -10,7 +10,7 @@ metadata:
     app.kubernetes.io/component: {{ .component.name }}
     {{- include "appwrite.labels" . | nindent 4 }}
 spec:
-#  serviceName: ""
+  serviceName: {{ printf "%s-%s" (include "appwrite.fullname" .) .component.name | trunc 63 }}
   {{- if not .component.config.autoscaling.enabled }}
   replicas: {{ .component.config.replicaCount }}
   {{- end }}
