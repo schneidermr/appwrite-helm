@@ -1,5 +1,0 @@
-{{- if eq "local" (.Values.environments.storage.device | lower) }}
-{{- include "appwrite.statefulset" (merge (dict "component" (dict "name" "app" "config" .Values.components.appwrite)) .)}}
-{{- else }}
-{{- include "appwrite.deployment" (merge (dict "component" (dict "name" "app" "config" .Values.components.appwrite)) .) }}
-{{- end }}

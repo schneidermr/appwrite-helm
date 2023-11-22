@@ -1,0 +1,3 @@
+{{- if .Values.components.core.autoscaling.enabled }}
+{{- include "appwrite.autoscaling" (merge (dict "component" (dict "name" "core" "config" .Values.components.core)) . (dict "persistent" (eq "local" (.Values.environments.storage.device | lower))))}}
+{{- end }}

@@ -1,0 +1,3 @@
+{{- if .Values.components.core.ingress.enabled }}
+{{- include "appwrite.ingress" (merge (dict "component" (dict "name" "core" "config" .Values.components.core)) .)}}
+{{- end }}

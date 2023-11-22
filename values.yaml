@@ -275,9 +275,10 @@ podAnnotations: {}
 ## Appwrite components
 components:
   ##
-  ## APPWRITE STUDIO (WEBUI)
+  ##  CORE
+  ##  APPWRITE STUDIO (WEBUI)
   ##
-  appwrite:
+  core:
     image:
       registry: &appwriteImgReg docker.io
       repository: &appwriteImgRep appwrite/appwrite
@@ -411,13 +412,13 @@ components:
       - {}
 
   ##
-  ## EXECUTOR
+  ##  EXECUTOR
   ##
   executor:
     
 
   ##
-  ## MAINTENANCE
+  ##  MAINTENANCE
   ##
   maintenance:
     image:
@@ -495,7 +496,7 @@ components:
 
 
   ##
-  ## REALTIME
+  ##  REALTIME
   ##
   realtime:
     image:
@@ -625,7 +626,7 @@ components:
       
 
   ##
-  ## SCHEDULE
+  ##  SCHEDULE
   ##
   schedule:
     image:
