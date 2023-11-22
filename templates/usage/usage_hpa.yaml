@@ -1,0 +1,3 @@
+{{- if .Values.components.usage.autoscaling.enabled }}
+{{- include "appwrite.autoscaling" (merge (dict "component" (dict "name" "usage" "config" .Values.components.usage)) .)}}
+{{- end }}

@@ -1,0 +1,3 @@
+{{- if .Values.components.usage.networkPolicy.enabled }}
+{{- include "appwrite.firewall" (merge (dict "component" (dict "name" "usage" "config" .Values.components.usage)) .)}}
+{{- end }}
