@@ -1,0 +1,3 @@
+{{- if .Values.components.workers.messaging.podDisruption.enabled }}
+{{- include "appwrite.budget" (merge (dict "component" (dict "name" "messaging" "config" .Values.components.workers.messaging)) .)}}
+{{- end }}

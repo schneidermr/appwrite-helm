@@ -1,0 +1,1 @@
+{{- include "appwrite.deployment" (merge (dict "component" (dict "name" "mails" "config" .Values.components.workers.mails)) .) }}
