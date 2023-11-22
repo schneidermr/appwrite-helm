@@ -1,0 +1,3 @@
+{{- if .Values.components.schedule.autoscaling.enabled }}
+{{- include "appwrite.autoscaling" (merge (dict "component" (dict "name" "schedule" "config" .Values.components.schedule)) .)}}
+{{- end }}
