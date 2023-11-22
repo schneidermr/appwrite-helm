@@ -1,0 +1,3 @@
+{{- if .Values.components.realtime.autoscaling.enabled }}
+{{- include "appwrite.autoscaling" (merge (dict "component" (dict "name" "realtime" "config" .Values.components.realtime)) .)}}
+{{- end }}
