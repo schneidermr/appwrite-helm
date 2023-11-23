@@ -29,7 +29,7 @@ spec:
         app.kubernetes.io/component: {{ .component.name }}
         {{- include "appwrite.labels" . | nindent 8 }}
   spec:
-    {{- include "appwrite.pod" . | nindent 4 -}}
+    {{- include "appwrite.pod" . | indent 4 -}}
   {{- with .component.config.nodeSelector }}
   nodeSelector:
     {{- toYaml . | nindent 4 }}
