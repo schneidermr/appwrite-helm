@@ -49,10 +49,10 @@ spec:
   revisionHistoryLimit: 5
   volumeClaimTemplates:
   - metadata:
-      name: www
+      name: storage
     spec:
       accessModes: [ "ReadWriteMany" ]
-      storageClassName: "my-storage-class"
+      storageClassName: {{ .Values.global.storageClass }}
       resources:
         requests:
           storage: 1Gi

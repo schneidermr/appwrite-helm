@@ -51,7 +51,8 @@ containers:
     env:
       {{ toYaml . | nindent 6 }}
     {{- end }}
+    {{  }}
     volumeMounts:
-    - name: www
-      mountPath: /usr/share/nginx/html
+    - name: storage
+      mountPath: /storage
 {{- end }}

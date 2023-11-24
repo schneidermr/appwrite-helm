@@ -2,301 +2,305 @@
 # SPDX-License-Identifier: APACHE-2.0
 
 
-# These global values also affect the sub-charts
+# -- These global values also affect the sub-charts
 global:
-  ## Global Docker registry secret names as an array
-  ## E.g.
-  ## imagePullSecrets:
-  ##   - myRegistryKeySecretName
+  # -- Global Docker registry secret names
+  # E.g.
+  # imagePullSecrets:
+  #   - myRegistryKeySecretName
   imagePullSecrets: []
-  ## Global StorageClass for Persistent Volume(s)
+  # -- Global StorageClass for Persistent Volume(s)
   storageClass: ""
 
 
 
-## Environment variables for Appwrite
-## ref: https://appwrite.io/docs/advanced/self-hosting/environment-variables
+# -- Environment variables for Appwrite
+# ref: [https://appwrite.io/docs/advanced/self-hosting/environment-variables] (https://appwrite.io/docs/advanced/self-hosting/environment-variables)
 environments:
-  ## _APP_ENV
+  # _APP_ENV
   env: production
-  ## _APP_LOCALE
+  # _APP_LOCALE
   locale: en
   worker:
-    ## _APP_WORKER_PER_CORE
+    # _APP_WORKER_PER_CORE
     perCore: 6
   console:
     whitelist:
-      ## _APP_CONSOLE_WHITELIST_ROOT
+      # _APP_CONSOLE_WHITELIST_ROOT
       root: ""
-      ## _APP_CONSOLE_WHITELIST_EMAILS
+      # _APP_CONSOLE_WHITELIST_EMAILS
       emails: ""
-      ## _APP_CONSOLE_WHITELIST_IPS
+      # _APP_CONSOLE_WHITELIST_IPS
       ips: ""
   system:
     email:
-      ## _APP_SYSTEM_EMAIL_NAME
+      # _APP_SYSTEM_EMAIL_NAME
       name: Appwrite
-      ## _APP_SYSTEM_EMAIL_ADDRESS
+      # _APP_SYSTEM_EMAIL_ADDRESS
       address: team@appwrite.io
     security:
-      ## _APP_SYSTEM_SECURITY_EMAIL_ADDRESS
+      # _APP_SYSTEM_SECURITY_EMAIL_ADDRESS
       emailAddress: security@appwrite.io
     response:
-      ## _APP_SYSTEM_RESPONSE_FORMAT
+      # _APP_SYSTEM_RESPONSE_FORMAT
       format: ""
   options:
-    ## _APP_OPTIONS_ABUSE
+    # _APP_OPTIONS_ABUSE
     abuse: disabled
-    ## _APP_OPTIONS_ROUTER_PROTECTION
+    # _APP_OPTIONS_ROUTER_PROTECTION
     routerProtection: disabled
-    ## _APP_OPTIONS_FORCE_HTTPS
+    # _APP_OPTIONS_FORCE_HTTPS
     forceHttps: disabled
     functions:
-      ## _APP_OPTIONS_FUNCTIONS_FORCE_HTTPS
+      # _APP_OPTIONS_FUNCTIONS_FORCE_HTTPS
       forceHttps: disabled
   openssl:
-    ## _APP_OPENSSL_KEY_V1
+    # _APP_OPENSSL_KEY_V1
     keyV1: ""
   domain: 
-    ## _APP_DOMAIN
+    # _APP_DOMAIN
     app: &appDomain localhost
-    ## _APP_DOMAIN_FUNCTIONS
+    # _APP_DOMAIN_FUNCTIONS
     functions: functions.localhost
-    ## _APP_DOMAIN_TARGET
+    # _APP_DOMAIN_TARGET
     target: localhost
   redis:
-    ## _APP_REDIS_HOST
+    # _APP_REDIS_HOST
     host: ""
-    ## _APP_REDIS_PORT
+    # _APP_REDIS_PORT
     port: 6379
-    ## _APP_REDIS_USER
+    # _APP_REDIS_USER
     username: ""
-    ## _APP_REDIS_PASS
+    # _APP_REDIS_PASS
     password: ""
   database:
-    ## _APP_DB_HOST
+    # _APP_DB_HOST
     host: ""
-    ## _APP_DB_PORT
+    # _APP_DB_PORT
     port: 3306
-    ## _APP_DB_SCHEMA
+    # _APP_DB_SCHEMA
     schema: appwrite
-    ## _APP_DB_USER
+    # _APP_DB_USER
     username: user
-    ## _APP_DB_PASS
+    # _APP_DB_PASS
     password: your-secret-password
-    ## _APP_DB_ROOT_PASS
+    # _APP_DB_ROOT_PASS
     rootPassword: root-secret-root-password
   storage:  
-    ## _APP_STORAGE_DEVICE
+    # _APP_STORAGE_DEVICE
     device: Local
     s3:
-      ## _APP_STORAGE_S3_ENDPOINT_URL
+      # _APP_STORAGE_S3_ENDPOINT_URL
       endpointUrl: ""
-      ## _APP_STORAGE_S3_ACCESS_KEY
+      # _APP_STORAGE_S3_ACCESS_KEY
       accessKey: ""
-      ## _APP_STORAGE_S3_SECRET
+      # _APP_STORAGE_S3_SECRET
       secret: ""
-      ## _APP_STORAGE_S3_REGION
+      # _APP_STORAGE_S3_REGION
       region: us-east-1
-      ## _APP_STORAGE_S3_BUCKET
+      # _APP_STORAGE_S3_BUCKET
       bucket: ""
     doSpaces:
-      ## _APP_STORAGE_DO_SPACES_ACCESS_KEY
+      # _APP_STORAGE_DO_SPACES_ACCESS_KEY
       accessKey: ""
-      ## _APP_STORAGE_DO_SPACES_SECRET
+      # _APP_STORAGE_DO_SPACES_SECRET
       secret: ""
-      ## _APP_STORAGE_DO_SPACES_REGION
+      # _APP_STORAGE_DO_SPACES_REGION
       region: us-east-1
-      ## _APP_STORAGE_DO_SPACES_BUCKET
+      # _APP_STORAGE_DO_SPACES_BUCKET
       bucket: ""
     backblaze:
-      ## _APP_STORAGE_BACKBLAZE_ACCESS_KEY
+      # _APP_STORAGE_BACKBLAZE_ACCESS_KEY
       accessKey: ""
-      ## _APP_STORAGE_BACKBLAZE_SECRET
+      # _APP_STORAGE_BACKBLAZE_SECRET
       secret: ""
-      ## _APP_STORAGE_BACKBLAZE_REGION
+      # _APP_STORAGE_BACKBLAZE_REGION
       region: us-west-004
-      ## _APP_STORAGE_BACKBLAZE_BUCKET
+      # _APP_STORAGE_BACKBLAZE_BUCKET
       bucket: ""
     linode:
-      ## _APP_STORAGE_LINODE_ACCESS_KEY
+      # _APP_STORAGE_LINODE_ACCESS_KEY
       accessKey: ""
-      ## _APP_STORAGE_LINODE_SECRET
+      # _APP_STORAGE_LINODE_SECRET
       secret: ""
-      ## _APP_STORAGE_LINODE_REGION
+      # _APP_STORAGE_LINODE_REGION
       region: eu-central-1
-      ## _APP_STORAGE_LINODE_BUCKET
+      # _APP_STORAGE_LINODE_BUCKET
       bucket: ""
     wasabi:
-      ## _APP_STORAGE_WASABI_ACCESS_KEY
+      # _APP_STORAGE_WASABI_ACCESS_KEY
       accessKey: ""
-      ## _APP_STORAGE_WASABI_SECRET
+      # _APP_STORAGE_WASABI_SECRET
       secret: ""
-      ## _APP_STORAGE_WASABI_REGION
+      # _APP_STORAGE_WASABI_REGION
       region: eu-central-1
-      ## _APP_STORAGE_WASABI_BUCKET
+      # _APP_STORAGE_WASABI_BUCKET
       bucket: ""
     antivirus:
-      ## _APP_STORAGE_ANTIVIRUS
+      # _APP_STORAGE_ANTIVIRUS
       enabled: disabled
-      ## _APP_STORAGE_ANTIVIRUS_HOST
+      # _APP_STORAGE_ANTIVIRUS_HOST
       host: clamav
-      ## _APP_STORAGE_ANTIVIRUS_PORT
+      # _APP_STORAGE_ANTIVIRUS_PORT
       port: 3310
-    ## _APP_STORAGE_LIMIT
+    # _APP_STORAGE_LIMIT
     limit: 30000000
-    ## _APP_STORAGE_PREVIEW_LIMIT
+    # _APP_STORAGE_PREVIEW_LIMIT
     previewLimit: 20000000
   influxdb:
-    ## _APP_INFLUXDB_HOST
+    # _APP_INFLUXDB_HOST
     host: ""
-    ## _APP_INFLUXDB_PORT
+    # _APP_INFLUXDB_PORT
     port: 8086
   statsd:
-    ## _APP_STATSD_HOST
+    # _APP_STATSD_HOST
     host: ""
-    ## _APP_STATSD_PORT
+    # _APP_STATSD_PORT
     port: 8125
   smtp:
-    ## _APP_SMTP_HOST
+    # _APP_SMTP_HOST
     host: ""
-    ## _APP_SMTP_PORT
+    # _APP_SMTP_PORT
     port: ""
-    ## _APP_SMTP_SECURE
+    # _APP_SMTP_SECURE
     secure: ""
-    ## _APP_SMTP_USERNAME
+    # _APP_SMTP_USERNAME
     username: ""
-    ## _APP_SMTP_PASSWORD
+    # _APP_SMTP_PASSWORD
     password: ""
   sms:
-    ## _APP_SMS_PROVIDER
+    # _APP_SMS_PROVIDER
     provider: ""
-    ## _APP_SMS_FROM
+    # _APP_SMS_FROM
     from: ""
   functions:
-    ## _APP_FUNCTIONS_SIZE_LIMIT
+    # _APP_FUNCTIONS_SIZE_LIMIT
     sizeLimit: 30000000
-    ## _APP_FUNCTIONS_TIMEOUT
+    # _APP_FUNCTIONS_TIMEOUT
     timeout: 900
-    ## _APP_FUNCTIONS_BUILD_TIMEOUT
+    # _APP_FUNCTIONS_BUILD_TIMEOUT
     buildTimeout: 900
-    ## _APP_FUNCTIONS_CPUS
+    # _APP_FUNCTIONS_CPUS
     cpus: ""
-    ## _APP_FUNCTIONS_MEMORY
+    # _APP_FUNCTIONS_MEMORY
     memory: ""
-    ## _APP_FUNCTIONS_INACTIVE_THRESHOLD
+    # _APP_FUNCTIONS_INACTIVE_THRESHOLD
     inactiveThreshold: 600
-    ## _APP_FUNCTIONS_MAINTENANCE_INTERVAL
+    # _APP_FUNCTIONS_MAINTENANCE_INTERVAL
     maintenanceInterval: 600
-    ## _APP_FUNCTIONS_RUNTIMES
+    # _APP_FUNCTIONS_RUNTIMES
     runtimes:
       - php-8.0
       - node-18.0
       - python-3.9
       - ruby-3.1
   executor:
-    ## _APP_EXECUTOR_SECRET
+    # _APP_EXECUTOR_SECRET
     secret: ""
-    ## _APP_EXECUTOR_HOST
+    # _APP_EXECUTOR_HOST
     host: ""
   maintenance:
-    ## _APP_MAINTENANCE_INTERVAL
+    # _APP_MAINTENANCE_INTERVAL
     interval: 86400
     retention:
-      ## _APP_MAINTENANCE_RETENTION_CACHE
+      # _APP_MAINTENANCE_RETENTION_CACHE
       cache: 2592000
-      ## _APP_MAINTENANCE_RETENTION_EXECUTION
+      # _APP_MAINTENANCE_RETENTION_EXECUTION
       execution: 1209600
-      ## _APP_MAINTENANCE_RETENTION_ABUSE
+      # _APP_MAINTENANCE_RETENTION_ABUSE
       abuse: 86400
-      ## _APP_MAINTENANCE_RETENTION_AUDIT
+      # _APP_MAINTENANCE_RETENTION_AUDIT
       audit: 1209600
-      ## _APP_MAINTENANCE_RETENTION_USAGE_HOURLY
+      # _APP_MAINTENANCE_RETENTION_USAGE_HOURLY
       usageHourly: 8640000
-      ## _APP_MAINTENANCE_RETENTION_SCHEDULES
+      # _APP_MAINTENANCE_RETENTION_SCHEDULES
       schedules: 86400
   usage:
-    ## _APP_USAGE_AGGREGATION_INTERVAL
+    # _APP_USAGE_AGGREGATION_INTERVAL
     aggregationInterval: 5
-    ## _APP_USAGE_STATS
+    # _APP_USAGE_STATS
     stats: enabled
   logging:
-    ## _APP_LOGGING_PROVIDER
+    # _APP_LOGGING_PROVIDER
     provider: ""
-    ## _APP_LOGGING_CONFIG
+    # _APP_LOGGING_CONFIG
     config: ""
   graphql:
-    ## _APP_GRAPHQL_MAX_BATCH_SIZE
+    # _APP_GRAPHQL_MAX_BATCH_SIZE
     maxBatchSize: 10
-    ## _APP_GRAPHQL_MAX_COMPLEXITY
+    # _APP_GRAPHQL_MAX_COMPLEXITY
     maxComplexity: 250
-    ## _APP_GRAPHQL_MAX_DEPTH
+    # _APP_GRAPHQL_MAX_DEPTH
     maxDepth: 3
   dockerHub:
-    ## _APP_DOCKER_HUB_USERNAME
+    # _APP_DOCKER_HUB_USERNAME
     username: ""
-    ## _APP_DOCKER_HUB_PASSWORD
+    # _APP_DOCKER_HUB_PASSWORD
     password: ""
   vcs:
     github:
-      ## _APP_VCS_GITHUB_APP_NAME
+      # _APP_VCS_GITHUB_APP_NAME
       appName: ""
-      ## _APP_VCS_GITHUB_PRIVATE_KEY
+      # _APP_VCS_GITHUB_PRIVATE_KEY
       privateKey: disabled
-      ## _APP_VCS_GITHUB_APP_ID
+      # _APP_VCS_GITHUB_APP_ID
       appId: ""
-      ## _APP_VCS_GITHUB_CLIENT_ID
+      # _APP_VCS_GITHUB_CLIENT_ID
       clientId: ""
-      ## _APP_VCS_GITHUB_CLIENT_SECRET
+      # _APP_VCS_GITHUB_CLIENT_SECRET
       clientSecret: ""
-      ## _APP_VCS_GITHUB_WEBHOOK_SECRET
+      # _APP_VCS_GITHUB_WEBHOOK_SECRET
       webhookSecret: ""
   migrations:
     firebase:
-      ## _APP_MIGRATIONS_FIREBASE_CLIENT_ID
+      # _APP_MIGRATIONS_FIREBASE_CLIENT_ID
       clientId: ""
-      ## _APP_MIGRATIONS_FIREBASE_CLIENT_SECRET
+      # _APP_MIGRATIONS_FIREBASE_CLIENT_SECRET
       clientSecret: ""
   assistant:
     openAi:
-      ## _APP_ASSISTANT_OPENAI_API_KEY
+      # _APP_ASSISTANT_OPENAI_API_KEY
       apiKey: ""
 
 
 
-## Kubernetes cluster domain name
+# -- The domain name of the Kubernetes cluster
 clusterDomain: cluster.local
-## Shared pod labels
+# -- Common label shared across pods
 podLabels: {}
-## Shared pod annotations
+# -- Common annotations shared across pods
 podAnnotations: {}
 
 
-## Appwrite components
+# Appwrite components
 components:
-  ##
-  ##  CORE
-  ##  APPWRITE STUDIO (WEBUI)
-  ##
+  #
+  #  CORE
+  #  APPWRITE STUDIO (WEBUI)
+  #
   core:
+    # -- Core (aka Appwrite Studio - WebUI) component's image data
     image:
       registry: &appwriteImgReg docker.io
       repository: &appwriteImgRep appwrite/appwrite
       tag: &appwriteImgTag 1.4.13
       pullPolicy: &appwriteImgPullP IfNotPresent
+    # -- Startup command for the app
     command:
       - /bin/sh
       - -c
+    # -- Startup command arguments for the app
     args:
       - php
       - -e
       - app/http.php
       - -dopcache.preload=opcache.preload=/usr/src/code/app/preload.php
+    # -- Attach previously defined environment variables to the pod
     env: true
-    ## Only effect if autoscaling false
+    # -- The number of instances in which the application will run. Only effect if autoscaling false
     replicaCount: 1
-    ## Setup autoscaling to enable HPA (HorizontalPodAutoscaler)
-    ## To enable also need to configure the resource limits
+    # -- Setup autoscaling to enable HPA (HorizontalPodAutoscaler). 
+    # To enable autoscaling also need to configure the resource limits
     autoscaling:
       enabled: false
       minReplicas: 1
@@ -304,7 +308,7 @@ components:
       targetCPU: "60"
       targetMemory: ""
       behavior: {}
-    ## Setup resource limits and requests
+    # -- Setup resource limits and requests for the app
     resources: {}
     # limits:
     #   cpu: 100m
@@ -312,15 +316,21 @@ components:
     # requests:
     #   cpu: 100m
     #   memory: 128Mi
+    # -- The labels that the application's pod will get.
+    # Will be extended with the common pod labels, what is defined in the global.
     podLabels: {}
+    # -- The annotations that the application's pod will get.
+    # Will be extended with the common pod labels, what is defined in the global.
     podAnnotations: {}
     deploymentStrategy:
       type: RollingUpdate
       maxUnavailable: 1
+    # -- Define the rediness probe
     readinessProbe:
       httpGet:
         path: /api/health
         port: 80
+    # -- Define the liveness probe
     livenessProbe:
       httpGet:
         path: /api/health
@@ -328,13 +338,16 @@ components:
       initialDelaySeconds: 30
       timeoutSeconds: 30
       failureThreshold: 10
+    # -- Choose the right restart condition when the app has to be restarted.
+    # Available options: Always | OnFailure
     restartPolicy: OnFailure
+    # -- 
     podSecurityContext:
       runAsNonRoot: true
       runAsUser: 472
       runAsGroup: 472
       fsGroup: 472
-      ## Enable it when deployed as statefulset
+      # Enable it when deployed as statefulset
       fsGroupChangePolicy: OnRootMismatch
     containerSecurityContext:
       allowPrivilegeEscalation: false
@@ -351,7 +364,7 @@ components:
       containerPort: 80
       protocol: TCP
 
-    ## Service configuration
+    # Service configuration
     service:
       type: ClusterIP
       ports:
@@ -360,7 +373,7 @@ components:
         port: 80
         targetPort: 80
 
-    ## Ingress configuration
+    # Ingress configuration
     ingress:
       enabled: false
       className: ""
@@ -384,16 +397,16 @@ components:
       #   hosts:
       #   - domain.name
         
-    ## PodDisruptionBudget configuration
+    # PodDisruptionBudget configuration
     podDisruption:
       enabled: false
       config:
       # minAvailable: 2
       # maxUnavailable: 1
-      ## >= 1.27
+      # >= 1.27
       # unhealthyPodEvictionPolicy: AlwaysAllow
 
-    ## NetworkPolicy configuration
+    # NetworkPolicy configuration
     networkPolicy:
       enabled: false
       policyTypes:
@@ -411,15 +424,15 @@ components:
       egress: 
       - {}
 
-  ##
-  ##  EXECUTOR
-  ##
+  #
+  #  EXECUTOR
+  #
   executor:
     
 
-  ##
-  ##  MAINTENANCE
-  ##
+  #
+  #  MAINTENANCE
+  #
   maintenance:
     image:
       registry: *appwriteImgReg
@@ -429,10 +442,10 @@ components:
     command:
       - "maintenance"
     env: true
-    ## Only effect if autoscaling false
+    # Only effect if autoscaling false
     replicaCount: 1
-    ## Setup autoscaling to enable HPA (HorizontalPodAutoscaler)
-    ## To enable also need to configure the resource limits
+    # Setup autoscaling to enable HPA (HorizontalPodAutoscaler)
+    # To enable also need to configure the resource limits
     autoscaling:
       enabled: false
       minReplicas: 1
@@ -440,7 +453,7 @@ components:
       targetCPU: "60"
       targetMemory: ""
       behavior: {}
-    ## Setup resource limits and requests
+    # Setup resource limits and requests
     resources: {}
     # limits:
     #   cpu: 100m
@@ -459,7 +472,7 @@ components:
       runAsUser: 472
       runAsGroup: 472
       fsGroup: 472
-      ## Enable it when deployed as statefulset
+      # Enable it when deployed as statefulset
       fsGroupChangePolicy: OnRootMismatch
     containerSecurityContext:
       allowPrivilegeEscalation: false
@@ -476,16 +489,16 @@ components:
       containerPort: 80
       protocol: TCP
         
-    ## PodDisruptionBudget configuration
+    # PodDisruptionBudget configuration
     podDisruption:
       enabled: false
       config:
       # minAvailable: 2
       # maxUnavailable: 1
-      ## >= 1.27
+      # >= 1.27
       # unhealthyPodEvictionPolicy: AlwaysAllow
 
-    ## NetworkPolicy configuration
+    # NetworkPolicy configuration
     networkPolicy:
       enabled: false
       policyTypes:
@@ -495,9 +508,9 @@ components:
         - {}
 
 
-  ##
-  ##  REALTIME
-  ##
+  #
+  #  REALTIME
+  #
   realtime:
     image:
       registry: *appwriteImgReg
@@ -507,10 +520,10 @@ components:
     command:
       - "realtime"
     env: true
-    ## Only effect if autoscaling false
+    # Only effect if autoscaling false
     replicaCount: 1
-    ## Setup autoscaling to enable HPA (HorizontalPodAutoscaler)
-    ## To enable also need to configure the resource limits
+    # Setup autoscaling to enable HPA (HorizontalPodAutoscaler)
+    # To enable also need to configure the resource limits
     autoscaling:
       enabled: false
       minReplicas: 1
@@ -518,7 +531,7 @@ components:
       targetCPU: "60"
       targetMemory: ""
       behavior: {}
-    ## Setup resource limits and requests
+    # Setup resource limits and requests
     resources: {}
     # limits:
     #   cpu: 100m
@@ -548,7 +561,7 @@ components:
       runAsUser: 472
       runAsGroup: 472
       fsGroup: 472
-      ## Enable it when deployed as statefulset
+      # Enable it when deployed as statefulset
       fsGroupChangePolicy: OnRootMismatch
     containerSecurityContext:
       allowPrivilegeEscalation: false
@@ -565,7 +578,7 @@ components:
       containerPort: 80
       protocol: TCP
 
-    ## Service configuration
+    # Service configuration
     service:
       type: ClusterIP
       ports:
@@ -574,7 +587,7 @@ components:
         port: 80
         targetPort: 80
 
-    ## Ingress configuration
+    # Ingress configuration
     ingress:
       enabled: false
       className: ""
@@ -598,16 +611,16 @@ components:
       #   hosts:
       #   - domain.name
         
-    ## PodDisruptionBudget configuration
+    # PodDisruptionBudget configuration
     podDisruption:
       enabled: false
       config:
       # minAvailable: 2
       # maxUnavailable: 1
-      ## >= 1.27
+      # >= 1.27
       # unhealthyPodEvictionPolicy: AlwaysAllow
 
-    ## NetworkPolicy configuration
+    # NetworkPolicy configuration
     networkPolicy:
       enabled: false
       policyTypes:
@@ -625,9 +638,9 @@ components:
       egress: {}
       
 
-  ##
-  ##  SCHEDULE
-  ##
+  #
+  #  SCHEDULE
+  #
   schedule:
     image:
       registry: *appwriteImgReg
@@ -637,10 +650,10 @@ components:
     command:
       - "schedule"
     env: true
-    ## Only effect if autoscaling false
+    # Only effect if autoscaling false
     replicaCount: 1
-    ## Setup autoscaling to enable HPA (HorizontalPodAutoscaler)
-    ## To enable also need to configure the resource limits
+    # Setup autoscaling to enable HPA (HorizontalPodAutoscaler)
+    # To enable also need to configure the resource limits
     autoscaling:
       enabled: false
       minReplicas: 1
@@ -648,7 +661,7 @@ components:
       targetCPU: "60"
       targetMemory: ""
       behavior: {}
-    ## Setup resource limits and requests
+    # Setup resource limits and requests
     resources: {}
     # limits:
     #   cpu: 100m
@@ -667,7 +680,7 @@ components:
       runAsUser: 472
       runAsGroup: 472
       fsGroup: 472
-      ## Enable it when deployed as statefulset
+      # Enable it when deployed as statefulset
       fsGroupChangePolicy: OnRootMismatch
     containerSecurityContext:
       allowPrivilegeEscalation: false
@@ -680,16 +693,16 @@ components:
     tolerations: []
     affinity: {}
         
-    ## PodDisruptionBudget configuration
+    # PodDisruptionBudget configuration
     podDisruption:
       enabled: false
       config:
       # minAvailable: 2
       # maxUnavailable: 1
-      ## >= 1.27
+      # >= 1.27
       # unhealthyPodEvictionPolicy: AlwaysAllow
 
-    ## NetworkPolicy configuration
+    # NetworkPolicy configuration
     networkPolicy:
       enabled: false
       policyTypes:
@@ -698,9 +711,9 @@ components:
       egress:
         - {}
 
-  ##
-  ##  TELEGRAF
-  ##
+  #
+  #  TELEGRAF
+  #
   telegraf:
     image:
       registry: docker.io
@@ -708,10 +721,10 @@ components:
       tag: 1.4.0
       pullPolicy: IfNotPresent
     env: true
-    ## Only effect if autoscaling false
+    # Only effect if autoscaling false
     replicaCount: 1
-    ## Setup autoscaling to enable HPA (HorizontalPodAutoscaler)
-    ## To enable also need to configure the resource limits
+    # Setup autoscaling to enable HPA (HorizontalPodAutoscaler)
+    # To enable also need to configure the resource limits
     autoscaling:
       enabled: false
       minReplicas: 1
@@ -719,7 +732,7 @@ components:
       targetCPU: "60"
       targetMemory: ""
       behavior: {}
-    ## Setup resource limits and requests
+    # Setup resource limits and requests
     resources: {}
     # limits:
     #   cpu: 100m
@@ -738,7 +751,7 @@ components:
       runAsUser: 472
       runAsGroup: 472
       fsGroup: 472
-      ## Enable it when deployed as statefulset
+      # Enable it when deployed as statefulset
       fsGroupChangePolicy: OnRootMismatch
     containerSecurityContext:
       allowPrivilegeEscalation: false
@@ -751,16 +764,16 @@ components:
     tolerations: []
     affinity: {}
         
-    ## PodDisruptionBudget configuration
+    # PodDisruptionBudget configuration
     podDisruption:
       enabled: false
       config:
       # minAvailable: 2
       # maxUnavailable: 1
-      ## >= 1.27
+      # >= 1.27
       # unhealthyPodEvictionPolicy: AlwaysAllow
 
-    ## NetworkPolicy configuration
+    # NetworkPolicy configuration
     networkPolicy:
       enabled: false
       policyTypes:
@@ -770,9 +783,9 @@ components:
       - {}
 
 
-  ##
-  ##  USAGE
-  ##
+  #
+  #  USAGE
+  #
   usage:
     image:
       registry: *appwriteImgReg
@@ -782,10 +795,10 @@ components:
     command:
       - "usage"
     env: true
-    ## Only effect if autoscaling false
+    # Only effect if autoscaling false
     replicaCount: 1
-    ## Setup autoscaling to enable HPA (HorizontalPodAutoscaler)
-    ## To enable also need to configure the resource limits
+    # Setup autoscaling to enable HPA (HorizontalPodAutoscaler)
+    # To enable also need to configure the resource limits
     autoscaling:
       enabled: false
       minReplicas: 1
@@ -793,7 +806,7 @@ components:
       targetCPU: "60"
       targetMemory: ""
       behavior: {}
-    ## Setup resource limits and requests
+    # Setup resource limits and requests
     resources: {}
     # limits:
     #   cpu: 100m
@@ -812,7 +825,7 @@ components:
       runAsUser: 472
       runAsGroup: 472
       fsGroup: 472
-      ## Enable it when deployed as statefulset
+      # Enable it when deployed as statefulset
       fsGroupChangePolicy: OnRootMismatch
     containerSecurityContext:
       allowPrivilegeEscalation: false
@@ -825,16 +838,16 @@ components:
     tolerations: []
     affinity: {}
 
-    ## PodDisruptionBudget configuration
+    # PodDisruptionBudget configuration
     podDisruption:
       enabled: false
       config:
       # minAvailable: 2
       # maxUnavailable: 1
-      ## >= 1.27
+      # >= 1.27
       # unhealthyPodEvictionPolicy: AlwaysAllow
 
-    ## NetworkPolicy configuration
+    # NetworkPolicy configuration
     networkPolicy:
       enabled: false
       policyTypes:
@@ -844,13 +857,14 @@ components:
         - {}
 
 
-  ##
-  ##  WORKERS
-  ##
+  #
+  #  WORKERS
+  #
+  # @ignore
   workers:
-    ##
-    ##  AUDITS
-    ##
+    #
+    #  AUDITS
+    #
     audits:
       image:
         registry: *appwriteImgReg
@@ -860,10 +874,10 @@ components:
       command:
         - "worker-audits"
       env: true
-      ## Only effect if autoscaling false
+      # Only effect if autoscaling false
       replicaCount: 1
-      ## Setup autoscaling to enable HPA (HorizontalPodAutoscaler)
-      ## To enable also need to configure the resource limits
+      # Setup autoscaling to enable HPA (HorizontalPodAutoscaler)
+      # To enable also need to configure the resource limits
       autoscaling:
         enabled: false
         minReplicas: 1
@@ -871,7 +885,7 @@ components:
         targetCPU: "60"
         targetMemory: ""
         behavior: {}
-      ## Setup resource limits and requests
+      # Setup resource limits and requests
       resources: {}
       # limits:
       #   cpu: 100m
@@ -890,7 +904,7 @@ components:
         runAsUser: 472
         runAsGroup: 472
         fsGroup: 472
-        ## Enable it when deployed as statefulset
+        # Enable it when deployed as statefulset
         fsGroupChangePolicy: OnRootMismatch
       containerSecurityContext:
         allowPrivilegeEscalation: false
@@ -903,16 +917,16 @@ components:
       tolerations: []
       affinity: {}
 
-      ## PodDisruptionBudget configuration
+      # PodDisruptionBudget configuration
       podDisruption:
         enabled: false
         config:
         # minAvailable: 2
         # maxUnavailable: 1
-        ## >= 1.27
+        # >= 1.27
         # unhealthyPodEvictionPolicy: AlwaysAllow
 
-      ## NetworkPolicy configuration
+      # NetworkPolicy configuration
       networkPolicy:
         enabled: false
         policyTypes:
@@ -922,9 +936,9 @@ components:
           - {}
 
 
-    ##
-    ##  BUILDS
-    ##
+    #
+    #  BUILDS
+    #
     builds:
       image:
         registry: *appwriteImgReg
@@ -934,10 +948,10 @@ components:
       command:
         - "worker-builds"
       env: true
-      ## Only effect if autoscaling false
+      # Only effect if autoscaling false
       replicaCount: 1
-      ## Setup autoscaling to enable HPA (HorizontalPodAutoscaler)
-      ## To enable also need to configure the resource limits
+      # Setup autoscaling to enable HPA (HorizontalPodAutoscaler)
+      # To enable also need to configure the resource limits
       autoscaling:
         enabled: false
         minReplicas: 1
@@ -945,7 +959,7 @@ components:
         targetCPU: "60"
         targetMemory: ""
         behavior: {}
-      ## Setup resource limits and requests
+      # Setup resource limits and requests
       resources: {}
       # limits:
       #   cpu: 100m
@@ -964,7 +978,7 @@ components:
         runAsUser: 472
         runAsGroup: 472
         fsGroup: 472
-        ## Enable it when deployed as statefulset
+        # Enable it when deployed as statefulset
         fsGroupChangePolicy: OnRootMismatch
       containerSecurityContext:
         allowPrivilegeEscalation: false
@@ -977,16 +991,16 @@ components:
       tolerations: []
       affinity: {}
 
-      ## PodDisruptionBudget configuration
+      # PodDisruptionBudget configuration
       podDisruption:
         enabled: false
         config:
         # minAvailable: 2
         # maxUnavailable: 1
-        ## >= 1.27
+        # >= 1.27
         # unhealthyPodEvictionPolicy: AlwaysAllow
 
-      ## NetworkPolicy configuration
+      # NetworkPolicy configuration
       networkPolicy:
         enabled: false
         policyTypes:
@@ -996,9 +1010,9 @@ components:
           - {}
 
 
-    ##
-    ##  CERTIFICATES
-    ##
+    #
+    #  CERTIFICATES
+    #
     certificates:
       image:
         registry: *appwriteImgReg
@@ -1008,10 +1022,10 @@ components:
       command:
         - "worker-certificates"
       env: true
-      ## Only effect if autoscaling false
+      # Only effect if autoscaling false
       replicaCount: 1
-      ## Setup autoscaling to enable HPA (HorizontalPodAutoscaler)
-      ## To enable also need to configure the resource limits
+      # Setup autoscaling to enable HPA (HorizontalPodAutoscaler)
+      # To enable also need to configure the resource limits
       autoscaling:
         enabled: false
         minReplicas: 1
@@ -1019,7 +1033,7 @@ components:
         targetCPU: "60"
         targetMemory: ""
         behavior: {}
-      ## Setup resource limits and requests
+      # Setup resource limits and requests
       resources: {}
       # limits:
       #   cpu: 100m
@@ -1038,7 +1052,7 @@ components:
         runAsUser: 472
         runAsGroup: 472
         fsGroup: 472
-        ## Enable it when deployed as statefulset
+        # Enable it when deployed as statefulset
         fsGroupChangePolicy: OnRootMismatch
       containerSecurityContext:
         allowPrivilegeEscalation: false
@@ -1051,16 +1065,16 @@ components:
       tolerations: []
       affinity: {}
 
-      ## PodDisruptionBudget configuration
+      # PodDisruptionBudget configuration
       podDisruption:
         enabled: false
         config:
         # minAvailable: 2
         # maxUnavailable: 1
-        ## >= 1.27
+        # >= 1.27
         # unhealthyPodEvictionPolicy: AlwaysAllow
 
-      ## NetworkPolicy configuration
+      # NetworkPolicy configuration
       networkPolicy:
         enabled: false
         policyTypes:
@@ -1070,9 +1084,9 @@ components:
           - {}
 
 
-    ##
-    ##  DATABASES
-    ##
+    #
+    #  DATABASES
+    #
     databases:
       image:
         registry: *appwriteImgReg
@@ -1082,10 +1096,10 @@ components:
       command:
         - "worker-databases"
       env: true
-      ## Only effect if autoscaling false
+      # Only effect if autoscaling false
       replicaCount: 1
-      ## Setup autoscaling to enable HPA (HorizontalPodAutoscaler)
-      ## To enable also need to configure the resource limits
+      # Setup autoscaling to enable HPA (HorizontalPodAutoscaler)
+      # To enable also need to configure the resource limits
       autoscaling:
         enabled: false
         minReplicas: 1
@@ -1093,7 +1107,7 @@ components:
         targetCPU: "60"
         targetMemory: ""
         behavior: {}
-      ## Setup resource limits and requests
+      # Setup resource limits and requests
       resources: {}
       # limits:
       #   cpu: 100m
@@ -1112,7 +1126,7 @@ components:
         runAsUser: 472
         runAsGroup: 472
         fsGroup: 472
-        ## Enable it when deployed as statefulset
+        # Enable it when deployed as statefulset
         fsGroupChangePolicy: OnRootMismatch
       containerSecurityContext:
         allowPrivilegeEscalation: false
@@ -1125,16 +1139,16 @@ components:
       tolerations: []
       affinity: {}
 
-      ## PodDisruptionBudget configuration
+      # PodDisruptionBudget configuration
       podDisruption:
         enabled: false
         config:
         # minAvailable: 2
         # maxUnavailable: 1
-        ## >= 1.27
+        # >= 1.27
         # unhealthyPodEvictionPolicy: AlwaysAllow
 
-      ## NetworkPolicy configuration
+      # NetworkPolicy configuration
       networkPolicy:
         enabled: false
         policyTypes:
@@ -1144,9 +1158,9 @@ components:
           - {}
 
 
-    ##
-    ##  DELETES
-    ##
+    #
+    #  DELETES
+    #
     deletes:
       image:
         registry: *appwriteImgReg
@@ -1156,10 +1170,10 @@ components:
       command:
         - "worker-deletes"
       env: true
-      ## Only effect if autoscaling false
+      # Only effect if autoscaling false
       replicaCount: 1
-      ## Setup autoscaling to enable HPA (HorizontalPodAutoscaler)
-      ## To enable also need to configure the resource limits
+      # Setup autoscaling to enable HPA (HorizontalPodAutoscaler)
+      # To enable also need to configure the resource limits
       autoscaling:
         enabled: false
         minReplicas: 1
@@ -1167,7 +1181,7 @@ components:
         targetCPU: "60"
         targetMemory: ""
         behavior: {}
-      ## Setup resource limits and requests
+      # Setup resource limits and requests
       resources: {}
       # limits:
       #   cpu: 100m
@@ -1186,7 +1200,7 @@ components:
         runAsUser: 472
         runAsGroup: 472
         fsGroup: 472
-        ## Enable it when deployed as statefulset
+        # Enable it when deployed as statefulset
         fsGroupChangePolicy: OnRootMismatch
       containerSecurityContext:
         allowPrivilegeEscalation: false
@@ -1199,16 +1213,16 @@ components:
       tolerations: []
       affinity: {}
 
-      ## PodDisruptionBudget configuration
+      # PodDisruptionBudget configuration
       podDisruption:
         enabled: false
         config:
         # minAvailable: 2
         # maxUnavailable: 1
-        ## >= 1.27
+        # >= 1.27
         # unhealthyPodEvictionPolicy: AlwaysAllow
 
-      ## NetworkPolicy configuration
+      # NetworkPolicy configuration
       networkPolicy:
         enabled: false
         policyTypes:
@@ -1218,9 +1232,9 @@ components:
           - {}
 
 
-    ##
-    ##  FUNCTIONS
-    ##
+    #
+    #  FUNCTIONS
+    #
     functions:
       image:
         registry: *appwriteImgReg
@@ -1230,10 +1244,10 @@ components:
       command:
         - "worker-functions"
       env: true
-      ## Only effect if autoscaling false
+      # Only effect if autoscaling false
       replicaCount: 1
-      ## Setup autoscaling to enable HPA (HorizontalPodAutoscaler)
-      ## To enable also need to configure the resource limits
+      # Setup autoscaling to enable HPA (HorizontalPodAutoscaler)
+      # To enable also need to configure the resource limits
       autoscaling:
         enabled: false
         minReplicas: 1
@@ -1241,7 +1255,7 @@ components:
         targetCPU: "60"
         targetMemory: ""
         behavior: {}
-      ## Setup resource limits and requests
+      # Setup resource limits and requests
       resources: {}
       # limits:
       #   cpu: 100m
@@ -1260,7 +1274,7 @@ components:
         runAsUser: 472
         runAsGroup: 472
         fsGroup: 472
-        ## Enable it when deployed as statefulset
+        # Enable it when deployed as statefulset
         fsGroupChangePolicy: OnRootMismatch
       containerSecurityContext:
         allowPrivilegeEscalation: false
@@ -1273,16 +1287,16 @@ components:
       tolerations: []
       affinity: {}
 
-      ## PodDisruptionBudget configuration
+      # PodDisruptionBudget configuration
       podDisruption:
         enabled: false
         config:
         # minAvailable: 2
         # maxUnavailable: 1
-        ## >= 1.27
+        # >= 1.27
         # unhealthyPodEvictionPolicy: AlwaysAllow
 
-      ## NetworkPolicy configuration
+      # NetworkPolicy configuration
       networkPolicy:
         enabled: false
         policyTypes:
@@ -1292,9 +1306,9 @@ components:
           - {}
 
 
-    ##
-    ##  MAILS
-    ##
+    #
+    #  MAILS
+    #
     mails:
       image:
         registry: *appwriteImgReg
@@ -1304,10 +1318,10 @@ components:
       command:
         - "worker-mails"
       env: true
-      ## Only effect if autoscaling false
+      # Only effect if autoscaling false
       replicaCount: 1
-      ## Setup autoscaling to enable HPA (HorizontalPodAutoscaler)
-      ## To enable also need to configure the resource limits
+      # Setup autoscaling to enable HPA (HorizontalPodAutoscaler)
+      # To enable also need to configure the resource limits
       autoscaling:
         enabled: false
         minReplicas: 1
@@ -1315,7 +1329,7 @@ components:
         targetCPU: "60"
         targetMemory: ""
         behavior: {}
-      ## Setup resource limits and requests
+      # Setup resource limits and requests
       resources: {}
       # limits:
       #   cpu: 100m
@@ -1334,7 +1348,7 @@ components:
         runAsUser: 472
         runAsGroup: 472
         fsGroup: 472
-        ## Enable it when deployed as statefulset
+        # Enable it when deployed as statefulset
         fsGroupChangePolicy: OnRootMismatch
       containerSecurityContext:
         allowPrivilegeEscalation: false
@@ -1347,16 +1361,16 @@ components:
       tolerations: []
       affinity: {}
 
-      ## PodDisruptionBudget configuration
+      # PodDisruptionBudget configuration
       podDisruption:
         enabled: false
         config:
         # minAvailable: 2
         # maxUnavailable: 1
-        ## >= 1.27
+        # >= 1.27
         # unhealthyPodEvictionPolicy: AlwaysAllow
 
-      ## NetworkPolicy configuration
+      # NetworkPolicy configuration
       networkPolicy:
         enabled: false
         policyTypes:
@@ -1366,9 +1380,9 @@ components:
           - {}
 
 
-    ##
-    ##  MESSAGING
-    ##
+    #
+    #  MESSAGING
+    #
     messaging:
       image:
         registry: *appwriteImgReg
@@ -1378,10 +1392,10 @@ components:
       command:
         - "worker-messaging"
       env: true
-      ## Only effect if autoscaling false
+      # Only effect if autoscaling false
       replicaCount: 1
-      ## Setup autoscaling to enable HPA (HorizontalPodAutoscaler)
-      ## To enable also need to configure the resource limits
+      # Setup autoscaling to enable HPA (HorizontalPodAutoscaler)
+      # To enable also need to configure the resource limits
       autoscaling:
         enabled: false
         minReplicas: 1
@@ -1389,7 +1403,7 @@ components:
         targetCPU: "60"
         targetMemory: ""
         behavior: {}
-      ## Setup resource limits and requests
+      # Setup resource limits and requests
       resources: {}
       # limits:
       #   cpu: 100m
@@ -1408,7 +1422,7 @@ components:
         runAsUser: 472
         runAsGroup: 472
         fsGroup: 472
-        ## Enable it when deployed as statefulset
+        # Enable it when deployed as statefulset
         fsGroupChangePolicy: OnRootMismatch
       containerSecurityContext:
         allowPrivilegeEscalation: false
@@ -1421,16 +1435,16 @@ components:
       tolerations: []
       affinity: {}
 
-      ## PodDisruptionBudget configuration
+      # PodDisruptionBudget configuration
       podDisruption:
         enabled: false
         config:
         # minAvailable: 2
         # maxUnavailable: 1
-        ## >= 1.27
+        # >= 1.27
         # unhealthyPodEvictionPolicy: AlwaysAllow
 
-      ## NetworkPolicy configuration
+      # NetworkPolicy configuration
       networkPolicy:
         enabled: false
         policyTypes:
@@ -1440,9 +1454,9 @@ components:
           - {}
 
 
-    ##
-    ##  WEBHOOKS
-    ##
+    #
+    #  WEBHOOKS
+    #
     webhooks:
       image:
         registry: *appwriteImgReg
@@ -1452,10 +1466,10 @@ components:
       command:
         - "worker-webhooks"
       env: true
-      ## Only effect if autoscaling false
+      # Only effect if autoscaling false
       replicaCount: 1
-      ## Setup autoscaling to enable HPA (HorizontalPodAutoscaler)
-      ## To enable also need to configure the resource limits
+      # Setup autoscaling to enable HPA (HorizontalPodAutoscaler)
+      # To enable also need to configure the resource limits
       autoscaling:
         enabled: false
         minReplicas: 1
@@ -1463,7 +1477,7 @@ components:
         targetCPU: "60"
         targetMemory: ""
         behavior: {}
-      ## Setup resource limits and requests
+      # Setup resource limits and requests
       resources: {}
       # limits:
       #   cpu: 100m
@@ -1482,7 +1496,7 @@ components:
         runAsUser: 472
         runAsGroup: 472
         fsGroup: 472
-        ## Enable it when deployed as statefulset
+        # Enable it when deployed as statefulset
         fsGroupChangePolicy: OnRootMismatch
       containerSecurityContext:
         allowPrivilegeEscalation: false
@@ -1495,16 +1509,16 @@ components:
       tolerations: []
       affinity: {}
 
-      ## PodDisruptionBudget configuration
+      # PodDisruptionBudget configuration
       podDisruption:
         enabled: false
         config:
         # minAvailable: 2
         # maxUnavailable: 1
-        ## >= 1.27
+        # >= 1.27
         # unhealthyPodEvictionPolicy: AlwaysAllow
 
-      ## NetworkPolicy configuration
+      # NetworkPolicy configuration
       networkPolicy:
         enabled: false
         policyTypes:
@@ -1516,20 +1530,20 @@ components:
 
 
 
-##
-## Bitnami Sub-Charts for required backend services (Redis, MariaDB, InfluxDB)
-##
+#
+# Bitnami Sub-Charts for required backend services (Redis, MariaDB, InfluxDB)
+#
 
-## Bitnami Redis subchart
+# Bitnami Redis subchart
 redis:
   enabled: false
   auth:
     enabled: false
     sentinel: false
-## Bitnami MariaDB subchart
+# Bitnami MariaDB subchart
 mariadb:
   enabled: false
-## Bitnami InfluxDB subchart
+# Bitnami InfluxDB subchart
 influxdb:
   enabled: false
   auth:
