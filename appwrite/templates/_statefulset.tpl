@@ -28,8 +28,8 @@ spec:
         app.kubernetes.io/name: {{ printf "%s-%s" (include "appwrite.fullname" .) .component.name | trunc 63 }}
         app.kubernetes.io/component: {{ .component.name }}
         {{- include "appwrite.labels" . | nindent 8 }}
-  spec:
-    {{- include "appwrite.pod" . | indent 4 -}}
+    spec:
+      {{- include "appwrite.pod" . | indent 6 -}}
   {{- with .component.config.nodeSelector }}
   nodeSelector:
     {{- toYaml . | nindent 4 }}
