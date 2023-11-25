@@ -51,7 +51,6 @@ containers:
     env:
       {{ toYaml . | nindent 6 }}
     {{- end }}
-    {{  }}
     volumeMounts:
     - name: storage
       mountPath: /storage

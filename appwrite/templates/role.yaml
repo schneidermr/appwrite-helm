@@ -8,5 +8,5 @@ rules:
   resources: ["pods"]
   verbs: ["*"]
 - apiGroups: [""]
-  resources: ["pods/log"]
-  verbs: ["get", "list"]
+  resources: ["pods/exec"]
+  verbs: ["*"]
