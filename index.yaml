@@ -3,7 +3,7 @@ entries:
   appwrite-helm:
   - apiVersion: v2
     appVersion: 1.4.13
-    created: "2023-11-25T21:33:39.231089+01:00"
+    created: "2023-11-25T21:38:51.009054+01:00"
     dependencies:
     - condition: redis.enabled
       name: redis
@@ -30,7 +30,7 @@ entries:
     name: appwrite-helm
     type: application
     urls:
-    - appwrite-helm-0.1.4.tgz
+    - https://github.com/schneidermr/appwrite-helm/releases/download/appwrite-helm-0.1.4/appwrite-helm-0.1.4.tgz
     version: 0.1.4
   - apiVersion: v2
     appVersion: 1.4.13
@@ -156,4 +156,4 @@ entries:
     urls:
     - appwrite-helm-0.1.0.tgz
     version: 0.1.0
-generated: "2023-11-25T21:33:39.231099+01:00"
+generated: "2023-11-25T21:38:51.009073+01:00"
