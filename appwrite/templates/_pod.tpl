@@ -51,7 +51,9 @@ containers:
     env:
       {{ toYaml . | nindent 6 }}
     {{- end }}
+    {{- if eq .component.name "core" }}
     volumeMounts:
     - name: storage
       mountPath: /storage
+    {{- end }}
 {{- end }}
