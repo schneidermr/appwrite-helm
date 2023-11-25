@@ -1,0 +1,13 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ printf "%s-%s" (include "appwrite.fullname" .) .component.name | trunc 63 }}
+  namespace: {{ include "appwrite.namespace" . }}
+subjects:
+- kind: ServiceAccount
+  name: {{ printf "%s-%s" (include "appwrite.fullname" .) .component.name | trunc 63 }}
+  namespace: {{ include "appwrite.namespace" . }}
+roleRef:
+  kind: Role
+  name: pod-manager
+  apiGroup: rbac.authorization.k8s.io
