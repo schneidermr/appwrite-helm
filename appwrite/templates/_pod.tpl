@@ -8,6 +8,7 @@ imagePullSecrets:
 securityContext:
   {{- toYaml . | nindent 2 }}
 {{- end }}
+restartPolicy: {{ .component.config.restartPolicy }}
 containers:
   - name: {{ .component.name }}
     {{- with .component.config.containerSecurityContext }}
@@ -40,7 +41,6 @@ containers:
     resources:
       {{- toYaml . | nindent 6 }}
     {{- end }}
-    restartPolicy: {{ .component.config.restartPolicy }}
     {{- if and (kindIs "bool" .component.config.env) .component.config.env }}
     envFrom:
       - configMapRef:
