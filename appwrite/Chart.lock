@@ -6,7 +6,7 @@ dependencies:
   repository: https://charts.bitnami.com/bitnami
   version: 14.1.2
 - name: influxdb
-  repository: https://charts.bitnami.com/bitnami
-  version: 5.10.2
-digest: sha256:0a7359c1aca700c59b1a1207fc7afcfd42c6ccd47ca3d41ec356120c17e05b30
-generated: "2023-11-23T20:21:33.645411+01:00"
+  repository: https://helm.influxdata.com/
+  version: 4.12.5
+digest: sha256:d59cb0bea4b0112f58db3b07a729b40b23b33b87b8ed882d633f0b7ec9eb1ba5
+generated: "2023-11-25T23:35:15.563441+01:00"

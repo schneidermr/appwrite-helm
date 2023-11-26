@@ -9,7 +9,7 @@ keywords:
   - "appwrite"
 icon: "https://appwrite.io/images/logos/logo.svg"
 type: application
-version: 0.1.5
+version: 0.1.7
 appVersion: "1.4.13"
 kubeVersion: ">=1.26"
 deprecated: false
@@ -23,8 +23,8 @@ dependencies:
     repository: https://charts.bitnami.com/bitnami
     condition: mariadb.enabled
   - name: influxdb
-    version: 5.10.2
-    repository: https://charts.bitnami.com/bitnami
+    version: 4.12.5
+    repository: https://helm.influxdata.com/
     condition: influxdb.enabled
 maintainers:
   - name: Marton Schneider

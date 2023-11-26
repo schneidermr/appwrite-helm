@@ -27,9 +27,9 @@ data:
   _APP_DOMAIN: {{ .Values.environments.domain.app | quote }}
   _APP_DOMAIN_FUNCTIONS: {{ .Values.environments.domain.functions | quote }}
   _APP_DOMAIN_TARGET: {{ .Values.environments.domain.target | quote }}
-  _APP_REDIS_HOST: {{ .Values.environments.redis.host | default (printf "%s-redis-master.%s.svc.%s" .Release.Name (include "appwrite.namespace" .) .Values.clusterDomain) | quote }}
+  _APP_REDIS_HOST: {{ .Values.environments.redis.host | default (printf "%s-redis-master.%s.svc" .Release.Name (include "appwrite.namespace" .)) | quote }}
   _APP_REDIS_PORT: {{ .Values.environments.redis.port | default 6379 | quote }}
-  _APP_DB_HOST: {{ .Values.environments.database.host | default (printf "%s-mariadb.%s.svc.%s" .Release.Name (include "appwrite.namespace" .) .Values.clusterDomain) | quote }}
+  _APP_DB_HOST: {{ .Values.environments.database.host | default (printf "%s-mariadb.%s.svc" .Release.Name (include "appwrite.namespace" .)) | quote }}
   _APP_DB_PORT: {{ .Values.environments.database.port | default 3306 | quote }}
   _APP_DB_SCHEMA: {{ .Values.environments.database.schema | quote }}
   _APP_STORAGE_DEVICE: {{ .Values.environments.storage.device | quote }}
@@ -45,11 +45,11 @@ data:
   _APP_STORAGE_WASABI_REGION: {{ .Values.environments.storage.wasabi.region | quote }}
   _APP_STORAGE_WASABI_BUCKET: {{ .Values.environments.storage.wasabi.bucket | quote }}
   _APP_STORAGE_ANTIVIRUS: {{ .Values.environments.storage.antivirus.enabled | quote }}
-  _APP_STORAGE_ANTIVIRUS_HOST: {{ .Values.environments.storage.antivirus.host | default (printf "clamav.%s.svc.%s" (include "appwrite.namespace" .) .Values.clusterDomain) | quote }}
+  _APP_STORAGE_ANTIVIRUS_HOST: {{ .Values.environments.storage.antivirus.host | default (printf "clamav.%s.svc" (include "appwrite.namespace" .)) | quote }}
   _APP_STORAGE_ANTIVIRUS_PORT: {{ .Values.environments.storage.antivirus.port | default 3310 | quote }}
-  _APP_INFLUXDB_HOST: {{ .Values.environments.influxdb.host | default (printf "%s-influxdb.%s.svc.%s" .Release.Name (include "appwrite.namespace" .) .Values.clusterDomain) | quote }}
+  _APP_INFLUXDB_HOST: {{ .Values.environments.influxdb.host | default (printf "%s-influxdb.%s.svc" .Release.Name (include "appwrite.namespace" .)) | quote }}
   _APP_INFLUXDB_PORT: {{ .Values.environments.influxdb.port | default 8086 | quote }}
-  _APP_STATSD_HOST: {{ .Values.environments.statsd.host | default (printf "telegraf.%s.svc.%s" (include "appwrite.namespace" .) .Values.clusterDomain) | quote }}
+  _APP_STATSD_HOST: {{ .Values.environments.statsd.host | default (printf "telegraf.%s.svc" (include "appwrite.namespace" .)) | quote }}
   _APP_STATSD_PORT: {{ .Values.environments.statsd.port | default 8125 | quote }}
   _APP_SMTP_HOST: {{ .Values.environments.smtp.host | quote }}
   _APP_SMTP_PORT: {{ .Values.environments.smtp.port | default 25 | quote }}
@@ -65,7 +65,7 @@ data:
   _APP_FUNCTIONS_MEMORY: {{ .Values.environments.functions.memory | quote }}
   _APP_FUNCTIONS_INACTIVE_THRESHOLD: {{ .Values.environments.functions.inactiveThreshold | quote }}
   _APP_FUNCTIONS_MAINTENANCE_INTERVAL: {{ .Values.environments.functions.maintenanceInterval | quote }}
-  _APP_EXECUTOR_HOST: {{ .Values.environments.executor.host | default (printf "http://proxy.%s.svc.%s/v1" (include "appwrite.namespace" .) .Values.clusterDomain) | quote }}
+  _APP_EXECUTOR_HOST: {{ .Values.environments.executor.host | default (printf "http://proxy.%s.svc/v1" (include "appwrite.namespace" .)) | quote }}
   _APP_FUNCTIONS_RUNTIMES: {{ if .Values.environments.functions.runtimes }}{{ (join "," .Values.environments.functions.runtimes) | quote }}{{ else }}{{ (print "php-8.0,node-18.0,python-3.9,ruby-3.1") | quote }}{{ end }}
   _APP_MAINTENANCE_INTERVAL: {{ .Values.environments.maintenance.interval | quote }}
   _APP_MAINTENANCE_RETENTION_CACHE: {{ .Values.environments.maintenance.retention.cache | quote }}
