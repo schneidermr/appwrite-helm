@@ -42,7 +42,7 @@ spec:
   tolerations:
     {{- toYaml . | nindent 4 }}
   {{- end }}
-  strategy:
+  updateStrategy:
     type: {{ .component.config.deploymentStrategy.type }}
     rollingUpdate:
       maxUnavailable: {{ .component.config.deploymentStrategy.maxUnavailable | default 1 }}
