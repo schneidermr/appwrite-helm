@@ -343,10 +343,10 @@ components:
     restartPolicy: OnFailure
     # -- 
     podSecurityContext:
-      runAsNonRoot: true
-      runAsUser: 472
-      runAsGroup: 472
-      fsGroup: 472
+      runAsNonRoot: false
+      runAsUser: 0
+      runAsGroup: 0
+      fsGroup: 0
       # Enable it when deployed as statefulset
       fsGroupChangePolicy: OnRootMismatch
     containerSecurityContext:
@@ -468,10 +468,10 @@ components:
       maxUnavailable: 1
     restartPolicy: OnFailure
     podSecurityContext:
-      runAsNonRoot: true
-      runAsUser: 472
-      runAsGroup: 472
-      fsGroup: 472
+      runAsNonRoot: false
+      runAsUser: 0
+      runAsGroup: 0
+      fsGroup: 0
       # Enable it when deployed as statefulset
       fsGroupChangePolicy: OnRootMismatch
     containerSecurityContext:
@@ -557,10 +557,10 @@ components:
       failureThreshold: 10
     restartPolicy: OnFailure
     podSecurityContext:
-      runAsNonRoot: true
-      runAsUser: 472
-      runAsGroup: 472
-      fsGroup: 472
+      runAsNonRoot: false
+      runAsUser: 0
+      runAsGroup: 0
+      fsGroup: 0
       # Enable it when deployed as statefulset
       fsGroupChangePolicy: OnRootMismatch
     containerSecurityContext:
@@ -676,10 +676,10 @@ components:
       maxUnavailable: 1
     restartPolicy: OnFailure
     podSecurityContext:
-      runAsNonRoot: true
-      runAsUser: 472
-      runAsGroup: 472
-      fsGroup: 472
+      runAsNonRoot: false
+      runAsUser: 0
+      runAsGroup: 0
+      fsGroup: 0
       # Enable it when deployed as statefulset
       fsGroupChangePolicy: OnRootMismatch
     containerSecurityContext:
@@ -821,10 +821,10 @@ components:
       maxUnavailable: 1
     restartPolicy: OnFailure
     podSecurityContext:
-      runAsNonRoot: true
-      runAsUser: 472
-      runAsGroup: 472
-      fsGroup: 472
+      runAsNonRoot: false
+      runAsUser: 0
+      runAsGroup: 0
+      fsGroup: 0
       # Enable it when deployed as statefulset
       fsGroupChangePolicy: OnRootMismatch
     containerSecurityContext:
@@ -900,10 +900,10 @@ components:
         maxUnavailable: 1
       restartPolicy: OnFailure
       podSecurityContext:
-        runAsNonRoot: true
-        runAsUser: 472
-        runAsGroup: 472
-        fsGroup: 472
+        runAsNonRoot: false
+        runAsUser: 0
+        runAsGroup: 0
+        fsGroup: 0
         # Enable it when deployed as statefulset
         fsGroupChangePolicy: OnRootMismatch
       containerSecurityContext:
@@ -974,10 +974,10 @@ components:
         maxUnavailable: 1
       restartPolicy: OnFailure
       podSecurityContext:
-        runAsNonRoot: true
-        runAsUser: 472
-        runAsGroup: 472
-        fsGroup: 472
+        runAsNonRoot: false
+        runAsUser: 0
+        runAsGroup: 0
+        fsGroup: 0
         # Enable it when deployed as statefulset
         fsGroupChangePolicy: OnRootMismatch
       containerSecurityContext:
@@ -1048,10 +1048,10 @@ components:
         maxUnavailable: 1
       restartPolicy: OnFailure
       podSecurityContext:
-        runAsNonRoot: true
-        runAsUser: 472
-        runAsGroup: 472
-        fsGroup: 472
+        runAsNonRoot: false
+        runAsUser: 0
+        runAsGroup: 0
+        fsGroup: 0
         # Enable it when deployed as statefulset
         fsGroupChangePolicy: OnRootMismatch
       containerSecurityContext:
@@ -1122,10 +1122,10 @@ components:
         maxUnavailable: 1
       restartPolicy: OnFailure
       podSecurityContext:
-        runAsNonRoot: true
-        runAsUser: 472
-        runAsGroup: 472
-        fsGroup: 472
+        runAsNonRoot: false
+        runAsUser: 0
+        runAsGroup: 0
+        fsGroup: 0
         # Enable it when deployed as statefulset
         fsGroupChangePolicy: OnRootMismatch
       containerSecurityContext:
@@ -1196,10 +1196,10 @@ components:
         maxUnavailable: 1
       restartPolicy: OnFailure
       podSecurityContext:
-        runAsNonRoot: true
-        runAsUser: 472
-        runAsGroup: 472
-        fsGroup: 472
+        runAsNonRoot: false
+        runAsUser: 0
+        runAsGroup: 0
+        fsGroup: 0
         # Enable it when deployed as statefulset
         fsGroupChangePolicy: OnRootMismatch
       containerSecurityContext:
@@ -1270,10 +1270,10 @@ components:
         maxUnavailable: 1
       restartPolicy: OnFailure
       podSecurityContext:
-        runAsNonRoot: true
-        runAsUser: 472
-        runAsGroup: 472
-        fsGroup: 472
+        runAsNonRoot: false
+        runAsUser: 0
+        runAsGroup: 0
+        fsGroup: 0
         # Enable it when deployed as statefulset
         fsGroupChangePolicy: OnRootMismatch
       containerSecurityContext:
@@ -1344,10 +1344,10 @@ components:
         maxUnavailable: 1
       restartPolicy: OnFailure
       podSecurityContext:
-        runAsNonRoot: true
-        runAsUser: 472
-        runAsGroup: 472
-        fsGroup: 472
+        runAsNonRoot: false
+        runAsUser: 0
+        runAsGroup: 0
+        fsGroup: 0
         # Enable it when deployed as statefulset
         fsGroupChangePolicy: OnRootMismatch
       containerSecurityContext:
@@ -1418,10 +1418,10 @@ components:
         maxUnavailable: 1
       restartPolicy: OnFailure
       podSecurityContext:
-        runAsNonRoot: true
-        runAsUser: 472
-        runAsGroup: 472
-        fsGroup: 472
+        runAsNonRoot: false
+        runAsUser: 0
+        runAsGroup: 0
+        fsGroup: 0
         # Enable it when deployed as statefulset
         fsGroupChangePolicy: OnRootMismatch
       containerSecurityContext:
@@ -1492,10 +1492,10 @@ components:
         maxUnavailable: 1
       restartPolicy: OnFailure
       podSecurityContext:
-        runAsNonRoot: true
-        runAsUser: 472
-        runAsGroup: 472
-        fsGroup: 472
+        runAsNonRoot: false
+        runAsUser: 0
+        runAsGroup: 0
+        fsGroup: 0
         # Enable it when deployed as statefulset
         fsGroupChangePolicy: OnRootMismatch
       containerSecurityContext:
