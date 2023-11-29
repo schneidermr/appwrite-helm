@@ -353,9 +353,6 @@ components:
       allowPrivilegeEscalation: false
       seccompProfile:
         type: RuntimeDefault
-      capabilities:
-        drop:
-        - ALL
     nodeSelector: {}
     tolerations: []
     affinity: {}
@@ -478,9 +475,6 @@ components:
       allowPrivilegeEscalation: false
       seccompProfile:
         type: RuntimeDefault
-      capabilities:
-        drop:
-        - ALL
     nodeSelector: {}
     tolerations: []
     affinity: {}
@@ -567,9 +561,6 @@ components:
       allowPrivilegeEscalation: false
       seccompProfile:
         type: RuntimeDefault
-      capabilities:
-        drop:
-        - ALL
     nodeSelector: {}
     tolerations: []
     affinity: {}
@@ -686,9 +677,6 @@ components:
       allowPrivilegeEscalation: false
       seccompProfile:
         type: RuntimeDefault
-      capabilities:
-        drop:
-        - ALL
     nodeSelector: {}
     tolerations: []
     affinity: {}
@@ -757,9 +745,6 @@ components:
       allowPrivilegeEscalation: false
       seccompProfile:
         type: RuntimeDefault
-      capabilities:
-        drop:
-        - ALL
     nodeSelector: {}
     tolerations: []
     affinity: {}
@@ -831,9 +816,6 @@ components:
       allowPrivilegeEscalation: false
       seccompProfile:
         type: RuntimeDefault
-      capabilities:
-        drop:
-        - ALL
     nodeSelector: {}
     tolerations: []
     affinity: {}
@@ -910,9 +892,6 @@ components:
         allowPrivilegeEscalation: false
         seccompProfile:
           type: RuntimeDefault
-        capabilities:
-          drop:
-          - ALL
       nodeSelector: {}
       tolerations: []
       affinity: {}
@@ -984,9 +963,6 @@ components:
         allowPrivilegeEscalation: false
         seccompProfile:
           type: RuntimeDefault
-        capabilities:
-          drop:
-          - ALL
       nodeSelector: {}
       tolerations: []
       affinity: {}
@@ -1058,9 +1034,6 @@ components:
         allowPrivilegeEscalation: false
         seccompProfile:
           type: RuntimeDefault
-        capabilities:
-          drop:
-          - ALL
       nodeSelector: {}
       tolerations: []
       affinity: {}
@@ -1132,9 +1105,6 @@ components:
         allowPrivilegeEscalation: false
         seccompProfile:
           type: RuntimeDefault
-        capabilities:
-          drop:
-          - ALL
       nodeSelector: {}
       tolerations: []
       affinity: {}
@@ -1206,9 +1176,6 @@ components:
         allowPrivilegeEscalation: false
         seccompProfile:
           type: RuntimeDefault
-        capabilities:
-          drop:
-          - ALL
       nodeSelector: {}
       tolerations: []
       affinity: {}
@@ -1280,9 +1247,6 @@ components:
         allowPrivilegeEscalation: false
         seccompProfile:
           type: RuntimeDefault
-        capabilities:
-          drop:
-          - ALL
       nodeSelector: {}
       tolerations: []
       affinity: {}
@@ -1354,9 +1318,6 @@ components:
         allowPrivilegeEscalation: false
         seccompProfile:
           type: RuntimeDefault
-        capabilities:
-          drop:
-          - ALL
       nodeSelector: {}
       tolerations: []
       affinity: {}
@@ -1428,9 +1389,6 @@ components:
         allowPrivilegeEscalation: false
         seccompProfile:
           type: RuntimeDefault
-        capabilities:
-          drop:
-          - ALL
       nodeSelector: {}
       tolerations: []
       affinity: {}
@@ -1502,9 +1460,6 @@ components:
         allowPrivilegeEscalation: false
         seccompProfile:
           type: RuntimeDefault
-        capabilities:
-          drop:
-          - ALL
       nodeSelector: {}
       tolerations: []
       affinity: {}
