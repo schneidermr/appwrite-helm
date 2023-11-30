@@ -1,1 +1,0 @@
-{{- include "appwrite.deployment" (merge (dict "component" (dict "name" "telegraf" "config" .Values.components.telegraf)) .) }}

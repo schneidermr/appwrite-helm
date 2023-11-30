@@ -1,3 +1,0 @@
-{{- if .Values.components.telegraf.networkPolicy.enabled }}
-{{- include "appwrite.firewall" (merge (dict "component" (dict "name" "telegraf" "config" .Values.components.telegraf)) .)}}
-{{- end }}

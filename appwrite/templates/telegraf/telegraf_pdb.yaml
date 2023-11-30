@@ -1,3 +1,0 @@
-{{- if .Values.components.telegraf.podDisruption.enabled }}
-{{- include "appwrite.budget" (merge (dict "component" (dict "name" "telegraf" "config" .Values.components.telegraf)) .)}}
-{{- end }}

@@ -8,5 +8,8 @@ dependencies:
 - name: influxdb
   repository: https://charts.bitnami.com/bitnami
   version: 5.10.2
-digest: sha256:0a7359c1aca700c59b1a1207fc7afcfd42c6ccd47ca3d41ec356120c17e05b30
-generated: "2023-11-29T21:43:18.115899+01:00"
+- name: telegraf
+  repository: https://helm.influxdata.com/
+  version: 1.8.38
+digest: sha256:268bc9e45538090cb8be1f5eb4d33f5836dcfb8ecab6fe00dde9c812ed365086
+generated: "2023-11-30T00:05:54.756551+01:00"

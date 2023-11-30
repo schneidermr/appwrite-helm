@@ -149,7 +149,7 @@ environments:
     previewLimit: 20000000
   influxdb:
     # _APP_INFLUXDB_HOST
-    host: ""
+    host: &influxhost ""
     # _APP_INFLUXDB_PORT
     port: 8086
   statsd:
@@ -1486,7 +1486,7 @@ components:
 
 
 #
-# Bitnami Sub-Charts for required backend services (Redis, MariaDB, InfluxDB)
+# Sub-Charts for required backend services (Redis, MariaDB, InfluxDB, Telegraf)
 #
 
 # Bitnami Redis subchart
@@ -1502,4 +1502,17 @@ mariadb:
 influxdb:
   enabled: false
   auth:
-    enabled: false
+    admin:
+      token: "supersecret-influx-token"
+      org: appwrite
+      bucket: telegraf
+# Influxdata Telegraf subchart
+telegraf:
+  enabled: false
+  config:
+    outputs:
+    - influxdb_v2:
+        urls: [*influxhost]
+        token: "supersecret-influx-token"
+        bucket: telegraf
+        organization: appwrite
