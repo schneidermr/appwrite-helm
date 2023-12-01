@@ -328,12 +328,12 @@ components:
     # -- Define the rediness probe
     readinessProbe:
       httpGet:
-        path: /api/health
+        path: /
         port: 80
     # -- Define the liveness probe
     livenessProbe:
       httpGet:
-        path: /api/health
+        path: /
         port: 80
       initialDelaySeconds: 30
       timeoutSeconds: 30
@@ -360,6 +360,11 @@ components:
     - name: http
       containerPort: 80
       protocol: TCP
+    test:
+    - hostkey: _APP_REDIS_HOST
+      portkey: _APP_REDIS_PORT
+    - hostkey: _APP_DB_HOST
+      portkey: _APP_DB_PORT
 
     # Service configuration
     service:
@@ -568,6 +573,9 @@ components:
     - name: http
       containerPort: 80
       protocol: TCP
+    test:
+    - hostkey: _APP_REDIS_HOST
+      portkey: _APP_REDIS_PORT
 
     # Service configuration
     service:

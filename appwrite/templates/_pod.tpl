@@ -9,6 +9,25 @@ securityContext:
   {{- toYaml . | nindent 2 }}
 {{- end }}
 restartPolicy: {{ .component.config.restartPolicy }}
+{{- if .component.config.test }}
+initContainers:
+  {{- $configname := (printf "%s-env" (include "appwrite.fullname" .)) -}}
+  {{- range $i, $v := .component.config.test }}
+  - name: "dependency-test-{{ $i }}"
+    image: ghcr.io/schneidermr/kubernetes-tools:telnet-test
+    env:
+      - name: TEST_HOST
+        valueFrom:
+          configMapKeyRef:
+            name: {{ $configname }}
+            key: {{ $v.hostkey }}
+      - name: TEST_PORT
+        valueFrom:
+          configMapKeyRef:
+            name: {{ $configname }}
+            key: {{ $v.portkey }}
+  {{- end }}
+{{- end }}
 containers:
   - name: {{ .component.name }}
     {{- with .component.config.containerSecurityContext }}
