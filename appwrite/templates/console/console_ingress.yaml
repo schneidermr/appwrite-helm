@@ -1,0 +1,3 @@
+{{- if .Values.components.console.ingress.enabled }}
+{{- include "appwrite.ingress" (merge (dict "component" (dict "name" "console" "config" .Values.components.console)) .)}}
+{{- end }}

@@ -70,7 +70,7 @@ containers:
     env:
       {{ toYaml . | nindent 6 }}
     {{- end }}
-    {{- if eq .component.name "core" }}
+    {{- if and (eq .component.name "core") (eq "local" (.Values.environments.storage.device | lower)) }}
     volumeMounts:
     - name: storage
       mountPath: /storage

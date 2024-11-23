@@ -276,25 +276,13 @@ podAnnotations: {}
 components:
   #
   #  CORE
-  #  APPWRITE STUDIO (WEBUI)
   #
   core:
-    # -- Core (aka Appwrite Studio - WebUI) component's image data
     image:
       registry: &appwriteImgReg docker.io
       repository: &appwriteImgRep appwrite/appwrite
-      tag: &appwriteImgTag 1.4.13
+      tag: &appwriteImgTag 1.6.0
       pullPolicy: &appwriteImgPullP IfNotPresent
-    # -- Startup command for the app
-    command:
-      - /bin/sh
-      - -c
-    # -- Startup command arguments for the app
-    args:
-      - php
-      - -e
-      - app/http.php
-      - -dopcache.preload=opcache.preload=/usr/src/code/app/preload.php
     # -- Attach previously defined environment variables to the pod
     env: true
     # -- The number of instances in which the application will run. Only effect if autoscaling false
@@ -426,6 +414,143 @@ components:
       egress: 
       - {}
 
+
+  #
+  #  CONSOLE
+  #
+  console:
+    image:
+      registry: &appwriteImgReg docker.io
+      repository: &appwriteImgRep appwrite/console
+      tag: &appwriteImgTag 5.0.12
+      pullPolicy: &appwriteImgPullP IfNotPresent
+    # -- Attach previously defined environment variables to the pod
+    env: false
+    # -- The number of instances in which the application will run. Only effect if autoscaling false
+    replicaCount: 1
+    # -- Setup autoscaling to enable HPA (HorizontalPodAutoscaler). 
+    # To enable autoscaling also need to configure the resource limits
+    autoscaling:
+      enabled: false
+      minReplicas: 1
+      maxReplicas: 5
+      targetCPU: "60"
+      targetMemory: ""
+      behavior: {}
+    # -- Setup resource limits and requests for the app
+    resources: {}
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # -- The labels that the application's pod will get.
+    # Will be extended with the common pod labels, what is defined in the global.
+    podLabels: {}
+    # -- The annotations that the application's pod will get.
+    # Will be extended with the common pod labels, what is defined in the global.
+    podAnnotations: {}
+    deploymentStrategy:
+      type: RollingUpdate
+      maxUnavailable: 1
+    # -- Define the rediness probe
+    readinessProbe:
+      httpGet:
+        path: /
+        port: 80
+    # -- Define the liveness probe
+    livenessProbe:
+      httpGet:
+        path: /
+        port: 80
+      initialDelaySeconds: 30
+      timeoutSeconds: 30
+      failureThreshold: 10
+    # -- Choose the right restart condition when the app has to be restarted.
+    # Available options: Always | OnFailure
+    restartPolicy: OnFailure
+    # -- 
+    podSecurityContext:
+      runAsNonRoot: false
+      runAsUser: 0
+      runAsGroup: 0
+      fsGroup: 0
+      # Enable it when deployed as statefulset
+      fsGroupChangePolicy: OnRootMismatch
+    containerSecurityContext:
+      allowPrivilegeEscalation: false
+      seccompProfile:
+        type: RuntimeDefault
+    nodeSelector: {}
+    tolerations: []
+    affinity: {}
+    ports:
+    - name: http
+      containerPort: 80
+      protocol: TCP
+
+    # Service configuration
+    service:
+      type: ClusterIP
+      ports:
+      - name: http
+        protocol: TCP
+        port: 80
+        targetPort: 80
+
+    # Ingress configuration
+    ingress:
+      enabled: false
+      className: ""
+      annotations: {}
+      # nginx.ingress.kubernetes.io/rewrite-target: /
+      # kubernetes.io/ingress.class: nginx
+      # kubernetes.io/tls-acme: "true"
+      rules:
+      - host: *appDomain
+        http:
+          paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: appwrite-console-svc
+                port:
+                  number: 80
+      tls: []
+      # - secretName: tls-secret-name
+      #   hosts:
+      #   - domain.name
+        
+    # PodDisruptionBudget configuration
+    podDisruption:
+      enabled: false
+      config:
+      # minAvailable: 2
+      # maxUnavailable: 1
+      # >= 1.27
+      # unhealthyPodEvictionPolicy: AlwaysAllow
+
+    # NetworkPolicy configuration
+    networkPolicy:
+      enabled: false
+      policyTypes:
+      - Ingress
+      ingress:
+      - from:
+        - ipBlock:
+            cidr: 0.0.0.0/0
+        - namespaceSelector:
+            matchLabels:
+              namespace: default
+        ports:
+          - protocol: TCP
+            port: 80
+      egress: 
+      - {}
+
+
   #
   #  EXECUTOR
   #
@@ -544,12 +669,10 @@ components:
       type: RollingUpdate
       maxUnavailable: 1
     readinessProbe:
-      httpGet:
-        path: /api/health
+      tcpSocket:
         port: 80
     livenessProbe:
-      httpGet:
-        path: /api/health
+      tcpSocket:
         port: 80
       initialDelaySeconds: 30
       timeoutSeconds: 30
