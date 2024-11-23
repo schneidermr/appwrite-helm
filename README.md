@@ -1,6 +1,6 @@
 # appwrite-helm
 
-![Version: 0.2.1](https://img.shields.io/badge/Version-0.2.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.6.0](https://img.shields.io/badge/AppVersion-1.6.0-informational?style=flat-square)
+![Version: 0.3.0](https://img.shields.io/badge/Version-0.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.6.0](https://img.shields.io/badge/AppVersion-1.6.0-informational?style=flat-square)
 
 An unofficial Helm chart to deploy Appwrite
 
@@ -70,7 +70,7 @@ Kubernetes: `>=1.26`
 | components.console.readinessProbe | object | `{"httpGet":{"path":"/","port":80}}` | Define the rediness probe |
 | components.console.replicaCount | int | `1` | The number of instances in which the application will run. Only effect if autoscaling false |
 | components.console.resources | object | `{}` | Setup resource limits and requests for the app |
-| components.console.restartPolicy | string | `"OnFailure"` | Choose the right restart condition when the app has to be restarted. Available options: Always | OnFailure |
+| components.console.restartPolicy | string | `"Always"` |  |
 | components.console.service.ports[0].name | string | `"http"` |  |
 | components.console.service.ports[0].port | int | `80` |  |
 | components.console.service.ports[0].protocol | string | `"TCP"` |  |
@@ -121,7 +121,7 @@ Kubernetes: `>=1.26`
 | components.core.readinessProbe | object | `{"httpGet":{"path":"/","port":80}}` | Define the rediness probe |
 | components.core.replicaCount | int | `1` | The number of instances in which the application will run. Only effect if autoscaling false |
 | components.core.resources | object | `{}` | Setup resource limits and requests for the app |
-| components.core.restartPolicy | string | `"OnFailure"` | Choose the right restart condition when the app has to be restarted. Available options: Always | OnFailure |
+| components.core.restartPolicy | string | `"Always"` |  |
 | components.core.service.ports[0].name | string | `"http"` |  |
 | components.core.service.ports[0].port | int | `80` |  |
 | components.core.service.ports[0].protocol | string | `"TCP"` |  |
@@ -133,44 +133,6 @@ Kubernetes: `>=1.26`
 | components.core.test[1].portkey | string | `"_APP_DB_PORT"` |  |
 | components.core.tolerations | list | `[]` |  |
 | components.executor | string | `nil` |  |
-| components.maintenance.affinity | object | `{}` |  |
-| components.maintenance.autoscaling.behavior | object | `{}` |  |
-| components.maintenance.autoscaling.enabled | bool | `false` |  |
-| components.maintenance.autoscaling.maxReplicas | int | `5` |  |
-| components.maintenance.autoscaling.minReplicas | int | `1` |  |
-| components.maintenance.autoscaling.targetCPU | string | `"60"` |  |
-| components.maintenance.autoscaling.targetMemory | string | `""` |  |
-| components.maintenance.command[0] | string | `"maintenance"` |  |
-| components.maintenance.containerSecurityContext.allowPrivilegeEscalation | bool | `false` |  |
-| components.maintenance.containerSecurityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
-| components.maintenance.deploymentStrategy.maxUnavailable | int | `1` |  |
-| components.maintenance.deploymentStrategy.type | string | `"RollingUpdate"` |  |
-| components.maintenance.env | bool | `true` |  |
-| components.maintenance.image.pullPolicy | string | `"IfNotPresent"` |  |
-| components.maintenance.image.registry | string | `"docker.io"` |  |
-| components.maintenance.image.repository | string | `"appwrite/console"` |  |
-| components.maintenance.image.tag | string | `"5.0.12"` |  |
-| components.maintenance.networkPolicy.egress[0] | object | `{}` |  |
-| components.maintenance.networkPolicy.enabled | bool | `false` |  |
-| components.maintenance.networkPolicy.policyTypes[0] | string | `"Ingress"` |  |
-| components.maintenance.networkPolicy.policyTypes[1] | string | `"Egress"` |  |
-| components.maintenance.nodeSelector | object | `{}` |  |
-| components.maintenance.podAnnotations | object | `{}` |  |
-| components.maintenance.podDisruption.config | string | `nil` |  |
-| components.maintenance.podDisruption.enabled | bool | `false` |  |
-| components.maintenance.podLabels | object | `{}` |  |
-| components.maintenance.podSecurityContext.fsGroup | int | `0` |  |
-| components.maintenance.podSecurityContext.fsGroupChangePolicy | string | `"OnRootMismatch"` |  |
-| components.maintenance.podSecurityContext.runAsGroup | int | `0` |  |
-| components.maintenance.podSecurityContext.runAsNonRoot | bool | `false` |  |
-| components.maintenance.podSecurityContext.runAsUser | int | `0` |  |
-| components.maintenance.ports[0].containerPort | int | `80` |  |
-| components.maintenance.ports[0].name | string | `"http"` |  |
-| components.maintenance.ports[0].protocol | string | `"TCP"` |  |
-| components.maintenance.replicaCount | int | `1` |  |
-| components.maintenance.resources | object | `{}` |  |
-| components.maintenance.restartPolicy | string | `"OnFailure"` |  |
-| components.maintenance.tolerations | list | `[]` |  |
 | components.realtime.affinity | object | `{}` |  |
 | components.realtime.autoscaling.behavior | object | `{}` |  |
 | components.realtime.autoscaling.enabled | bool | `false` |  |
@@ -192,7 +154,7 @@ Kubernetes: `>=1.26`
 | components.realtime.ingress.className | string | `""` |  |
 | components.realtime.ingress.enabled | bool | `false` |  |
 | components.realtime.ingress.rules[0].host | string | `"localhost"` |  |
-| components.realtime.ingress.rules[0].http.paths[0].backend.service.name | string | `"appwrite-app-svc"` |  |
+| components.realtime.ingress.rules[0].http.paths[0].backend.service.name | string | `"appwrite-realtime-svc"` |  |
 | components.realtime.ingress.rules[0].http.paths[0].backend.service.port.number | int | `80` |  |
 | components.realtime.ingress.rules[0].http.paths[0].path | string | `"/v1/realtime"` |  |
 | components.realtime.ingress.rules[0].http.paths[0].pathType | string | `"Prefix"` |  |
@@ -224,7 +186,7 @@ Kubernetes: `>=1.26`
 | components.realtime.readinessProbe.tcpSocket.port | int | `80` |  |
 | components.realtime.replicaCount | int | `1` |  |
 | components.realtime.resources | object | `{}` |  |
-| components.realtime.restartPolicy | string | `"OnFailure"` |  |
+| components.realtime.restartPolicy | string | `"Always"` |  |
 | components.realtime.service.ports[0].name | string | `"http"` |  |
 | components.realtime.service.ports[0].port | int | `80` |  |
 | components.realtime.service.ports[0].protocol | string | `"TCP"` |  |
@@ -232,111 +194,9 @@ Kubernetes: `>=1.26`
 | components.realtime.service.type | string | `"ClusterIP"` |  |
 | components.realtime.test[0].hostkey | string | `"_APP_REDIS_HOST"` |  |
 | components.realtime.test[0].portkey | string | `"_APP_REDIS_PORT"` |  |
+| components.realtime.test[1].hostkey | string | `"_APP_DB_HOST"` |  |
+| components.realtime.test[1].portkey | string | `"_APP_DB_PORT"` |  |
 | components.realtime.tolerations | list | `[]` |  |
-| components.schedule.affinity | object | `{}` |  |
-| components.schedule.autoscaling.behavior | object | `{}` |  |
-| components.schedule.autoscaling.enabled | bool | `false` |  |
-| components.schedule.autoscaling.maxReplicas | int | `5` |  |
-| components.schedule.autoscaling.minReplicas | int | `1` |  |
-| components.schedule.autoscaling.targetCPU | string | `"60"` |  |
-| components.schedule.autoscaling.targetMemory | string | `""` |  |
-| components.schedule.command[0] | string | `"schedule"` |  |
-| components.schedule.containerSecurityContext.allowPrivilegeEscalation | bool | `false` |  |
-| components.schedule.containerSecurityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
-| components.schedule.deploymentStrategy.maxUnavailable | int | `1` |  |
-| components.schedule.deploymentStrategy.type | string | `"RollingUpdate"` |  |
-| components.schedule.env | bool | `true` |  |
-| components.schedule.image.pullPolicy | string | `"IfNotPresent"` |  |
-| components.schedule.image.registry | string | `"docker.io"` |  |
-| components.schedule.image.repository | string | `"appwrite/console"` |  |
-| components.schedule.image.tag | string | `"5.0.12"` |  |
-| components.schedule.networkPolicy.egress[0] | object | `{}` |  |
-| components.schedule.networkPolicy.enabled | bool | `false` |  |
-| components.schedule.networkPolicy.policyTypes[0] | string | `"Ingress"` |  |
-| components.schedule.networkPolicy.policyTypes[1] | string | `"Egress"` |  |
-| components.schedule.nodeSelector | object | `{}` |  |
-| components.schedule.podAnnotations | object | `{}` |  |
-| components.schedule.podDisruption.config | string | `nil` |  |
-| components.schedule.podDisruption.enabled | bool | `false` |  |
-| components.schedule.podLabels | object | `{}` |  |
-| components.schedule.podSecurityContext.fsGroup | int | `0` |  |
-| components.schedule.podSecurityContext.fsGroupChangePolicy | string | `"OnRootMismatch"` |  |
-| components.schedule.podSecurityContext.runAsGroup | int | `0` |  |
-| components.schedule.podSecurityContext.runAsNonRoot | bool | `false` |  |
-| components.schedule.podSecurityContext.runAsUser | int | `0` |  |
-| components.schedule.replicaCount | int | `1` |  |
-| components.schedule.resources | object | `{}` |  |
-| components.schedule.restartPolicy | string | `"OnFailure"` |  |
-| components.schedule.tolerations | list | `[]` |  |
-| components.telegraf.affinity | object | `{}` |  |
-| components.telegraf.autoscaling.behavior | object | `{}` |  |
-| components.telegraf.autoscaling.enabled | bool | `false` |  |
-| components.telegraf.autoscaling.maxReplicas | int | `5` |  |
-| components.telegraf.autoscaling.minReplicas | int | `1` |  |
-| components.telegraf.autoscaling.targetCPU | string | `"60"` |  |
-| components.telegraf.autoscaling.targetMemory | string | `""` |  |
-| components.telegraf.containerSecurityContext.allowPrivilegeEscalation | bool | `false` |  |
-| components.telegraf.containerSecurityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
-| components.telegraf.deploymentStrategy.maxUnavailable | int | `1` |  |
-| components.telegraf.deploymentStrategy.type | string | `"RollingUpdate"` |  |
-| components.telegraf.env | bool | `true` |  |
-| components.telegraf.image.pullPolicy | string | `"IfNotPresent"` |  |
-| components.telegraf.image.registry | string | `"docker.io"` |  |
-| components.telegraf.image.repository | string | `"appwrite/telegraf"` |  |
-| components.telegraf.image.tag | string | `"1.4.0"` |  |
-| components.telegraf.networkPolicy.egress[0] | object | `{}` |  |
-| components.telegraf.networkPolicy.enabled | bool | `false` |  |
-| components.telegraf.networkPolicy.policyTypes[0] | string | `"Ingress"` |  |
-| components.telegraf.networkPolicy.policyTypes[1] | string | `"Egress"` |  |
-| components.telegraf.nodeSelector | object | `{}` |  |
-| components.telegraf.podAnnotations | object | `{}` |  |
-| components.telegraf.podDisruption.config | string | `nil` |  |
-| components.telegraf.podDisruption.enabled | bool | `false` |  |
-| components.telegraf.podLabels | object | `{}` |  |
-| components.telegraf.podSecurityContext.fsGroup | int | `472` |  |
-| components.telegraf.podSecurityContext.fsGroupChangePolicy | string | `"OnRootMismatch"` |  |
-| components.telegraf.podSecurityContext.runAsGroup | int | `472` |  |
-| components.telegraf.podSecurityContext.runAsNonRoot | bool | `true` |  |
-| components.telegraf.podSecurityContext.runAsUser | int | `472` |  |
-| components.telegraf.replicaCount | int | `1` |  |
-| components.telegraf.resources | object | `{}` |  |
-| components.telegraf.restartPolicy | string | `"OnFailure"` |  |
-| components.telegraf.tolerations | list | `[]` |  |
-| components.usage.affinity | object | `{}` |  |
-| components.usage.autoscaling.behavior | object | `{}` |  |
-| components.usage.autoscaling.enabled | bool | `false` |  |
-| components.usage.autoscaling.maxReplicas | int | `5` |  |
-| components.usage.autoscaling.minReplicas | int | `1` |  |
-| components.usage.autoscaling.targetCPU | string | `"60"` |  |
-| components.usage.autoscaling.targetMemory | string | `""` |  |
-| components.usage.command[0] | string | `"usage"` |  |
-| components.usage.containerSecurityContext.allowPrivilegeEscalation | bool | `false` |  |
-| components.usage.containerSecurityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
-| components.usage.deploymentStrategy.maxUnavailable | int | `1` |  |
-| components.usage.deploymentStrategy.type | string | `"RollingUpdate"` |  |
-| components.usage.env | bool | `true` |  |
-| components.usage.image.pullPolicy | string | `"IfNotPresent"` |  |
-| components.usage.image.registry | string | `"docker.io"` |  |
-| components.usage.image.repository | string | `"appwrite/console"` |  |
-| components.usage.image.tag | string | `"5.0.12"` |  |
-| components.usage.networkPolicy.egress[0] | object | `{}` |  |
-| components.usage.networkPolicy.enabled | bool | `false` |  |
-| components.usage.networkPolicy.policyTypes[0] | string | `"Ingress"` |  |
-| components.usage.networkPolicy.policyTypes[1] | string | `"Egress"` |  |
-| components.usage.nodeSelector | object | `{}` |  |
-| components.usage.podAnnotations | object | `{}` |  |
-| components.usage.podDisruption.config | string | `nil` |  |
-| components.usage.podDisruption.enabled | bool | `false` |  |
-| components.usage.podLabels | object | `{}` |  |
-| components.usage.podSecurityContext.fsGroup | int | `0` |  |
-| components.usage.podSecurityContext.fsGroupChangePolicy | string | `"OnRootMismatch"` |  |
-| components.usage.podSecurityContext.runAsGroup | int | `0` |  |
-| components.usage.podSecurityContext.runAsNonRoot | bool | `false` |  |
-| components.usage.podSecurityContext.runAsUser | int | `0` |  |
-| components.usage.replicaCount | int | `1` |  |
-| components.usage.resources | object | `{}` |  |
-| components.usage.restartPolicy | string | `"OnFailure"` |  |
-| components.usage.tolerations | list | `[]` |  |
 | environments | object | `{"assistant":{"openAi":{"apiKey":""}},"console":{"whitelist":{"emails":"","ips":"","root":""}},"database":{"host":"","password":"your-secret-password","port":3306,"rootPassword":"root-secret-root-password","schema":"appwrite","username":"user"},"dockerHub":{"password":"","username":""},"domain":{"app":"localhost","functions":"functions.localhost","target":"localhost"},"env":"production","executor":{"host":"","secret":""},"functions":{"buildTimeout":900,"cpus":"","inactiveThreshold":600,"maintenanceInterval":600,"memory":"","runtimes":["php-8.0","node-18.0","python-3.9","ruby-3.1"],"sizeLimit":30000000,"timeout":900},"graphql":{"maxBatchSize":10,"maxComplexity":250,"maxDepth":3},"influxdb":{"host":"","port":8086},"locale":"en","logging":{"config":"","provider":""},"maintenance":{"interval":86400,"retention":{"abuse":86400,"audit":1209600,"cache":2592000,"execution":1209600,"schedules":86400,"usageHourly":8640000}},"migrations":{"firebase":{"clientId":"","clientSecret":""}},"openssl":{"keyV1":""},"options":{"abuse":"disabled","forceHttps":"disabled","functions":{"forceHttps":"disabled"},"routerProtection":"disabled"},"redis":{"host":"","password":"","port":6379,"username":""},"sms":{"from":"","provider":""},"smtp":{"host":"","password":"","port":"","secure":"","username":""},"statsd":{"host":"","port":8125},"storage":{"antivirus":{"enabled":"disabled","host":"clamav","port":3310},"backblaze":{"accessKey":"","bucket":"","region":"us-west-004","secret":""},"device":"Local","doSpaces":{"accessKey":"","bucket":"","region":"us-east-1","secret":""},"limit":30000000,"linode":{"accessKey":"","bucket":"","region":"eu-central-1","secret":""},"previewLimit":20000000,"s3":{"accessKey":"","bucket":"","endpointUrl":"","region":"us-east-1","secret":""},"wasabi":{"accessKey":"","bucket":"","region":"eu-central-1","secret":""}},"system":{"email":{"address":"team@appwrite.io","name":"Appwrite"},"response":{"format":""},"security":{"emailAddress":"security@appwrite.io"}},"usage":{"aggregationInterval":5,"stats":"enabled"},"vcs":{"github":{"appId":"","appName":"","clientId":"","clientSecret":"","privateKey":"disabled","webhookSecret":""}},"worker":{"perCore":6}}` | Environment variables for Appwrite ref: [https://appwrite.io/docs/advanced/self-hosting/environment-variables] (https://appwrite.io/docs/advanced/self-hosting/environment-variables) |
 | global | object | `{"imagePullSecrets":[],"storageClass":""}` | These global values also affect the sub-charts |
 | global.imagePullSecrets | list | `[]` | Global Docker registry secret names E.g. imagePullSecrets:   - myRegistryKeySecretName |
