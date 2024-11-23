@@ -2,6 +2,41 @@ apiVersion: v1
 entries:
   appwrite-helm:
   - apiVersion: v2
+    appVersion: 1.6.0
+    created: "2024-11-23T23:27:45.681955+01:00"
+    dependencies:
+    - condition: redis.enabled
+      name: redis
+      repository: https://charts.bitnami.com/bitnami
+      version: 18.4.0
+    - condition: mariadb.enabled
+      name: mariadb
+      repository: https://charts.bitnami.com/bitnami
+      version: 14.1.2
+    - condition: influxdb.enabled
+      name: influxdb
+      repository: https://charts.bitnami.com/bitnami
+      version: 5.10.2
+    - condition: telegraf.enabled
+      name: telegraf
+      repository: https://helm.influxdata.com/
+      version: 1.8.38
+    description: An unofficial Helm chart to deploy Appwrite
+    digest: bfe0021f4b4c4ead45efcaf3f940c3d5a36f872103f63756f075552528ea1bf7
+    icon: https://appwrite.io/images/logos/logo.svg
+    keywords:
+    - Appwrite
+    - appwrite
+    kubeVersion: '>=1.26'
+    maintainers:
+    - name: Marton Schneider
+      url: https://github.com/schneidermr
+    name: appwrite-helm
+    type: application
+    urls:
+    - https://github.com/schneidermr/appwrite-helm/releases/download/appwrite-helm-0.2.1/appwrite-helm-0.2.1.tgz
+    version: 0.2.1
+  - apiVersion: v2
     appVersion: 1.4.13
     created: "2023-12-01T11:27:25.021916+01:00"
     dependencies:
@@ -408,4 +443,4 @@ entries:
     urls:
     - appwrite-helm-0.1.0.tgz
     version: 0.1.0
-generated: "2023-12-01T11:27:26.748554+01:00"
+generated: "2024-11-23T23:27:45.682052+01:00"
