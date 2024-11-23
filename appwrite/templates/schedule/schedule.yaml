@@ -1,1 +1,0 @@
-{{- include "appwrite.deployment" (merge (dict "component" (dict "name" "schedule" "config" .Values.components.schedule)) .) }}

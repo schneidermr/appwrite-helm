@@ -1,3 +1,0 @@
-{{- if .Values.components.maintenance.autoscaling.enabled }}
-{{- include "appwrite.autoscaling" (merge (dict "component" (dict "name" "maintenance" "config" .Values.components.maintenance)) .)}}
-{{- end }}

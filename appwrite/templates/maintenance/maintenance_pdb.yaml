@@ -1,3 +1,0 @@
-{{- if .Values.components.maintenance.podDisruption.enabled }}
-{{- include "appwrite.budget" (merge (dict "component" (dict "name" "maintenance" "config" .Values.components.maintenance)) .)}}
-{{- end }}

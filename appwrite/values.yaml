@@ -551,81 +551,7 @@ components:
   #  EXECUTOR
   #
   executor:
-    
-
-  #
-  #  MAINTENANCE
-  #
-  maintenance:
-    image:
-      registry: *appwriteImgReg
-      repository: *appwriteImgRep
-      tag: *appwriteImgTag
-      pullPolicy: *appwriteImgPullP
-    command:
-      - "maintenance"
-    env: true
-    # Only effect if autoscaling false
-    replicaCount: 1
-    # Setup autoscaling to enable HPA (HorizontalPodAutoscaler)
-    # To enable also need to configure the resource limits
-    autoscaling:
-      enabled: false
-      minReplicas: 1
-      maxReplicas: 5
-      targetCPU: "60"
-      targetMemory: ""
-      behavior: {}
-    # Setup resource limits and requests
-    resources: {}
-    # limits:
-    #   cpu: 100m
-    #   memory: 128Mi
-    # requests:
-    #   cpu: 100m
-    #   memory: 128Mi
-    podLabels: {}
-    podAnnotations: {}
-    deploymentStrategy:
-      type: RollingUpdate
-      maxUnavailable: 1
-    restartPolicy: Always
-    podSecurityContext:
-      runAsNonRoot: false
-      runAsUser: 0
-      runAsGroup: 0
-      fsGroup: 0
-      # Enable it when deployed as statefulset
-      fsGroupChangePolicy: OnRootMismatch
-    containerSecurityContext:
-      allowPrivilegeEscalation: false
-      seccompProfile:
-        type: RuntimeDefault
-    nodeSelector: {}
-    tolerations: []
-    affinity: {}
-    ports:
-    - name: http
-      containerPort: 80
-      protocol: TCP
-        
-    # PodDisruptionBudget configuration
-    podDisruption:
-      enabled: false
-      config:
-      # minAvailable: 2
-      # maxUnavailable: 1
-      # >= 1.27
-      # unhealthyPodEvictionPolicy: AlwaysAllow
-
-    # NetworkPolicy configuration
-    networkPolicy:
-      enabled: false
-      policyTypes:
-      - Ingress
-      - Egress
-      egress:
-        - {}
+  
 
 
   #
@@ -695,6 +621,8 @@ components:
     test:
     - hostkey: _APP_REDIS_HOST
       portkey: _APP_REDIS_PORT
+    - hostkey: _APP_DB_HOST
+      portkey: _APP_DB_PORT
 
     # Service configuration
     service:
@@ -721,7 +649,7 @@ components:
             pathType: Prefix
             backend:
               service:
-                name: appwrite-app-svc
+                name: appwrite-realtime-svc
                 port:
                   number: 80
       tls: []
@@ -754,216 +682,320 @@ components:
           - protocol: TCP
             port: 80
       egress: {}
-      
-
-  #
-  #  SCHEDULE
-  #
-  schedule:
-    image:
-      registry: *appwriteImgReg
-      repository: *appwriteImgRep
-      tag: *appwriteImgTag
-      pullPolicy: *appwriteImgPullP
-    command:
-      - "schedule"
-    env: true
-    # Only effect if autoscaling false
-    replicaCount: 1
-    # Setup autoscaling to enable HPA (HorizontalPodAutoscaler)
-    # To enable also need to configure the resource limits
-    autoscaling:
-      enabled: false
-      minReplicas: 1
-      maxReplicas: 5
-      targetCPU: "60"
-      targetMemory: ""
-      behavior: {}
-    # Setup resource limits and requests
-    resources: {}
-    # limits:
-    #   cpu: 100m
-    #   memory: 128Mi
-    # requests:
-    #   cpu: 100m
-    #   memory: 128Mi
-    podLabels: {}
-    podAnnotations: {}
-    deploymentStrategy:
-      type: RollingUpdate
-      maxUnavailable: 1
-    restartPolicy: Always
-    podSecurityContext:
-      runAsNonRoot: false
-      runAsUser: 0
-      runAsGroup: 0
-      fsGroup: 0
-      # Enable it when deployed as statefulset
-      fsGroupChangePolicy: OnRootMismatch
-    containerSecurityContext:
-      allowPrivilegeEscalation: false
-      seccompProfile:
-        type: RuntimeDefault
-    nodeSelector: {}
-    tolerations: []
-    affinity: {}
-        
-    # PodDisruptionBudget configuration
-    podDisruption:
-      enabled: false
-      config:
-      # minAvailable: 2
-      # maxUnavailable: 1
-      # >= 1.27
-      # unhealthyPodEvictionPolicy: AlwaysAllow
-
-    # NetworkPolicy configuration
-    networkPolicy:
-      enabled: false
-      policyTypes:
-      - Ingress
-      - Egress
-      egress:
-        - {}
-
-  #
-  #  TELEGRAF
-  #
-  telegraf:
-    image:
-      registry: docker.io
-      repository: appwrite/telegraf
-      tag: 1.4.0
-      pullPolicy: IfNotPresent
-    env: true
-    # Only effect if autoscaling false
-    replicaCount: 1
-    # Setup autoscaling to enable HPA (HorizontalPodAutoscaler)
-    # To enable also need to configure the resource limits
-    autoscaling:
-      enabled: false
-      minReplicas: 1
-      maxReplicas: 5
-      targetCPU: "60"
-      targetMemory: ""
-      behavior: {}
-    # Setup resource limits and requests
-    resources: {}
-    # limits:
-    #   cpu: 100m
-    #   memory: 128Mi
-    # requests:
-    #   cpu: 100m
-    #   memory: 128Mi
-    podLabels: {}
-    podAnnotations: {}
-    deploymentStrategy:
-      type: RollingUpdate
-      maxUnavailable: 1
-    restartPolicy: Always
-    podSecurityContext:
-      runAsNonRoot: true
-      runAsUser: 472
-      runAsGroup: 472
-      fsGroup: 472
-      # Enable it when deployed as statefulset
-      fsGroupChangePolicy: OnRootMismatch
-    containerSecurityContext:
-      allowPrivilegeEscalation: false
-      seccompProfile:
-        type: RuntimeDefault
-    nodeSelector: {}
-    tolerations: []
-    affinity: {}
-        
-    # PodDisruptionBudget configuration
-    podDisruption:
-      enabled: false
-      config:
-      # minAvailable: 2
-      # maxUnavailable: 1
-      # >= 1.27
-      # unhealthyPodEvictionPolicy: AlwaysAllow
-
-    # NetworkPolicy configuration
-    networkPolicy:
-      enabled: false
-      policyTypes:
-      - Ingress
-      - Egress
-      egress:
-      - {}
 
 
   #
-  #  USAGE
+  #  TASKS
   #
-  usage:
-    image:
-      registry: *appwriteImgReg
-      repository: *appwriteImgRep
-      tag: *appwriteImgTag
-      pullPolicy: *appwriteImgPullP
-    command:
-      - "usage"
-    env: true
-    # Only effect if autoscaling false
-    replicaCount: 1
-    # Setup autoscaling to enable HPA (HorizontalPodAutoscaler)
-    # To enable also need to configure the resource limits
-    autoscaling:
-      enabled: false
-      minReplicas: 1
-      maxReplicas: 5
-      targetCPU: "60"
-      targetMemory: ""
-      behavior: {}
-    # Setup resource limits and requests
-    resources: {}
-    # limits:
-    #   cpu: 100m
-    #   memory: 128Mi
-    # requests:
-    #   cpu: 100m
-    #   memory: 128Mi
-    podLabels: {}
-    podAnnotations: {}
-    deploymentStrategy:
-      type: RollingUpdate
-      maxUnavailable: 1
-    restartPolicy: Always
-    podSecurityContext:
-      runAsNonRoot: false
-      runAsUser: 0
-      runAsGroup: 0
-      fsGroup: 0
-      # Enable it when deployed as statefulset
-      fsGroupChangePolicy: OnRootMismatch
-    containerSecurityContext:
-      allowPrivilegeEscalation: false
-      seccompProfile:
-        type: RuntimeDefault
-    nodeSelector: {}
-    tolerations: []
-    affinity: {}
+  # @ignore
+  tasks:
+    #
+    #  MAINTENANCE
+    #
+    maintenance:
+      image:
+        registry: *appwriteImgReg
+        repository: *appwriteImgRep
+        tag: *appwriteImgTag
+        pullPolicy: *appwriteImgPullP
+      command:
+        - "maintenance"
+      env: true
+      # Only effect if autoscaling false
+      replicaCount: 1
+      # Setup autoscaling to enable HPA (HorizontalPodAutoscaler)
+      # To enable also need to configure the resource limits
+      autoscaling:
+        enabled: false
+        minReplicas: 1
+        maxReplicas: 5
+        targetCPU: "60"
+        targetMemory: ""
+        behavior: {}
+      # Setup resource limits and requests
+      resources: {}
+      # limits:
+      #   cpu: 100m
+      #   memory: 128Mi
+      # requests:
+      #   cpu: 100m
+      #   memory: 128Mi
+      podLabels: {}
+      podAnnotations: {}
+      deploymentStrategy:
+        type: RollingUpdate
+        maxUnavailable: 1
+      restartPolicy: Always
+      podSecurityContext:
+        runAsNonRoot: false
+        runAsUser: 0
+        runAsGroup: 0
+        fsGroup: 0
+        # Enable it when deployed as statefulset
+        fsGroupChangePolicy: OnRootMismatch
+      containerSecurityContext:
+        allowPrivilegeEscalation: false
+        seccompProfile:
+          type: RuntimeDefault
+      nodeSelector: {}
+      tolerations: []
+      affinity: {}
+      ports:
+      - name: http
+        containerPort: 80
+        protocol: TCP
+      test:
+      - hostkey: _APP_REDIS_HOST
+        portkey: _APP_REDIS_PORT
+          
+      # PodDisruptionBudget configuration
+      podDisruption:
+        enabled: false
+        config:
+        # minAvailable: 2
+        # maxUnavailable: 1
+        # >= 1.27
+        # unhealthyPodEvictionPolicy: AlwaysAllow
 
-    # PodDisruptionBudget configuration
-    podDisruption:
-      enabled: false
-      config:
-      # minAvailable: 2
-      # maxUnavailable: 1
-      # >= 1.27
-      # unhealthyPodEvictionPolicy: AlwaysAllow
+      # NetworkPolicy configuration
+      networkPolicy:
+        enabled: false
+        policyTypes:
+        - Ingress
+        - Egress
+        egress:
+          - {}
 
-    # NetworkPolicy configuration
-    networkPolicy:
-      enabled: false
-      policyTypes:
-      - Ingress
-      - Egress
-      egress: 
-        - {}
+
+  #
+  #  SCHEDULERS
+  #
+  # @ignore
+  schedulers:
+    #
+    #  FUNCTIONS
+    #
+    functions:
+      image:
+        registry: *appwriteImgReg
+        repository: *appwriteImgRep
+        tag: *appwriteImgTag
+        pullPolicy: *appwriteImgPullP
+      command:
+        - "schedule-functions"
+      env: true
+      # Only effect if autoscaling false
+      replicaCount: 1
+      # Setup autoscaling to enable HPA (HorizontalPodAutoscaler)
+      # To enable also need to configure the resource limits
+      autoscaling:
+        enabled: false
+        minReplicas: 1
+        maxReplicas: 5
+        targetCPU: "60"
+        targetMemory: ""
+        behavior: {}
+      # Setup resource limits and requests
+      resources: {}
+      # limits:
+      #   cpu: 100m
+      #   memory: 128Mi
+      # requests:
+      #   cpu: 100m
+      #   memory: 128Mi
+      podLabels: {}
+      podAnnotations: {}
+      deploymentStrategy:
+        type: RollingUpdate
+        maxUnavailable: 1
+      restartPolicy: Always
+      podSecurityContext:
+        runAsNonRoot: false
+        runAsUser: 0
+        runAsGroup: 0
+        fsGroup: 0
+        # Enable it when deployed as statefulset
+        fsGroupChangePolicy: OnRootMismatch
+      containerSecurityContext:
+        allowPrivilegeEscalation: false
+        seccompProfile:
+          type: RuntimeDefault
+      nodeSelector: {}
+      tolerations: []
+      affinity: {}
+      test:
+      - hostkey: _APP_REDIS_HOST
+        portkey: _APP_REDIS_PORT
+      - hostkey: _APP_DB_HOST
+        portkey: _APP_DB_PORT
+          
+      # PodDisruptionBudget configuration
+      podDisruption:
+        enabled: false
+        config:
+        # minAvailable: 2
+        # maxUnavailable: 1
+        # >= 1.27
+        # unhealthyPodEvictionPolicy: AlwaysAllow
+
+      # NetworkPolicy configuration
+      networkPolicy:
+        enabled: false
+        policyTypes:
+        - Ingress
+        - Egress
+        egress:
+          - {}
+
+    #
+    #  EXECUTIONS
+    #
+    executions:
+      image:
+        registry: *appwriteImgReg
+        repository: *appwriteImgRep
+        tag: *appwriteImgTag
+        pullPolicy: *appwriteImgPullP
+      command:
+        - "schedule-executions"
+      env: true
+      # Only effect if autoscaling false
+      replicaCount: 1
+      # Setup autoscaling to enable HPA (HorizontalPodAutoscaler)
+      # To enable also need to configure the resource limits
+      autoscaling:
+        enabled: false
+        minReplicas: 1
+        maxReplicas: 5
+        targetCPU: "60"
+        targetMemory: ""
+        behavior: {}
+      # Setup resource limits and requests
+      resources: {}
+      # limits:
+      #   cpu: 100m
+      #   memory: 128Mi
+      # requests:
+      #   cpu: 100m
+      #   memory: 128Mi
+      podLabels: {}
+      podAnnotations: {}
+      deploymentStrategy:
+        type: RollingUpdate
+        maxUnavailable: 1
+      restartPolicy: Always
+      podSecurityContext:
+        runAsNonRoot: false
+        runAsUser: 0
+        runAsGroup: 0
+        fsGroup: 0
+        # Enable it when deployed as statefulset
+        fsGroupChangePolicy: OnRootMismatch
+      containerSecurityContext:
+        allowPrivilegeEscalation: false
+        seccompProfile:
+          type: RuntimeDefault
+      nodeSelector: {}
+      tolerations: []
+      affinity: {}
+      test:
+      - hostkey: _APP_REDIS_HOST
+        portkey: _APP_REDIS_PORT
+      - hostkey: _APP_DB_HOST
+        portkey: _APP_DB_PORT
+          
+      # PodDisruptionBudget configuration
+      podDisruption:
+        enabled: false
+        config:
+        # minAvailable: 2
+        # maxUnavailable: 1
+        # >= 1.27
+        # unhealthyPodEvictionPolicy: AlwaysAllow
+
+      # NetworkPolicy configuration
+      networkPolicy:
+        enabled: false
+        policyTypes:
+        - Ingress
+        - Egress
+        egress:
+          - {}
+
+    #
+    #  MESSAGES
+    #
+    messages:
+      image:
+        registry: *appwriteImgReg
+        repository: *appwriteImgRep
+        tag: *appwriteImgTag
+        pullPolicy: *appwriteImgPullP
+      command:
+        - "schedule-messages"
+      env: true
+      # Only effect if autoscaling false
+      replicaCount: 1
+      # Setup autoscaling to enable HPA (HorizontalPodAutoscaler)
+      # To enable also need to configure the resource limits
+      autoscaling:
+        enabled: false
+        minReplicas: 1
+        maxReplicas: 5
+        targetCPU: "60"
+        targetMemory: ""
+        behavior: {}
+      # Setup resource limits and requests
+      resources: {}
+      # limits:
+      #   cpu: 100m
+      #   memory: 128Mi
+      # requests:
+      #   cpu: 100m
+      #   memory: 128Mi
+      podLabels: {}
+      podAnnotations: {}
+      deploymentStrategy:
+        type: RollingUpdate
+        maxUnavailable: 1
+      restartPolicy: Always
+      podSecurityContext:
+        runAsNonRoot: false
+        runAsUser: 0
+        runAsGroup: 0
+        fsGroup: 0
+        # Enable it when deployed as statefulset
+        fsGroupChangePolicy: OnRootMismatch
+      containerSecurityContext:
+        allowPrivilegeEscalation: false
+        seccompProfile:
+          type: RuntimeDefault
+      nodeSelector: {}
+      tolerations: []
+      affinity: {}
+      test:
+      - hostkey: _APP_REDIS_HOST
+        portkey: _APP_REDIS_PORT
+      - hostkey: _APP_DB_HOST
+        portkey: _APP_DB_PORT
+          
+      # PodDisruptionBudget configuration
+      podDisruption:
+        enabled: false
+        config:
+        # minAvailable: 2
+        # maxUnavailable: 1
+        # >= 1.27
+        # unhealthyPodEvictionPolicy: AlwaysAllow
+
+      # NetworkPolicy configuration
+      networkPolicy:
+        enabled: false
+        policyTypes:
+        - Ingress
+        - Egress
+        egress:
+          - {}
 
 
   #
@@ -971,6 +1003,158 @@ components:
   #
   # @ignore
   workers:
+    #
+    #  USAGE
+    #
+    usage:
+      image:
+        registry: *appwriteImgReg
+        repository: *appwriteImgRep
+        tag: *appwriteImgTag
+        pullPolicy: *appwriteImgPullP
+      command:
+        - "worker-usage"
+      env: true
+      # Only effect if autoscaling false
+      replicaCount: 1
+      # Setup autoscaling to enable HPA (HorizontalPodAutoscaler)
+      # To enable also need to configure the resource limits
+      autoscaling:
+        enabled: false
+        minReplicas: 1
+        maxReplicas: 5
+        targetCPU: "60"
+        targetMemory: ""
+        behavior: {}
+      # Setup resource limits and requests
+      resources: {}
+      # limits:
+      #   cpu: 100m
+      #   memory: 128Mi
+      # requests:
+      #   cpu: 100m
+      #   memory: 128Mi
+      podLabels: {}
+      podAnnotations: {}
+      deploymentStrategy:
+        type: RollingUpdate
+        maxUnavailable: 1
+      restartPolicy: Always
+      podSecurityContext:
+        runAsNonRoot: false
+        runAsUser: 0
+        runAsGroup: 0
+        fsGroup: 0
+        # Enable it when deployed as statefulset
+        fsGroupChangePolicy: OnRootMismatch
+      containerSecurityContext:
+        allowPrivilegeEscalation: false
+        seccompProfile:
+          type: RuntimeDefault
+      nodeSelector: {}
+      tolerations: []
+      affinity: {}
+      test:
+      - hostkey: _APP_REDIS_HOST
+        portkey: _APP_REDIS_PORT
+      - hostkey: _APP_DB_HOST
+        portkey: _APP_DB_PORT
+
+      # PodDisruptionBudget configuration
+      podDisruption:
+        enabled: false
+        config:
+        # minAvailable: 2
+        # maxUnavailable: 1
+        # >= 1.27
+        # unhealthyPodEvictionPolicy: AlwaysAllow
+
+      # NetworkPolicy configuration
+      networkPolicy:
+        enabled: false
+        policyTypes:
+        - Ingress
+        - Egress
+        egress: 
+          - {}
+
+
+    #
+    #  USAGE DUMP
+    #
+    usage-dump:
+      image:
+        registry: *appwriteImgReg
+        repository: *appwriteImgRep
+        tag: *appwriteImgTag
+        pullPolicy: *appwriteImgPullP
+      command:
+        - "worker-usage"
+      env: true
+      # Only effect if autoscaling false
+      replicaCount: 1
+      # Setup autoscaling to enable HPA (HorizontalPodAutoscaler)
+      # To enable also need to configure the resource limits
+      autoscaling:
+        enabled: false
+        minReplicas: 1
+        maxReplicas: 5
+        targetCPU: "60"
+        targetMemory: ""
+        behavior: {}
+      # Setup resource limits and requests
+      resources: {}
+      # limits:
+      #   cpu: 100m
+      #   memory: 128Mi
+      # requests:
+      #   cpu: 100m
+      #   memory: 128Mi
+      podLabels: {}
+      podAnnotations: {}
+      deploymentStrategy:
+        type: RollingUpdate
+        maxUnavailable: 1
+      restartPolicy: Always
+      podSecurityContext:
+        runAsNonRoot: false
+        runAsUser: 0
+        runAsGroup: 0
+        fsGroup: 0
+        # Enable it when deployed as statefulset
+        fsGroupChangePolicy: OnRootMismatch
+      containerSecurityContext:
+        allowPrivilegeEscalation: false
+        seccompProfile:
+          type: RuntimeDefault
+      nodeSelector: {}
+      tolerations: []
+      affinity: {}
+      test:
+      - hostkey: _APP_REDIS_HOST
+        portkey: _APP_REDIS_PORT
+      - hostkey: _APP_DB_HOST
+        portkey: _APP_DB_PORT
+
+      # PodDisruptionBudget configuration
+      podDisruption:
+        enabled: false
+        config:
+        # minAvailable: 2
+        # maxUnavailable: 1
+        # >= 1.27
+        # unhealthyPodEvictionPolicy: AlwaysAllow
+
+      # NetworkPolicy configuration
+      networkPolicy:
+        enabled: false
+        policyTypes:
+        - Ingress
+        - Egress
+        egress: 
+          - {}
+
+
     #
     #  AUDITS
     #
@@ -1022,6 +1206,11 @@ components:
       nodeSelector: {}
       tolerations: []
       affinity: {}
+      test:
+      - hostkey: _APP_REDIS_HOST
+        portkey: _APP_REDIS_PORT
+      - hostkey: _APP_DB_HOST
+        portkey: _APP_DB_PORT
 
       # PodDisruptionBudget configuration
       podDisruption:
@@ -1093,6 +1282,11 @@ components:
       nodeSelector: {}
       tolerations: []
       affinity: {}
+      test:
+      - hostkey: _APP_REDIS_HOST
+        portkey: _APP_REDIS_PORT
+      - hostkey: _APP_DB_HOST
+        portkey: _APP_DB_PORT
 
       # PodDisruptionBudget configuration
       podDisruption:
@@ -1164,6 +1358,11 @@ components:
       nodeSelector: {}
       tolerations: []
       affinity: {}
+      test:
+      - hostkey: _APP_REDIS_HOST
+        portkey: _APP_REDIS_PORT
+      - hostkey: _APP_DB_HOST
+        portkey: _APP_DB_PORT
 
       # PodDisruptionBudget configuration
       podDisruption:
@@ -1235,6 +1434,11 @@ components:
       nodeSelector: {}
       tolerations: []
       affinity: {}
+      test:
+      - hostkey: _APP_REDIS_HOST
+        portkey: _APP_REDIS_PORT
+      - hostkey: _APP_DB_HOST
+        portkey: _APP_DB_PORT
 
       # PodDisruptionBudget configuration
       podDisruption:
@@ -1306,6 +1510,11 @@ components:
       nodeSelector: {}
       tolerations: []
       affinity: {}
+      test:
+      - hostkey: _APP_REDIS_HOST
+        portkey: _APP_REDIS_PORT
+      - hostkey: _APP_DB_HOST
+        portkey: _APP_DB_PORT
 
       # PodDisruptionBudget configuration
       podDisruption:
@@ -1377,6 +1586,11 @@ components:
       nodeSelector: {}
       tolerations: []
       affinity: {}
+      test:
+      - hostkey: _APP_REDIS_HOST
+        portkey: _APP_REDIS_PORT
+      - hostkey: _APP_DB_HOST
+        portkey: _APP_DB_PORT
 
       # PodDisruptionBudget configuration
       podDisruption:
@@ -1448,6 +1662,9 @@ components:
       nodeSelector: {}
       tolerations: []
       affinity: {}
+      test:
+      - hostkey: _APP_REDIS_HOST
+        portkey: _APP_REDIS_PORT
 
       # PodDisruptionBudget configuration
       podDisruption:
@@ -1519,6 +1736,83 @@ components:
       nodeSelector: {}
       tolerations: []
       affinity: {}
+      test:
+      - hostkey: _APP_REDIS_HOST
+        portkey: _APP_REDIS_PORT
+
+      # PodDisruptionBudget configuration
+      podDisruption:
+        enabled: false
+        config:
+        # minAvailable: 2
+        # maxUnavailable: 1
+        # >= 1.27
+        # unhealthyPodEvictionPolicy: AlwaysAllow
+
+      # NetworkPolicy configuration
+      networkPolicy:
+        enabled: false
+        policyTypes:
+        - Ingress
+        - Egress
+        egress: 
+          - {}
+
+
+    #
+    #  MIGRATIONS
+    #
+    migrations:
+      image:
+        registry: *appwriteImgReg
+        repository: *appwriteImgRep
+        tag: *appwriteImgTag
+        pullPolicy: *appwriteImgPullP
+      command:
+        - "worker-migrations"
+      env: true
+      # Only effect if autoscaling false
+      replicaCount: 1
+      # Setup autoscaling to enable HPA (HorizontalPodAutoscaler)
+      # To enable also need to configure the resource limits
+      autoscaling:
+        enabled: false
+        minReplicas: 1
+        maxReplicas: 5
+        targetCPU: "60"
+        targetMemory: ""
+        behavior: {}
+      # Setup resource limits and requests
+      resources: {}
+      # limits:
+      #   cpu: 100m
+      #   memory: 128Mi
+      # requests:
+      #   cpu: 100m
+      #   memory: 128Mi
+      podLabels: {}
+      podAnnotations: {}
+      deploymentStrategy:
+        type: RollingUpdate
+        maxUnavailable: 1
+      restartPolicy: Always
+      podSecurityContext:
+        runAsNonRoot: false
+        runAsUser: 0
+        runAsGroup: 0
+        fsGroup: 0
+        # Enable it when deployed as statefulset
+        fsGroupChangePolicy: OnRootMismatch
+      containerSecurityContext:
+        allowPrivilegeEscalation: false
+        seccompProfile:
+          type: RuntimeDefault
+      nodeSelector: {}
+      tolerations: []
+      affinity: {}
+      test:
+      - hostkey: _APP_DB_HOST
+        portkey: _APP_DB_PORT
 
       # PodDisruptionBudget configuration
       podDisruption:
@@ -1590,6 +1884,11 @@ components:
       nodeSelector: {}
       tolerations: []
       affinity: {}
+      test:
+      - hostkey: _APP_REDIS_HOST
+        portkey: _APP_REDIS_PORT
+      - hostkey: _APP_DB_HOST
+        portkey: _APP_DB_PORT
 
       # PodDisruptionBudget configuration
       podDisruption:

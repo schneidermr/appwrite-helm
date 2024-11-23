@@ -1,0 +1,3 @@
+{{- if .Values.components.schedulers.executions.podDisruption.enabled }}
+{{- include "appwrite.budget" (merge (dict "component" (dict "name" "executions" "config" .Values.components.schedulers.executions)) .)}}
+{{- end }}

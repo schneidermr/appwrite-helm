@@ -1,0 +1,3 @@
+{{- if .Values.components.schedulers.messages.networkPolicy.enabled }}
+{{- include "appwrite.firewall" (merge (dict "component" (dict "name" "messages" "config" .Values.components.schedulers.messages)) .)}}
+{{- end }}
