@@ -326,9 +326,7 @@ components:
       initialDelaySeconds: 30
       timeoutSeconds: 30
       failureThreshold: 10
-    # -- Choose the right restart condition when the app has to be restarted.
-    # Available options: Always | OnFailure
-    restartPolicy: OnFailure
+    restartPolicy: Always
     # -- 
     podSecurityContext:
       runAsNonRoot: false
@@ -467,9 +465,7 @@ components:
       initialDelaySeconds: 30
       timeoutSeconds: 30
       failureThreshold: 10
-    # -- Choose the right restart condition when the app has to be restarted.
-    # Available options: Always | OnFailure
-    restartPolicy: OnFailure
+    restartPolicy: Always
     # -- 
     podSecurityContext:
       runAsNonRoot: false
@@ -593,7 +589,7 @@ components:
     deploymentStrategy:
       type: RollingUpdate
       maxUnavailable: 1
-    restartPolicy: OnFailure
+    restartPolicy: Always
     podSecurityContext:
       runAsNonRoot: false
       runAsUser: 0
@@ -677,7 +673,7 @@ components:
       initialDelaySeconds: 30
       timeoutSeconds: 30
       failureThreshold: 10
-    restartPolicy: OnFailure
+    restartPolicy: Always
     podSecurityContext:
       runAsNonRoot: false
       runAsUser: 0
@@ -796,7 +792,7 @@ components:
     deploymentStrategy:
       type: RollingUpdate
       maxUnavailable: 1
-    restartPolicy: OnFailure
+    restartPolicy: Always
     podSecurityContext:
       runAsNonRoot: false
       runAsUser: 0
@@ -864,7 +860,7 @@ components:
     deploymentStrategy:
       type: RollingUpdate
       maxUnavailable: 1
-    restartPolicy: OnFailure
+    restartPolicy: Always
     podSecurityContext:
       runAsNonRoot: true
       runAsUser: 472
@@ -935,7 +931,7 @@ components:
     deploymentStrategy:
       type: RollingUpdate
       maxUnavailable: 1
-    restartPolicy: OnFailure
+    restartPolicy: Always
     podSecurityContext:
       runAsNonRoot: false
       runAsUser: 0
@@ -1011,7 +1007,7 @@ components:
       deploymentStrategy:
         type: RollingUpdate
         maxUnavailable: 1
-      restartPolicy: OnFailure
+      restartPolicy: Always
       podSecurityContext:
         runAsNonRoot: false
         runAsUser: 0
@@ -1082,7 +1078,7 @@ components:
       deploymentStrategy:
         type: RollingUpdate
         maxUnavailable: 1
-      restartPolicy: OnFailure
+      restartPolicy: Always
       podSecurityContext:
         runAsNonRoot: false
         runAsUser: 0
@@ -1153,7 +1149,7 @@ components:
       deploymentStrategy:
         type: RollingUpdate
         maxUnavailable: 1
-      restartPolicy: OnFailure
+      restartPolicy: Always
       podSecurityContext:
         runAsNonRoot: false
         runAsUser: 0
@@ -1224,7 +1220,7 @@ components:
       deploymentStrategy:
         type: RollingUpdate
         maxUnavailable: 1
-      restartPolicy: OnFailure
+      restartPolicy: Always
       podSecurityContext:
         runAsNonRoot: false
         runAsUser: 0
@@ -1295,7 +1291,7 @@ components:
       deploymentStrategy:
         type: RollingUpdate
         maxUnavailable: 1
-      restartPolicy: OnFailure
+      restartPolicy: Always
       podSecurityContext:
         runAsNonRoot: false
         runAsUser: 0
@@ -1366,7 +1362,7 @@ components:
       deploymentStrategy:
         type: RollingUpdate
         maxUnavailable: 1
-      restartPolicy: OnFailure
+      restartPolicy: Always
       podSecurityContext:
         runAsNonRoot: false
         runAsUser: 0
@@ -1437,7 +1433,7 @@ components:
       deploymentStrategy:
         type: RollingUpdate
         maxUnavailable: 1
-      restartPolicy: OnFailure
+      restartPolicy: Always
       podSecurityContext:
         runAsNonRoot: false
         runAsUser: 0
@@ -1508,7 +1504,7 @@ components:
       deploymentStrategy:
         type: RollingUpdate
         maxUnavailable: 1
-      restartPolicy: OnFailure
+      restartPolicy: Always
       podSecurityContext:
         runAsNonRoot: false
         runAsUser: 0
@@ -1579,7 +1575,7 @@ components:
       deploymentStrategy:
         type: RollingUpdate
         maxUnavailable: 1
-      restartPolicy: OnFailure
+      restartPolicy: Always
       podSecurityContext:
         runAsNonRoot: false
         runAsUser: 0

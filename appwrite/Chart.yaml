@@ -9,7 +9,7 @@ keywords:
   - "appwrite"
 icon: "https://appwrite.io/images/logos/logo.svg"
 type: application
-version: 0.2.1
+version: 0.2.2
 appVersion: "1.6.0"
 kubeVersion: ">=1.26"
 deprecated: false
