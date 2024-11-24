@@ -1,1 +1,1 @@
-{{- include "appwrite.deployment" (merge (dict "component" (dict "name" "task_functions" "config" .Values.components.schedulers.functions)) .) }}
+{{- include "appwrite.deployment" (merge (dict "component" (dict "name" "task-functions" "config" .Values.components.schedulers.functions)) .) }}
