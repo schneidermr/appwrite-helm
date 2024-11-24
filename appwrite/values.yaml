@@ -315,13 +315,11 @@ components:
       maxUnavailable: 1
     # -- Define the rediness probe
     readinessProbe:
-      httpGet:
-        path: /
+      tcpSocket:
         port: 80
     # -- Define the liveness probe
     livenessProbe:
-      httpGet:
-        path: /
+      tcpSocket:
         port: 80
       initialDelaySeconds: 30
       timeoutSeconds: 30
@@ -418,10 +416,10 @@ components:
   #
   console:
     image:
-      registry: &appwriteImgReg docker.io
-      repository: &appwriteImgRep appwrite/console
-      tag: &appwriteImgTag 5.0.12
-      pullPolicy: &appwriteImgPullP IfNotPresent
+      registry: *appwriteImgReg
+      repository: appwrite/console
+      tag: 5.0.12
+      pullPolicy: *appwriteImgPullP
     # -- Attach previously defined environment variables to the pod
     env: false
     # -- The number of instances in which the application will run. Only effect if autoscaling false

@@ -1,6 +1,6 @@
 # appwrite-helm
 
-![Version: 0.3.1](https://img.shields.io/badge/Version-0.3.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.6.0](https://img.shields.io/badge/AppVersion-1.6.0-informational?style=flat-square)
+![Version: 0.3.3](https://img.shields.io/badge/Version-0.3.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.6.0](https://img.shields.io/badge/AppVersion-1.6.0-informational?style=flat-square)
 
 An unofficial Helm chart to deploy Appwrite
 
@@ -97,7 +97,7 @@ Kubernetes: `>=1.26`
 | components.core.ingress.rules[0].http.paths[0].path | string | `"/"` |  |
 | components.core.ingress.rules[0].http.paths[0].pathType | string | `"Prefix"` |  |
 | components.core.ingress.tls | list | `[]` |  |
-| components.core.livenessProbe | object | `{"failureThreshold":10,"httpGet":{"path":"/","port":80},"initialDelaySeconds":30,"timeoutSeconds":30}` | Define the liveness probe |
+| components.core.livenessProbe | object | `{"failureThreshold":10,"initialDelaySeconds":30,"tcpSocket":{"port":80},"timeoutSeconds":30}` | Define the liveness probe |
 | components.core.networkPolicy.egress[0] | object | `{}` |  |
 | components.core.networkPolicy.enabled | bool | `false` |  |
 | components.core.networkPolicy.ingress[0].from[0].ipBlock.cidr | string | `"0.0.0.0/0"` |  |
@@ -118,7 +118,7 @@ Kubernetes: `>=1.26`
 | components.core.ports[0].containerPort | int | `80` |  |
 | components.core.ports[0].name | string | `"http"` |  |
 | components.core.ports[0].protocol | string | `"TCP"` |  |
-| components.core.readinessProbe | object | `{"httpGet":{"path":"/","port":80}}` | Define the rediness probe |
+| components.core.readinessProbe | object | `{"tcpSocket":{"port":80}}` | Define the rediness probe |
 | components.core.replicaCount | int | `1` | The number of instances in which the application will run. Only effect if autoscaling false |
 | components.core.resources | object | `{}` | Setup resource limits and requests for the app |
 | components.core.restartPolicy | string | `"Always"` |  |
@@ -148,8 +148,8 @@ Kubernetes: `>=1.26`
 | components.realtime.env | bool | `true` |  |
 | components.realtime.image.pullPolicy | string | `"IfNotPresent"` |  |
 | components.realtime.image.registry | string | `"docker.io"` |  |
-| components.realtime.image.repository | string | `"appwrite/console"` |  |
-| components.realtime.image.tag | string | `"5.0.12"` |  |
+| components.realtime.image.repository | string | `"appwrite/appwrite"` |  |
+| components.realtime.image.tag | string | `"1.6.0"` |  |
 | components.realtime.ingress.annotations | object | `{}` |  |
 | components.realtime.ingress.className | string | `""` |  |
 | components.realtime.ingress.enabled | bool | `false` |  |
