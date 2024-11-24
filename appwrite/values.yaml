@@ -1082,7 +1082,7 @@ components:
     #
     #  USAGE DUMP
     #
-    usage-dump:
+    usagedump:
       image:
         registry: *appwriteImgReg
         repository: *appwriteImgRep

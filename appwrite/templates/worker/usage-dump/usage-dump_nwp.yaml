@@ -1,3 +1,0 @@
-{{- if .Values.components.workers.usage-dump.networkPolicy.enabled }}
-{{- include "appwrite.firewall" (merge (dict "component" (dict "name" "usage-dump" "config" .Values.components.workers.usage-dump)) .)}}
-{{- end }}
