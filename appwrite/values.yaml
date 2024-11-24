@@ -59,11 +59,11 @@ environments:
     keyV1: ""
   domain: 
     # _APP_DOMAIN
-    app: &appDomain localhost
+    app: &appDomain example.com
     # _APP_DOMAIN_FUNCTIONS
-    functions: functions.localhost
+    functions: functions.example.com
     # _APP_DOMAIN_TARGET
-    target: localhost
+    target: example.com
   redis:
     # _APP_REDIS_HOST
     host: ""
@@ -375,7 +375,7 @@ components:
             pathType: Prefix
             backend:
               service:
-                name: appwrite-app-svc
+                name: appwrite-core
                 port:
                   number: 80
       tls: []
@@ -505,11 +505,11 @@ components:
       - host: *appDomain
         http:
           paths:
-          - path: /
+          - path: /console
             pathType: Prefix
             backend:
               service:
-                name: appwrite-console-svc
+                name: appwrite-console
                 port:
                   number: 80
       tls: []
@@ -647,7 +647,7 @@ components:
             pathType: Prefix
             backend:
               service:
-                name: appwrite-realtime-svc
+                name: appwrite-realtime
                 port:
                   number: 80
       tls: []

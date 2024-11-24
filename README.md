@@ -1,6 +1,6 @@
 # appwrite-helm
 
-![Version: 0.3.3](https://img.shields.io/badge/Version-0.3.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.6.0](https://img.shields.io/badge/AppVersion-1.6.0-informational?style=flat-square)
+![Version: 0.3.4](https://img.shields.io/badge/Version-0.3.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.6.0](https://img.shields.io/badge/AppVersion-1.6.0-informational?style=flat-square)
 
 An unofficial Helm chart to deploy Appwrite
 
@@ -40,10 +40,10 @@ Kubernetes: `>=1.26`
 | components.console.ingress.annotations | object | `{}` |  |
 | components.console.ingress.className | string | `""` |  |
 | components.console.ingress.enabled | bool | `false` |  |
-| components.console.ingress.rules[0].host | string | `"localhost"` |  |
-| components.console.ingress.rules[0].http.paths[0].backend.service.name | string | `"appwrite-console-svc"` |  |
+| components.console.ingress.rules[0].host | string | `"example.com"` |  |
+| components.console.ingress.rules[0].http.paths[0].backend.service.name | string | `"appwrite-console"` |  |
 | components.console.ingress.rules[0].http.paths[0].backend.service.port.number | int | `80` |  |
-| components.console.ingress.rules[0].http.paths[0].path | string | `"/"` |  |
+| components.console.ingress.rules[0].http.paths[0].path | string | `"/console"` |  |
 | components.console.ingress.rules[0].http.paths[0].pathType | string | `"Prefix"` |  |
 | components.console.ingress.tls | list | `[]` |  |
 | components.console.livenessProbe | object | `{"failureThreshold":10,"httpGet":{"path":"/","port":80},"initialDelaySeconds":30,"timeoutSeconds":30}` | Define the liveness probe |
@@ -91,8 +91,8 @@ Kubernetes: `>=1.26`
 | components.core.ingress.annotations | object | `{}` |  |
 | components.core.ingress.className | string | `""` |  |
 | components.core.ingress.enabled | bool | `false` |  |
-| components.core.ingress.rules[0].host | string | `"localhost"` |  |
-| components.core.ingress.rules[0].http.paths[0].backend.service.name | string | `"appwrite-app-svc"` |  |
+| components.core.ingress.rules[0].host | string | `"example.com"` |  |
+| components.core.ingress.rules[0].http.paths[0].backend.service.name | string | `"appwrite-core"` |  |
 | components.core.ingress.rules[0].http.paths[0].backend.service.port.number | int | `80` |  |
 | components.core.ingress.rules[0].http.paths[0].path | string | `"/"` |  |
 | components.core.ingress.rules[0].http.paths[0].pathType | string | `"Prefix"` |  |
@@ -153,8 +153,8 @@ Kubernetes: `>=1.26`
 | components.realtime.ingress.annotations | object | `{}` |  |
 | components.realtime.ingress.className | string | `""` |  |
 | components.realtime.ingress.enabled | bool | `false` |  |
-| components.realtime.ingress.rules[0].host | string | `"localhost"` |  |
-| components.realtime.ingress.rules[0].http.paths[0].backend.service.name | string | `"appwrite-realtime-svc"` |  |
+| components.realtime.ingress.rules[0].host | string | `"example.com"` |  |
+| components.realtime.ingress.rules[0].http.paths[0].backend.service.name | string | `"appwrite-realtime"` |  |
 | components.realtime.ingress.rules[0].http.paths[0].backend.service.port.number | int | `80` |  |
 | components.realtime.ingress.rules[0].http.paths[0].path | string | `"/v1/realtime"` |  |
 | components.realtime.ingress.rules[0].http.paths[0].pathType | string | `"Prefix"` |  |
@@ -197,7 +197,7 @@ Kubernetes: `>=1.26`
 | components.realtime.test[1].hostkey | string | `"_APP_DB_HOST"` |  |
 | components.realtime.test[1].portkey | string | `"_APP_DB_PORT"` |  |
 | components.realtime.tolerations | list | `[]` |  |
-| environments | object | `{"assistant":{"openAi":{"apiKey":""}},"console":{"whitelist":{"emails":"","ips":"","root":""}},"database":{"host":"","password":"your-secret-password","port":3306,"rootPassword":"root-secret-root-password","schema":"appwrite","username":"user"},"dockerHub":{"password":"","username":""},"domain":{"app":"localhost","functions":"functions.localhost","target":"localhost"},"env":"production","executor":{"host":"","secret":""},"functions":{"buildTimeout":900,"cpus":"","inactiveThreshold":600,"maintenanceInterval":600,"memory":"","runtimes":["php-8.0","node-18.0","python-3.9","ruby-3.1"],"sizeLimit":30000000,"timeout":900},"graphql":{"maxBatchSize":10,"maxComplexity":250,"maxDepth":3},"influxdb":{"host":"","port":8086},"locale":"en","logging":{"config":"","provider":""},"maintenance":{"interval":86400,"retention":{"abuse":86400,"audit":1209600,"cache":2592000,"execution":1209600,"schedules":86400,"usageHourly":8640000}},"migrations":{"firebase":{"clientId":"","clientSecret":""}},"openssl":{"keyV1":""},"options":{"abuse":"disabled","forceHttps":"disabled","functions":{"forceHttps":"disabled"},"routerProtection":"disabled"},"redis":{"host":"","password":"","port":6379,"username":""},"sms":{"from":"","provider":""},"smtp":{"host":"","password":"","port":"","secure":"","username":""},"statsd":{"host":"","port":8125},"storage":{"antivirus":{"enabled":"disabled","host":"clamav","port":3310},"backblaze":{"accessKey":"","bucket":"","region":"us-west-004","secret":""},"device":"Local","doSpaces":{"accessKey":"","bucket":"","region":"us-east-1","secret":""},"limit":30000000,"linode":{"accessKey":"","bucket":"","region":"eu-central-1","secret":""},"previewLimit":20000000,"s3":{"accessKey":"","bucket":"","endpointUrl":"","region":"us-east-1","secret":""},"wasabi":{"accessKey":"","bucket":"","region":"eu-central-1","secret":""}},"system":{"email":{"address":"team@appwrite.io","name":"Appwrite"},"response":{"format":""},"security":{"emailAddress":"security@appwrite.io"}},"usage":{"aggregationInterval":5,"stats":"enabled"},"vcs":{"github":{"appId":"","appName":"","clientId":"","clientSecret":"","privateKey":"disabled","webhookSecret":""}},"worker":{"perCore":6}}` | Environment variables for Appwrite ref: [https://appwrite.io/docs/advanced/self-hosting/environment-variables] (https://appwrite.io/docs/advanced/self-hosting/environment-variables) |
+| environments | object | `{"assistant":{"openAi":{"apiKey":""}},"console":{"whitelist":{"emails":"","ips":"","root":""}},"database":{"host":"","password":"your-secret-password","port":3306,"rootPassword":"root-secret-root-password","schema":"appwrite","username":"user"},"dockerHub":{"password":"","username":""},"domain":{"app":"example.com","functions":"functions.example.com","target":"example.com"},"env":"production","executor":{"host":"","secret":""},"functions":{"buildTimeout":900,"cpus":"","inactiveThreshold":600,"maintenanceInterval":600,"memory":"","runtimes":["php-8.0","node-18.0","python-3.9","ruby-3.1"],"sizeLimit":30000000,"timeout":900},"graphql":{"maxBatchSize":10,"maxComplexity":250,"maxDepth":3},"influxdb":{"host":"","port":8086},"locale":"en","logging":{"config":"","provider":""},"maintenance":{"interval":86400,"retention":{"abuse":86400,"audit":1209600,"cache":2592000,"execution":1209600,"schedules":86400,"usageHourly":8640000}},"migrations":{"firebase":{"clientId":"","clientSecret":""}},"openssl":{"keyV1":""},"options":{"abuse":"disabled","forceHttps":"disabled","functions":{"forceHttps":"disabled"},"routerProtection":"disabled"},"redis":{"host":"","password":"","port":6379,"username":""},"sms":{"from":"","provider":""},"smtp":{"host":"","password":"","port":"","secure":"","username":""},"statsd":{"host":"","port":8125},"storage":{"antivirus":{"enabled":"disabled","host":"clamav","port":3310},"backblaze":{"accessKey":"","bucket":"","region":"us-west-004","secret":""},"device":"Local","doSpaces":{"accessKey":"","bucket":"","region":"us-east-1","secret":""},"limit":30000000,"linode":{"accessKey":"","bucket":"","region":"eu-central-1","secret":""},"previewLimit":20000000,"s3":{"accessKey":"","bucket":"","endpointUrl":"","region":"us-east-1","secret":""},"wasabi":{"accessKey":"","bucket":"","region":"eu-central-1","secret":""}},"system":{"email":{"address":"team@appwrite.io","name":"Appwrite"},"response":{"format":""},"security":{"emailAddress":"security@appwrite.io"}},"usage":{"aggregationInterval":5,"stats":"enabled"},"vcs":{"github":{"appId":"","appName":"","clientId":"","clientSecret":"","privateKey":"disabled","webhookSecret":""}},"worker":{"perCore":6}}` | Environment variables for Appwrite ref: [https://appwrite.io/docs/advanced/self-hosting/environment-variables] (https://appwrite.io/docs/advanced/self-hosting/environment-variables) |
 | global | object | `{"imagePullSecrets":[],"storageClass":""}` | These global values also affect the sub-charts |
 | global.imagePullSecrets | list | `[]` | Global Docker registry secret names E.g. imagePullSecrets:   - myRegistryKeySecretName |
 | global.storageClass | string | `""` | Global StorageClass for Persistent Volume(s) |
